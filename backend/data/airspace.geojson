@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "_comment": [
+    "Your own no-fly and advisory zones. Read by the backend (GET/PUT /api/airspace).",
+    "severity: 'block' = points get blocked, 'warn' = warning, 'info' = note.",
+    "buffer_m: radius in metres. Required for Point/LineString, optional for Polygon.",
+    "The two examples below are placeholders - replace them with your own zones.",
+    "Official sources for geographical UAS zones in Germany: dipul.de, DFS AIS, Droniq.",
+    "Elsewhere, check with your national aviation authority."
+  ],
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "EXAMPLE - control zone of an airport",
+        "kind": "ctr",
+        "severity": "block",
+        "buffer_m": 3000,
+        "note": "Placeholder. Replace with real CTR geometry from your official source."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.1829, 48.6899]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "EXAMPLE - wildlife refuge",
+        "kind": "nature",
+        "severity": "warn",
+        "note": "Placeholder for self-maintained quiet zones, bird sanctuaries or hunting grounds."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [9.10, 48.70],
+            [9.12, 48.70],
+            [9.12, 48.71],
+            [9.10, 48.71],
+            [9.10, 48.70]
+          ]
+        ]
+      }
+    }
+  ]
+}

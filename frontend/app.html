@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Finder – FPV Flying Spot Finder</title>
+    <meta
+      name="description"
+      content="Interactive map: find FPV flying spots with few people around and good flying conditions."
+    />
+    <!-- The tool itself is not indexed: it renders nothing without JavaScript,
+         and every search is a fresh computation, so crawling it would only burn
+         the shared Overpass budget. The landing page and FAQ carry the content
+         that should rank, and they link here. -->
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="/app" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

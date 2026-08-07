@@ -1,0 +1,101 @@
+name: Container image
+
+# Builds the image and publishes it to the GitHub Container Registry.
+#
+# On pull requests it only builds (no push), so a broken Dockerfile is caught
+# before it reaches the registry.
+#
+# Tags produced:
+#   main branch  -> :main and :latest
+#   git tag v1.2.3 -> :1.2.3, :1.2, :1 and :latest
+#   every build  -> :sha-<short sha>
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*.*.*']
+  pull_request:
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # GHCR requires an all-lowercase image name, but github.repository keeps
+      # the owner's original casing (e.g. Layer0180/fpvfinder). Lowercasing it
+      # explicitly here rather than relying on the action to do it.
+      - name: Compute the image name
+        id: image
+        run: echo "name=${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Never log in on pull requests: forked PRs get a read-only token, and we
+      # do not want to push from them anyway.
+      - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Derive tags and labels
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha,prefix=sha-
+            type=raw,value=latest,enable={{is_default_branch}}
+          labels: |
+            org.opencontainers.image.title=FPV Flying Spot Finder
+            org.opencontainers.image.description=Finds FPV flying spots with few people around, from OpenStreetMap and the Strava heatmap
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # Buildx would otherwise attach provenance attestations, which show up
+          # in the GHCR package listing as extra "unknown/unknown" entries next
+          # to the real platforms. Turning them off keeps the listing readable.
+          provenance: false
+
+      - name: Summary
+        if: github.event_name != 'pull_request'
+        run: |
+          {
+            echo "### Image published"
+            echo
+            echo '```'
+            echo "${{ steps.meta.outputs.tags }}"
+            echo '```'
+            echo
+            echo "Pull with:"
+            echo '```'
+            echo "docker pull ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}:latest"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

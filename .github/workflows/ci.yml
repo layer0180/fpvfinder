@@ -1,0 +1,78 @@
+name: CI
+
+# Checks the backend scoring and the frontend build. Deliberately without
+# network access to Overpass or Strava - the offline test builds its own world,
+# so CI never fails because of somebody else's rate limit.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  backend:
+    name: Backend (scoring tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Offline smoke test
+        working-directory: backend
+        run: python -m tests.test_scoring_offline
+
+      - name: Check the app imports
+        working-directory: backend
+        run: python -c "from app.main import app; print('FastAPI app loads:', app.title)"
+
+  frontend:
+    name: Frontend (build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build
+        working-directory: frontend
+        run: npm run build
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scan the repository for credentials
+        run: |
+          # Same patterns as tools/pre-commit, but against the whole tracked
+          # tree rather than just the diff.
+          S='_strava'; CF='CloudFront'
+          patterns="${S}4_session|${S}_idcf|${CF}-(Signature|Policy|Key-Pair-Id)=|BEGIN [A-Z ]*PRIVATE KEY|ghp_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}"
+          if git grep -I -E -n -- "$patterns" -- . ':!tools/' ':!.github/'; then
+            echo "::error::Possible credentials found in the repository."
+            exit 1
+          fi
+          echo "No credentials found."

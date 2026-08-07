@@ -1,0 +1,16 @@
+# Adds the "Sponsor" button to the repository page.
+#
+# GitHub only picks this up under one of these exact paths, with this exact
+# capitalisation: .github/FUNDING.yml, FUNDING.yml, or docs/FUNDING.yml.
+#
+# Only the platform key is given here, never a full URL - GitHub builds the
+# link itself (buy_me_a_coffee: layer0180 -> https://buymeacoffee.com/layer0180).
+# Every other platform is left out on purpose: an unused key renders a dead
+# button. Uncomment one once you actually have an account there.
+
+buy_me_a_coffee: layer0180
+
+# github: [Layer0180]          # needs GitHub Sponsors to be set up first
+# ko_fi:
+# liberapay:
+# custom: ["https://example.org/donate"]

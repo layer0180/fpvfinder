@@ -1,0 +1,126 @@
+# Self-hosting the FPV Flying Spot Finder.
+#
+#   cp .env.example .env          -> fill in your domain, donation link, ...
+#   docker compose up -d          -> http://localhost:8000
+#   docker compose pull           -> fetch a newer image
+#   docker compose logs -f
+#
+# .env is optional - every setting below has a fallback and the app runs
+# without one - but it is where your own values belong. Compose loads .env
+# from this directory automatically, and it is gitignored, so `git pull` never
+# overwrites it and it never ends up in a commit.
+#
+# To build from your local checkout instead of pulling, comment out `image:`
+# and uncomment `build:`.
+#
+# This file is deliberately provider-agnostic: it is the same on a laptop, a
+# Hetzner/Netcup VPS or anywhere else that runs Docker. Nothing here is tied to
+# a particular host. For TLS on your own server, add the Caddy overlay:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.caddy.yml up -d
+
+services:
+  fpvfinder:
+    image: ghcr.io/layer0180/fpvfinder:latest
+    # build: .
+    container_name: fpvfinder
+    restart: unless-stopped
+
+    ports:
+      - "8000:8000"
+
+    # Values come from .env next to this file (see .env.example) via the
+    # ${VAR:-default} syntax below - Compose substitutes them at `up` time, so
+    # editing .env and running `docker compose up -d` again is enough, no
+    # rebuild needed. Anything left unset in .env just uses the default here.
+    environment:
+      # Identifies this app to Nominatim and Overpass. Never put "example.com"
+      # in here - Nominatim rejects any such User-Agent with 403.
+      USER_AGENT: "${USER_AGENT:-fpvfinder/0.1 (+https://github.com/Layer0180/fpvfinder)}"
+
+      # --- Turn this on for any instance other people can reach ------------
+      PUBLIC_MODE: "${PUBLIC_MODE:-false}"
+      # Only true when something terminates TLS in front of this container.
+      TRUST_PROXY: "${TRUST_PROXY:-false}"
+
+      # The address search engines are told about - every canonical link,
+      # hreflang, og:url and sitemap entry is rewritten to this at serve time
+      # (see backend/app/main.py). The image is built without a fixed domain
+      # baked in, so an empty PUBLIC_URL falls back to http://localhost:8000 -
+      # harmless for local testing, but Google rejects a sitemap built from
+      # that and canonical tags pointing at it deindex the site. Set it in
+      # .env; the startup log prints the address actually being advertised.
+      PUBLIC_URL: "${PUBLIC_URL:-}"
+      GOOGLE_SITE_VERIFICATION: "${GOOGLE_SITE_VERIFICATION:-}"
+
+      # --- Sizing ----------------------------------------------------------
+      # Memory grows with the square of the radius (~240 MiB of heap at 5 km),
+      # so keep this in step with the `limits` block below.
+      MAX_RADIUS_KM: "${MAX_RADIUS_KM:-10}"
+      SEARCH_MAX_CONCURRENT: "${SEARCH_MAX_CONCURRENT:-2}"
+      SEARCH_MAX_QUEUED: "${SEARCH_MAX_QUEUED:-8}"
+
+      # --- Donation button (empty = not rendered) --------------------------
+      # NOTE for anyone else running this: change or remove DONATE_URL in
+      # .env, or you will be pointing your visitors at somebody else's
+      # donation page.
+      DONATE_URL: "${DONATE_URL:-https://buymeacoffee.com/layer0180}"
+      DONATE_LABEL: "${DONATE_LABEL:-Buy me a coffee}"
+      # Legal pages use this as the contact route - no personal details needed.
+      # PROJECT_URL: "https://github.com/Layer0180/fpvfinder"
+
+      # Optional: your own Overpass instances, in order of preference.
+      # OVERPASS_URLS: "https://overpass-api.de/api/interpreter,https://overpass.kumi.systems/api/interpreter"
+
+    volumes:
+      # Overpass cache and Strava tiles. Keeping this makes repeat searches
+      # nearly instant and spares the public APIs - it is the single most
+      # valuable thing to persist.
+      - fpvfinder-data:/app/backend/data
+      # weights.json, so your tuning survives an image update.
+      - fpvfinder-config:/app/backend/config
+      # Imprint and privacy texts. Mount your own to fill them in without
+      # rebuilding; comment this out to use the templates from the image.
+      # - ./backend/content:/app/backend/content:ro
+
+    # Resource ceilings. Without a limit a single large search can consume all
+    # available memory on a small host; with one, the container is restarted
+    # instead of the whole machine grinding to a halt.
+    #
+    # Keep `memory` above what MAX_RADIUS_KM implies, with room to spare:
+    #     5 km -> ~240 MiB heap    10 km -> ~1 GiB heap
+    # multiplied by SEARCH_MAX_CONCURRENT, plus ~120 MiB for the interpreter,
+    # numpy and shapely.
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 2g
+        reservations:
+          memory: 256m
+
+    # `deploy.resources.limits` is honoured by `docker compose up` in Compose
+    # v2. These are the equivalents for older setups and plain `docker run`:
+    #   docker run --cpus 1.5 --memory 2g ...
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4).status == 200 else 1)"
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+    # Keep log files from filling the disk on a long-running host.
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  fpvfinder-data:
+  fpvfinder-config:

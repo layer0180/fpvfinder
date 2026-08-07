@@ -1,0 +1,25 @@
+{
+  "name": "fpvfinder-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "prebuild": "node scripts/build-site.mjs",
+    "build": "vite build",
+    "predev": "node scripts/build-site.mjs",
+    "dev": "vite",
+    "preview": "vite preview",
+    "build:site": "node scripts/build-site.mjs"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "leaflet.heat": "^0.2.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-leaflet": "^5.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.7"
+  }
+}

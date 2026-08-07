@@ -1,0 +1,18 @@
+# --- Core ---
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.7
+httpx>=0.27
+
+# --- Geometry / numerics ---
+# shapely 2.x is required (vectorised STRtree queries)
+shapely>=2.0
+numpy>=1.26
+
+# --- Strava heatmap tiles (reading pixels) ---
+Pillow>=10.0
+
+# --- OPTIONAL ---
+# Population density raster (GHSL / WorldPop GeoTIFF).
+# Only install this if you actually want to use a raster:
+# rasterio>=1.3

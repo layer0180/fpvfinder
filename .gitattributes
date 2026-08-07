@@ -1,0 +1,14 @@
+# Always LF in the repository, CRLF in the working tree on Windows.
+* text=auto eol=lf
+
+# PowerShell scripts need CRLF on Windows.
+*.ps1 text eol=crlf
+
+# Leave binary files alone.
+*.png binary
+*.jpg binary
+*.tif binary
+*.sqlite binary
+
+# Keep the lockfile out of diffs and language statistics.
+frontend/package-lock.json -diff linguist-generated
