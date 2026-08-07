@@ -35,6 +35,17 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    # Same reasoning as the app service: remove root's other privileges even
+    # though the official image still starts as root. NET_BIND_SERVICE is the
+    # one capability actually needed, to bind ports 80/443 (anything below
+    # 1024 requires it or full root) - everything else Linux offers root is
+    # dropped.
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
     environment:
       DOMAIN: ${DOMAIN:?set DOMAIN}
       ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL}

@@ -15,9 +15,41 @@
 	# visitor would look like the proxy and share a single rate limit bucket.
 	reverse_proxy fpvfinder:8000
 
+	# The backend has no body-size limit of its own (Starlette does not enforce
+	# one), so without this a single POST /api/search with an oversized `weights`
+	# override, or just padding, ties up memory and CPU parsing JSON before
+	# Pydantic ever validates a field. The full default scoring config, fully
+	# spelled out, is ~7 KB; 256 KB leaves generous room for a verbose override
+	# while still being far too small to matter as a resource-exhaustion vector.
+	# Also covers PUT /api/airspace (the shipped example is ~1.4 KB) - raise
+	# this if your own custom no-fly-zone file is unusually large.
+	request_body {
+		max_size 256KB
+	}
+
 	header {
-		# Basic hardening. No CSP with 'unsafe-inline' gymnastics here: the app
-		# loads map tiles and its own bundle only.
+		# Exact hosts, worked out from what the frontend actually loads (see
+		# frontend/src/components/MapView.jsx and backend/app/config.py):
+		#   - the app's own bundle and API (script/connect/font/style: 'self')
+		#   - OpenStreetMap base tiles: tile.openstreetmap.org
+		#   - Strava heatmap tiles: *.strava.com (the host is a configurable
+		#     env var, STRAVA_TILE_URL_PUBLIC, so the wildcard covers an
+		#     operator pointing it at a different Strava subdomain)
+		#   - data: for the rare inlined-as-data-URI asset (Vite inlines small
+		#     files below its size threshold)
+		# style-src needs 'unsafe-inline': React and Leaflet both set the
+		# `style` attribute directly (drawer transforms, marker colours), which
+		# CSP treats as inline styles regardless of how the value was computed.
+		# That is a much smaller allowance than 'unsafe-inline' on scripts would
+		# be - it permits CSS, not code execution - and script-src stays 'self'
+		# only, since the production build never emits an inline <script>.
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org https://*.strava.com; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+
+		# Only geolocation is used (the "use my location" button); everything
+		# else this could plausibly gate - camera, microphone, payment, USB -
+		# is switched off entirely rather than left to browser defaults.
+		Permissions-Policy "geolocation=(self), camera=(), microphone=(), payment=(), usb=()"
+
 		Strict-Transport-Security "max-age=31536000; includeSubDomains"
 		X-Content-Type-Options "nosniff"
 		Referrer-Policy "strict-origin-when-cross-origin"

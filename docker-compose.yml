@@ -29,6 +29,15 @@ services:
     ports:
       - "8000:8000"
 
+    # The image already runs as a non-root user (Dockerfile: appuser, uid
+    # 10001); these two go further and remove what root privilege the process
+    # could still theoretically escalate to or use, even though nothing in the
+    # app needs any Linux capability or setuid/setgid binaries to begin with.
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
     # Values come from .env next to this file (see .env.example) via the
     # ${VAR:-default} syntax below - Compose substitutes them at `up` time, so
     # editing .env and running `docker compose up -d` again is enough, no

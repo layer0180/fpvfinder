@@ -10,6 +10,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+# None of these jobs write anything - they only read the checkout, run tests
+# and grep for secrets. Least privilege: without this, GITHUB_TOKEN gets
+# whatever the repository/org default is, which can be broader than needed
+# (and this workflow also runs on pull_request from forks).
+permissions:
+  contents: read
+
 jobs:
   backend:
     name: Backend (scoring tests)
