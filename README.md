@@ -13,6 +13,8 @@ good, using OpenStreetMap and the Strava heatmap. No accounts, no ads, no API ke
 
 ## Run it
 
+[Clone Github Repository](https://github.com/layer0180/fpvfinder)
+
 ```bash
 docker run -d -p 8000:8000 \
   -v fpvfinder-data:/app/backend/data \
