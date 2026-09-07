@@ -1,5 +1,7 @@
 # FPV Flying Spot Finder
 
+[fpv-finder.com](https://fpv-finder.com)
+
 Finds places within a chosen radius where few people are about and the flying is
 good, using OpenStreetMap and the Strava heatmap. No accounts, no ads, no API keys.
 
@@ -23,8 +25,7 @@ docker run -d -p 8000:8000 \
 ```
 
 Then open <http://localhost:8000>. `docker compose up -d` does the same; copy
-[`.env.example`](.env.example) to `.env` first to set your own domain and
-donation link.
+[`.env.example`](.env.example) to `.env` first to set your own domain.
 
 From source, in two terminals:
 
