@@ -1,6 +1,6 @@
 # FPV Flying Spot Finder
 
-[fpv-finder.com](https://fpv-finder.com)
+[fpv-finder.com](https://fpv-finder.com/en)
 
 Finds places within a chosen radius where few people are about and the flying is
 good, using OpenStreetMap and the Strava heatmap. No accounts, no ads, no API keys.
