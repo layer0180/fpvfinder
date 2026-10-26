@@ -1,0 +1,153 @@
+# Self-hosting the FPV Flying Spot Finder.
+#
+#   cp .env.example .env          -> fill in your domain etc.
+#   docker compose up -d          -> http://localhost:8000
+#   docker compose pull && docker compose up -d   -> update
+#   docker compose logs -f
+#
+# With TLS on your own server (Caddy, Let's Encrypt):
+#   docker compose -f docker-compose.yml -f docker-compose.caddy.yml up -d
+#
+# Optional, self-hosted visitor statistics (Umami, no cookies):
+#   docker compose --profile analytics up -d      (see .env.example)
+#
+# Every v1 setting in .env keeps working. The defaults below are sized for a
+# small server (2 GB RAM, 1 CPU) - see the comments on `deploy`.
+
+services:
+  fpvfinder:
+    image: ghcr.io/layer0180/fpvfinder:${FPVFINDER_TAG:-latest}
+    # build: .
+    container_name: fpvfinder
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    environment:
+      USER_AGENT: "${USER_AGENT:-fpvfinder/2.0 (+https://github.com/Layer0180/fpvfinder)}"
+
+      # --- Public instance ---------------------------------------------------
+      PUBLIC_MODE: "${PUBLIC_MODE:-false}"
+      TRUST_PROXY: "${TRUST_PROXY:-false}"
+      PUBLIC_URL: "${PUBLIC_URL:-}"
+      GOOGLE_SITE_VERIFICATION: "${GOOGLE_SITE_VERIFICATION:-}"
+
+      # --- OSM data ------------------------------------------------------------
+      # The prebuilt store for Germany (~1.5 GB), downloaded on first start and
+      # refreshed when older than OSM_STORE_MAX_AGE_DAYS. Without it every
+      # search asks the public Overpass servers - slow, and they fail under load.
+      OSM_STORE_URL: "${OSM_STORE_URL:-}"
+      OSM_STORE_MAX_AGE_DAYS: "${OSM_STORE_MAX_AGE_DAYS:-35}"
+      # Region pages (/regionen), computed from the same import.
+      REGIONS_URL: "${REGIONS_URL:-}"
+      # Outside the store: ask Overpass live (true) or say "not covered" (false).
+      OSM_LIVE_FALLBACK: "${OSM_LIVE_FALLBACK:-true}"
+
+      # --- Map, geocoding, Strava -----------------------------------------------
+      MAP_STYLE_URL: "${MAP_STYLE_URL:-https://tiles.openfreemap.org/styles/liberty}"
+      PHOTON_URL: "${PHOTON_URL:-https://photon.komoot.io}"
+      GEOCODE_COUNTRY: "${GEOCODE_COUNTRY:-de}"
+      # Empty = off on a public instance, on for a private one.
+      STRAVA_ENABLED: "${STRAVA_ENABLED:-}"
+
+      # --- Sizing ------------------------------------------------------------
+      MAX_RADIUS_KM: "${MAX_RADIUS_KM:-10}"
+      SEARCH_MAX_CONCURRENT: "${SEARCH_MAX_CONCURRENT:-1}"
+      SEARCH_MAX_QUEUED: "${SEARCH_MAX_QUEUED:-6}"
+
+      # --- Donations, legal pages, analytics -------------------------------------
+      DONATE_URL: "${DONATE_URL:-}"
+      DONATE_LABEL: "${DONATE_LABEL:-Buy me a coffee}"
+      PROJECT_URL: "${PROJECT_URL:-https://github.com/Layer0180/fpvfinder}"
+      CONTACT_EMAIL: "${CONTACT_EMAIL:-}"
+      OPERATOR_NAME: "${OPERATOR_NAME:-}"
+      OPERATOR_ADDRESS: "${OPERATOR_ADDRESS:-}"
+      ANALYTICS_SCRIPT_URL: "${ANALYTICS_SCRIPT_URL:-}"
+      ANALYTICS_WEBSITE_ID: "${ANALYTICS_WEBSITE_ID:-}"
+
+    volumes:
+      # OSM store, result cache, share links, geocoder cache. The one thing
+      # worth persisting - share links live here.
+      - fpvfinder-data:/app/backend/data
+      - fpvfinder-config:/app/backend/config
+      # Your own imprint / privacy texts, without rebuilding:
+      # - ./backend/content:/app/backend/content:ro
+
+    # Sized for a 2 GB / 1 CPU server. One search at a time (each holds its OSM
+    # extract in memory); peak use measured on rural areas is ~360 MB at
+    # 10 km. Leave the rest of the RAM to the OS, Caddy and the page cache
+    # that keeps the OSM store fast.
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1g
+        reservations:
+          memory: 256m
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4).status == 200 else 1)"
+      interval: 30s
+      timeout: 5s
+      start_period: 600s
+      retries: 3
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # --- Optional: Umami, cookieless visitor statistics -------------------------
+  # Only with `--profile analytics`. ~300 MB of RAM together with its database.
+  # Needs UMAMI_DB_PASSWORD and UMAMI_APP_SECRET in .env - Postgres refuses to
+  # start without a password. (Not enforced with ${VAR:?} here: Compose would
+  # then refuse to start the main service too, even without this profile.)
+  # After the first start: log in (admin / umami), CHANGE THE PASSWORD, add the
+  # site, and put its tracking-script URL and website ID into .env.
+  umami:
+    profiles: [analytics]
+    image: ${UMAMI_IMAGE:-ghcr.io/umami-software/umami:postgresql-latest}
+    container_name: fpvfinder-umami
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://umami:${UMAMI_DB_PASSWORD:-}@umami-db:5432/umami
+      APP_SECRET: ${UMAMI_APP_SECRET:-}
+      DISABLE_TELEMETRY: "1"
+    depends_on:
+      - umami-db
+    ports:
+      - "127.0.0.1:3000:3000"
+    deploy:
+      resources:
+        limits:
+          memory: 384m
+
+  umami-db:
+    profiles: [analytics]
+    image: postgres:16-alpine
+    container_name: fpvfinder-umami-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: ${UMAMI_DB_PASSWORD:-}
+    volumes:
+      - umami-db:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 192m
+
+volumes:
+  fpvfinder-data:
+  fpvfinder-config:
+  umami-db:

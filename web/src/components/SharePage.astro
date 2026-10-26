@@ -1,0 +1,113 @@
+---
+/**
+ * Frame for a shared spot (/s/<id>). The backend fills every @@...@@ marker
+ * per request from the share's snapshot (backend/app/web.py), so a shared link
+ * has its own title, description and preview image for chat apps and social
+ * networks - and renders without any JavaScript.
+ *
+ * noindex: a share is one person's pick, not a page that should rank.
+ */
+import Base from '../layouts/Base.astro'
+import { type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+}
+const { lang } = Astro.props
+const path = '/s/@@SHARE_ID@@'
+---
+
+<Base
+  lang={lang}
+  title="@@SHARE_TITLE@@"
+  description="@@SHARE_DESCRIPTION@@"
+  alternates={{ de: path, en: path }}
+  ogImage="/og/s/@@SHARE_ID@@.png"
+  noindex
+>
+  <article class="share" set:html="<!--@@SERVER_CONTENT@@-->" />
+</Base>
+
+<style is:global>
+  .share {
+    max-width: 34rem;
+    margin: 24px auto 0;
+  }
+
+  .share-card {
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .share-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .share-head h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .share-head p {
+    margin: 2px 0 0;
+    color: var(--text-muted);
+  }
+
+  .share-score {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: conic-gradient(var(--ring) 0 var(--p), var(--surface-2) 0);
+  }
+
+  .share-score span {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--surface);
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .share ul {
+    padding-left: 1.2em;
+  }
+
+  .share .warning {
+    margin: 0 0 6px;
+    padding: 8px 12px;
+    border-left: 4px solid var(--warning);
+    border-radius: var(--radius-small);
+    background: var(--warning-soft);
+    list-style: none;
+  }
+
+  .share .warning-danger {
+    border-color: var(--danger);
+    background: var(--danger-soft);
+  }
+
+  .share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .share-note {
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+</style>

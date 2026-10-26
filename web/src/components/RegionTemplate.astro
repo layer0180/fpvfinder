@@ -1,0 +1,143 @@
+---
+/**
+ * Frame for the region pages (/regionen, /regionen/<slug> and English). The
+ * backend fills the markers from data/regions.json, which the monthly OSM
+ * workflow computes (backend/app/regions.py) - the page content changes with
+ * the data, not with a site build.
+ */
+import Base from '../layouts/Base.astro'
+import { type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+}
+const { lang } = Astro.props
+---
+
+<Base
+  lang={lang}
+  title="@@REGION_TITLE@@"
+  description="@@REGION_DESCRIPTION@@"
+  alternates={{ de: '/regionen@@REGION_PATH@@', en: '/en/regions@@REGION_PATH@@' }}
+>
+  <article class="prose region" set:html="<!--@@SERVER_CONTENT@@-->" />
+</Base>
+
+<style is:global>
+  .region-map {
+    display: block;
+    width: 100%;
+    max-width: 30rem;
+    height: auto;
+    margin: 16px 0;
+  }
+
+  .region-map .r-area {
+    fill: color-mix(in srgb, var(--accent) 6%, transparent);
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-dasharray: 6 6;
+  }
+
+  .region-map .r-city {
+    fill: var(--text);
+  }
+
+  .region-map .r-label {
+    fill: var(--text-muted);
+    font: 600 13px var(--font);
+  }
+
+  .region-map .r-pin {
+    stroke: #11151a;
+    stroke-width: 2;
+  }
+
+  .region-map .r-n {
+    fill: #11151a;
+    font: 800 13px var(--font);
+  }
+
+  .region-spots {
+    padding: 0;
+    list-style: none;
+    counter-reset: spot;
+  }
+
+  .region-spots > li {
+    margin: 0 0 16px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .region-spots h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 6px;
+  }
+
+  .region-spots .result-rank {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #11151a;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .region-spots [data-step='0'] { background: var(--score-0); }
+  .region-spots [data-step='1'] { background: var(--score-1); }
+  .region-spots [data-step='2'] { background: var(--score-2); }
+  .region-spots [data-step='3'] { background: var(--score-3); color: #11151a; }
+  .region-spots [data-step='4'] { background: var(--score-4); color: #11151a; }
+
+  .region .breadcrumb {
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+
+  .region .muted {
+    color: var(--text-muted);
+  }
+
+  .region-spots .r-score {
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .region-spots ul {
+    margin: 6px 0;
+    padding-left: 1.2em;
+  }
+
+  .region-spots .r-watch {
+    color: var(--text-muted);
+    font-size: 0.94rem;
+  }
+
+  .region-spots .r-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .region-index {
+    columns: 2 14rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .region-index li {
+    break-inside: avoid;
+    padding: 4px 0;
+  }
+</style>

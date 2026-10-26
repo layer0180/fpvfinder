@@ -1,0 +1,140 @@
+name: CI
+
+# Backend tests, the website build with type checks, end-to-end tests on a
+# phone and a desktop viewport, and Lighthouse budgets. No network access to
+# Overpass or Strava: the tests build their own tiny OSM world, and the e2e
+# run uses a small fixture store, so CI never fails on somebody else's limits.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements-import.txt
+      - name: Install
+        working-directory: backend
+        run: pip install -r requirements-import.txt pytest
+      - name: Tests
+        working-directory: backend
+        run: python -m pytest -q tests
+
+  web:
+    name: Website build, e2e and Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements-import.txt
+
+      - name: Install
+        run: |
+          npm ci --prefix web
+          # pytest: the fixture store is built from the OSM world in tests/
+          pip install -r backend/requirements-import.txt pytest
+          npx --prefix web playwright install --with-deps chromium firefox webkit
+
+      - name: Type check and build
+        working-directory: web
+        run: |
+          npx astro check
+          npm run build
+
+      - name: Start the server on a fixture OSM store
+        working-directory: backend
+        env:
+          OSM_STORE: ${{ github.workspace }}/backend/data/osm-fixture.sqlite
+          OSM_LIVE_FALLBACK: 'false'
+          # The e2e suite searches more often than one visitor would.
+          RATE_SEARCH_BURST: '100'
+        run: |
+          python -m tests.make_fixture_store "$OSM_STORE"
+          nohup python -m uvicorn app.main:app --port 8000 > server.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf localhost:8000/api/health > /dev/null && break; sleep 1; done
+
+      - name: End-to-end tests (phone + desktop)
+        working-directory: web
+        run: npx playwright test
+
+      - name: Lighthouse budgets
+        working-directory: web
+        run: npx lhci autorun
+
+      # Failed budgets as annotations: they show on the run's summary page
+      # (and through the public API) without opening the log.
+      - name: Lighthouse findings
+        if: failure()
+        working-directory: web
+        run: |
+          [ -f .lighthouseci/assertion-results.json ] || exit 0
+          node -e '
+            const fs = require("fs")
+            const failed = require("./.lighthouseci/assertion-results.json").filter((a) => a.level === "error")
+            for (const a of failed)
+              console.log(`::error title=Lighthouse::${a.url} ${a.auditProperty || a.auditId}: expected ${a.operator} ${a.expected}, found ${a.actual}`)
+            // ... and which audits pulled the category down, with the elements.
+            for (const file of fs.readdirSync(".lighthouseci").filter((f) => /^lhr-.*\.json$/.test(f))) {
+              const lhr = JSON.parse(fs.readFileSync(`.lighthouseci/${file}`, "utf8"))
+              for (const a of failed.filter((f) => f.url === lhr.finalDisplayedUrl || f.url === lhr.requestedUrl)) {
+                const category = (a.auditProperty || "").replace(/^categories\./, "") || a.auditId
+                for (const ref of lhr.categories[category]?.auditRefs ?? []) {
+                  const audit = lhr.audits[ref.id]
+                  if (audit.score === null || audit.score === 1 || !ref.weight) continue
+                  const nodes = (audit.details?.items ?? []).slice(0, 3).map((i) => i.node?.snippet ?? i.url ?? "").join(" | ")
+                  console.log(`::warning title=${ref.id}::${lhr.requestedUrl} ${audit.title} ${nodes}`.replace(/\n/g, " "))
+                }
+              }
+            }
+          '
+
+      - name: Lighthouse reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: web/.lighthouseci/
+          # The folder starts with a dot, which upload-artifact skips by default.
+          include-hidden-files: true
+          if-no-files-found: ignore
+
+      - name: Server log
+        if: failure()
+        run: cat backend/server.log
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan the repository for credentials
+        run: |
+          S='_strava'; CF='CloudFront'
+          patterns="${S}4_session|${S}_idcf|${CF}-(Signature|Policy|Key-Pair-Id)=|BEGIN [A-Z ]*PRIVATE KEY|ghp_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}"
+          if git grep -I -E -n -- "$patterns" -- . ':!tools/' ':!.github/'; then
+            echo "::error::Possible credentials found in the repository."
+            exit 1
+          fi
+          echo "No credentials found."

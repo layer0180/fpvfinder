@@ -1,0 +1,68 @@
+# TLS overlay for running on your own server (VPS, home lab) - e.g. Netcup,
+# Hetzner. Caddy needs ~30 MB of RAM; fine next to the app on a 2 GB machine.
+#
+#   DOMAIN=fpv-finder.com ACME_EMAIL=you@example.com \
+#     docker compose -f docker-compose.yml -f docker-compose.caddy.yml up -d
+#
+# Caddy obtains and renews a Let's Encrypt certificate on its own - no certbot,
+# no cron job. Point an A/AAAA record at the server first.
+#
+# You do NOT need this on Coolify or Render: those already sit behind their
+# own reverse proxy, which terminates TLS for you (set TRUST_PROXY=true
+# instead). That is exactly why this lives in a separate overlay file - the
+# base compose file stays portable across all of them.
+
+services:
+  fpvfinder:
+    # No longer published directly; Caddy becomes the only way in.
+    # `!reset` needs Docker Compose >= 2.24. On an older version, delete the
+    # `ports:` block from docker-compose.yml instead.
+    ports: !reset []
+    environment:
+      # Caddy sets X-Forwarded-For, so per-client rate limiting works again.
+      TRUST_PROXY: "true"
+      PUBLIC_MODE: "true"
+      PUBLIC_URL: "https://${DOMAIN:?set DOMAIN}"
+      # A public, single-core server answers "not covered" outside the OSM
+      # store instead of tying up its only search slot with live Overpass.
+      OSM_LIVE_FALLBACK: "${OSM_LIVE_FALLBACK:-false}"
+    expose:
+      - "8000"
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: fpvfinder-caddy
+    restart: unless-stopped
+    depends_on:
+      - fpvfinder
+    ports:
+      - "80:80"
+      - "443:443"
+    # Same reasoning as the app service: remove root's other privileges even
+    # though the official image still starts as root. NET_BIND_SERVICE is the
+    # one capability actually needed, to bind ports 80/443 (anything below
+    # 1024 requires it or full root) - everything else Linux offers root is
+    # dropped.
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL}
+      ANALYTICS_DOMAIN: ${ANALYTICS_DOMAIN:-stats.invalid}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  caddy-data:
+  caddy-config:

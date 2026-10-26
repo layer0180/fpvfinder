@@ -1,0 +1,78 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://localhost:8000/",
+        "http://localhost:8000/faq",
+        "http://localhost:8000/ratgeber/wo-darf-ich-fpv-fliegen",
+        "http://localhost:8000/start",
+        "http://localhost:8000/en",
+        "http://localhost:8000/app"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "chromeFlags": "--headless=new"
+      }
+    },
+    "assert": {
+      "assertMatrix": [
+        {
+          "matchingUrlPattern": "localhost:8000/(en|faq|start|ratgeber/.+)?$",
+          "assertions": {
+            "categories:performance": [
+              "error",
+              {
+                "minScore": 0.9
+              }
+            ],
+            "categories:accessibility": [
+              "error",
+              {
+                "minScore": 0.95
+              }
+            ],
+            "categories:best-practices": [
+              "error",
+              {
+                "minScore": 0.95
+              }
+            ],
+            "categories:seo": [
+              "error",
+              {
+                "minScore": 1
+              }
+            ]
+          }
+        },
+        {
+          "matchingUrlPattern": "localhost:8000/app$",
+          "assertions": {
+            "categories:performance": [
+              "error",
+              {
+                "minScore": 0.9
+              }
+            ],
+            "categories:accessibility": [
+              "error",
+              {
+                "minScore": 0.95
+              }
+            ],
+            "categories:best-practices": [
+              "error",
+              {
+                "minScore": 0.95
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci"
+    }
+  }
+}

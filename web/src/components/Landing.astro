@@ -1,0 +1,314 @@
+---
+import { getCollection } from 'astro:content'
+import Base from '../layouts/Base.astro'
+import HeroVisual from './HeroVisual.astro'
+import { pages } from '../i18n/pages'
+import { ROUTES, SITE_NAME, type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+}
+const { lang } = Astro.props
+const c = pages[lang].landing
+const faq = pages[lang].faq.items.slice(0, 4)
+const guides = (await getCollection('guides', (e) => e.data.lang === lang)).sort((a, b) => a.data.order - b.data.order).slice(0, 3)
+const site = (Astro.site?.href ?? '').replace(/\/$/, '')
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: SITE_NAME,
+    url: site + ROUTES.home[lang],
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    browserRequirements: 'Requires JavaScript and WebGL2',
+    inLanguage: lang,
+    description: c.description,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    isAccessibleForFree: true,
+  },
+]
+---
+
+<Base lang={lang} title={c.title} description={c.description} alternates={ROUTES.home} jsonLd={jsonLd}>
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1>{c.h1}</h1>
+      <p class="lead">{c.lead}</p>
+      <!-- A plain form: works before (and without) any JavaScript. -->
+      <form class="hero-search" action={ROUTES.app[lang]} method="get" role="search">
+        <label class="visually-hidden" for="hero-q">{c.searchLabel}</label>
+        <input id="hero-q" name="q" type="search" placeholder={c.searchPlaceholder} autocomplete="off" required />
+        <button class="btn btn-primary" type="submit">{c.searchButton}</button>
+      </form>
+      <a class="locate-link" href={`${ROUTES.app[lang]}?locate=1`}>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"
+          ><path
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            d="M12 2v3M12 19v3M2 12h3M19 12h3"></path><circle
+            cx="12"
+            cy="12"
+            r="6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"></circle><circle cx="12" cy="12" r="2" fill="currentColor"></circle></svg
+        >
+        {c.locate}
+      </a>
+      <p class="data-note">{c.dataNote}</p>
+    </div>
+    <HeroVisual lang={lang} />
+  </section>
+
+  <section class="steps" aria-labelledby="steps-h">
+    <h2 id="steps-h">{c.stepsH2}</h2>
+    <ol>
+      {
+        c.steps.map((step) => (
+          <li class="card">
+            <h3>{step.h3}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="rates" aria-labelledby="rates-h">
+    <h2 id="rates-h">{c.ratesH2}</h2>
+    <div class="rates-grid">
+      {
+        c.rates.map((group) => (
+          <div class="card">
+            <h3>{group.h3}</h3>
+            <ul>
+              {group.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="prose" aria-labelledby="legal-h">
+    <div class="notice">
+      <h2 id="legal-h">{c.legalH2}</h2>
+      <p set:html={c.legal} />
+    </div>
+  </section>
+
+  <section aria-labelledby="guides-h">
+    <h2 id="guides-h">{c.guidesH2}</h2>
+    <ul class="guide-teasers">
+      {
+        guides.map((g) => (
+          <li class="card">
+            <a href={`${ROUTES.guides[lang]}/${g.data.slug}`}>
+              <strong>{g.data.h1}</strong>
+              <span>{g.data.description}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p>
+      <a href={ROUTES.guides[lang]}>{c.guidesMore} →</a> · <a href={ROUTES.regions[lang]}>{c.regionsLink} →</a>
+    </p>
+  </section>
+
+  <section class="prose" aria-labelledby="faq-h">
+    <h2 id="faq-h">{c.faqH2}</h2>
+    {
+      faq.map((item) => (
+        <details class="faq">
+          <summary>{item.q}</summary>
+          <p set:html={item.a} />
+        </details>
+      ))
+    }
+    <p><a href={ROUTES.faq[lang]}>{c.faqMore} →</a></p>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 24px 0 8px;
+  }
+
+  .eyebrow {
+    margin: 0 0 8px;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+
+  h1 {
+    margin: 0 0 16px;
+    font-size: clamp(2rem, 5.4vw, 3.3rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .lead {
+    margin: 0 0 24px;
+    font-size: 1.15rem;
+    color: var(--text-muted);
+  }
+
+  .hero-search {
+    display: flex;
+    gap: 8px;
+    padding: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+  }
+
+  .hero-search input {
+    flex: 1;
+    min-width: 0;
+    min-height: 48px;
+    padding: 0 16px;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 1.05rem;
+  }
+
+  .hero-search input:focus {
+    outline: none;
+  }
+
+  .hero-search:focus-within {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .locate-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--tap);
+    margin-top: 10px;
+    padding: 0 6px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .data-note {
+    margin: 6px 0 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .steps ol {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .steps li {
+    counter-increment: step;
+  }
+
+  .steps li h3::before {
+    content: counter(step);
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-size: 0.9rem;
+  }
+
+  .steps h3,
+  .rates h3 {
+    margin: 0 0 6px;
+  }
+
+  .steps p {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .guide-teasers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .guide-teasers a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-decoration: none;
+  }
+
+  .guide-teasers span {
+    color: var(--text-muted);
+    font-size: 0.94rem;
+  }
+
+  .guide-teasers a:hover strong {
+    text-decoration: underline;
+  }
+
+  .rates-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .rates ul {
+    margin: 0;
+    padding-left: 1.2em;
+  }
+
+  section {
+    margin-top: 48px;
+  }
+
+  section.hero {
+    margin-top: 0;
+  }
+
+  .notice h2 {
+    margin-top: 0;
+    font-size: 1.15rem;
+  }
+
+  @media (max-width: 860px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .steps ol,
+    .rates-grid,
+    .guide-teasers {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

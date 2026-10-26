@@ -1,0 +1,102 @@
+---
+/**
+ * The finder. Rendered entirely in the browser (client:only) - it is a map
+ * application with nothing for a crawler to read, so it is noindex and the
+ * content pages carry the search traffic.
+ *
+ * The fallback is a static copy of the panel's first screen, so the largest
+ * paint happens before any JavaScript has run.
+ */
+import Base from '../layouts/Base.astro'
+import Finder from '../finder/Finder'
+import { ROUTES, type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+}
+const { lang } = Astro.props
+const copy =
+  lang === 'de'
+    ? {
+        title: 'Finder – FPV-Spots in der Nähe | FPV Flying Spot Finder',
+        description: 'Interaktive Karte: ruhige FPV-Spots mit freiem Gelände in deiner Umgebung finden.',
+        heading: 'Wo willst du fliegen?',
+        loading: 'Finder lädt …',
+        placeholder: 'Ort oder Adresse',
+        noscript: 'Der Finder braucht JavaScript und WebGL2.',
+      }
+    : {
+        title: 'Finder – FPV spots nearby | FPV Flying Spot Finder',
+        description: 'Interactive map: find quiet FPV spots with open ground around you.',
+        heading: 'Where do you want to fly?',
+        loading: 'Loading the finder …',
+        placeholder: 'Place or address',
+        noscript: 'The finder needs JavaScript and WebGL2.',
+      }
+---
+
+<Base lang={lang} title={copy.title} description={copy.description} alternates={ROUTES.app} noindex bare>
+  <link slot="head" rel="preconnect" href="https://tiles.openfreemap.org" crossorigin />
+  <Finder client:only="react" lang={lang}>
+    <div slot="fallback" class="finder-fallback">
+      <div class="ff-panel">
+        <div class="ff-search">{copy.placeholder}</div>
+        <h1>{copy.heading}</h1>
+        <p>{copy.loading}</p>
+        <noscript><p>{copy.noscript}</p></noscript>
+      </div>
+    </div>
+  </Finder>
+</Base>
+
+<style is:global>
+  .finder-fallback {
+    position: fixed;
+    inset: 0;
+    background: var(--surface-2);
+  }
+
+  .ff-panel {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 52vh;
+    padding: 24px 16px;
+    border-radius: 20px 20px 0 0;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .ff-panel h1 {
+    margin: 16px 0 4px;
+    font-size: 1.25rem;
+  }
+
+  .ff-panel p {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .ff-search {
+    height: 48px;
+    padding: 0 44px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    line-height: 46px;
+  }
+
+  @media (min-width: 900px) {
+    .ff-panel {
+      top: 16px;
+      right: auto;
+      bottom: 16px;
+      left: 16px;
+      width: 420px;
+      height: auto;
+      border-radius: var(--radius);
+    }
+  }
+</style>

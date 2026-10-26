@@ -1,0 +1,24 @@
+---
+// Served with status 404 by the backend for any unknown path. Bilingual,
+// because the backend cannot tell which language the visitor expected.
+import Base from '../layouts/Base.astro'
+import { ROUTES } from '../i18n/site'
+---
+
+<Base
+  lang="de"
+  title="Seite nicht gefunden | FPV Flying Spot Finder"
+  description="Diese Seite gibt es nicht."
+  alternates={{ de: '/404', en: '/404' }}
+  noindex
+>
+  <div class="prose">
+    <h1>Diese Seite gibt es nicht.</h1>
+    <p class="lead">Vielleicht hat sich die Adresse geändert. <span lang="en">This page does not exist.</span></p>
+    <p>
+      <a class="btn btn-primary" href={ROUTES.app.de}>Spots finden</a>
+      <a class="btn" href={ROUTES.home.de}>Startseite</a>
+      <a class="btn" href={ROUTES.home.en} lang="en">English</a>
+    </p>
+  </div>
+</Base>

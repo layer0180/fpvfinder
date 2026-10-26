@@ -1,0 +1,91 @@
+name: OSM data for Germany
+
+# Builds the OSM tile store for Germany once a month and publishes it as the
+# asset of a fixed release ("osm-data"), which running servers download via
+# OSM_STORE_URL. The public server is far too small to import Germany itself;
+# a GitHub runner (16 GB RAM, 4 cores) does it in about an hour.
+#
+# Measured locally: peak ~10 GB RAM with the in-memory node index, ~1.5 GB
+# output. If the runner ever runs short of memory, switch --index to
+# sparse_file_array,<path> (slower, disk instead of RAM).
+
+on:
+  schedule:
+    # 03:17 UTC on the 2nd - Geofabrik's extract from the night before is ready.
+    - cron: '17 3 2 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # to update the release asset
+
+concurrency:
+  group: osm-data
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    # Import ~2 h plus region pages ~1 h on a hosted runner; 6 h is the maximum.
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements-import.txt
+
+      - name: Install
+        working-directory: backend
+        run: pip install -r requirements-import.txt
+
+      - name: Download the Geofabrik extract
+        run: |
+          mkdir -p work
+          curl -sfL -o work/germany.poly https://download.geofabrik.de/europe/germany.poly
+          curl -sfL -o work/germany-latest.osm.pbf https://download.geofabrik.de/europe/germany-latest.osm.pbf
+          ls -lh work
+
+      - name: Import
+        working-directory: backend
+        run: |
+          python -u -m app.osm.importer ../work/germany-latest.osm.pbf --poly ../work/germany.poly \
+            --out ../work/osm-germany.sqlite --index sparse_mem_array
+
+      - name: Sanity check
+        working-directory: backend
+        env:
+          OSM_STORE: ${{ github.workspace }}/work/osm-germany.sqlite
+        run: |
+          python - <<'EOF'
+          import os
+          from pathlib import Path
+          from app.osm.store import OsmTileStore
+          s = OsmTileStore(Path(os.environ["OSM_STORE"]))
+          print(s.summary())
+          assert s.tile_count > 3500, "too few tiles - the import is incomplete"
+          stuttgart = s.get(91, 487)
+          assert stuttgart and len(stuttgart) > 50_000, "Stuttgart tile looks empty"
+          EOF
+
+      - name: Region pages
+        working-directory: backend
+        env:
+          OSM_STORE: ${{ github.workspace }}/work/osm-germany.sqlite
+        run: python -u -m app.regions --out ../work/regions.json
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view osm-data > /dev/null 2>&1 || \
+            gh release create osm-data --title "OSM data for Germany" \
+              --notes "Prebuilt OSM tile store, refreshed monthly. Download with OSM_STORE_URL." --latest=false
+          gh release upload osm-data work/osm-germany.sqlite work/regions.json --clobber
+          gh release edit osm-data --notes "Prebuilt OSM tile store for Germany. Data as of $(date -u +%Y-%m-%d). Map data © OpenStreetMap contributors, ODbL."

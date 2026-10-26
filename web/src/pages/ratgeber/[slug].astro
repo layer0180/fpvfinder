@@ -1,0 +1,12 @@
+---
+import { getCollection } from 'astro:content'
+import GuidePage from '../../components/GuidePage.astro'
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides', (e) => e.data.lang === 'de')
+  return guides.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }))
+}
+const { entry } = Astro.props
+---
+
+<GuidePage entry={entry} />

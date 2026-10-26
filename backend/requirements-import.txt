@@ -1,0 +1,5 @@
+# Only for the offline OSM import (app/osm/importer.py), which runs on a
+# workstation or in CI - never on the server. Kept out of requirements.txt so
+# the runtime image stays small.
+-r requirements.txt
+osmium>=4.0

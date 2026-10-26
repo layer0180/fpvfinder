@@ -1,0 +1,25 @@
+---
+/**
+ * A page whose body the backend fills in at request time.
+ *
+ * The imprint, privacy and support texts are Markdown files the operator
+ * mounts into the container (backend/content/) - they must change without a
+ * rebuild, so the build only produces the frame. The backend replaces the
+ * marker below with the rendered Markdown (backend/app/web.py).
+ */
+import Base from '../layouts/Base.astro'
+import { type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+  title: string
+  description: string
+  alternates: Record<Lang, string>
+  noindex?: boolean
+}
+const { lang, title, description, alternates, noindex = false } = Astro.props
+---
+
+<Base lang={lang} title={title} description={description} alternates={alternates} noindex={noindex}>
+  <article class="prose" set:html="<!--@@SERVER_CONTENT@@-->" />
+</Base>

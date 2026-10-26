@@ -1,0 +1,184 @@
+---
+/**
+ * Illustration of a result: stylised fields and forest, numbered spots, one
+ * spot card. Inline SVG instead of a screenshot - no request, no layout shift,
+ * sharp at any size and correct in light and dark mode.
+ */
+import type { Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+}
+const { lang } = Astro.props
+const card =
+  lang === 'de'
+    ? { title: 'Wiese bei Gomadingen', reasons: ['Nächster Weg 420 m', 'Wohngebiet 1,1 km entfernt', 'Offenes Gelände'], weather: 'Wind 9 km/h · fliegbar' }
+    : { title: 'Meadow near Gomadingen', reasons: ['Nearest path 420 m', 'Residential area 1.1 km away', 'Open terrain'], weather: 'Wind 9 km/h · flyable' }
+const pins = [
+  { n: 1, x: 236, y: 150, c: 'var(--score-4)' },
+  { n: 2, x: 128, y: 92, c: 'var(--score-4)' },
+  { n: 3, x: 318, y: 238, c: 'var(--score-3)' },
+  { n: 4, x: 88, y: 252, c: 'var(--score-3)' },
+  { n: 5, x: 344, y: 74, c: 'var(--score-2)' },
+]
+---
+
+<figure class="hero-visual" aria-hidden="true">
+  <svg viewBox="0 0 400 320" role="presentation">
+    <rect width="400" height="320" rx="18" class="v-land"></rect>
+    <path class="v-forest" d="M0 0h150c-10 40 20 60 0 90S70 120 0 140Z"></path>
+    <path class="v-forest" d="M400 170c-40 10-70 40-60 80s30 50 60 70Z"></path>
+    <path class="v-field" d="M170 20h120v90H180Z"></path>
+    <path class="v-field" d="M160 190h110l-10 110H150Z"></path>
+    <path class="v-road" d="M-10 205C80 190 120 230 210 120S330 40 410 30"></path>
+    <path class="v-path" d="M40 320C60 260 120 250 150 170S200 60 260 0"></path>
+    <circle cx="236" cy="150" r="58" class="v-ring"></circle>
+    {
+      pins.map((p) => (
+        <g transform={`translate(${p.x} ${p.y})`}>
+          <circle r="15" fill={p.c} class="v-pin" />
+          <text y="5" text-anchor="middle" class="v-pin-n">
+            {p.n}
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+  <div class="v-card">
+    <div class="v-score"><span>91</span></div>
+    <div>
+      <strong>{card.title}</strong>
+      <ul>{card.reasons.map((r) => <li>{r}</li>)}</ul>
+      <p class="v-weather">{card.weather}</p>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .hero-visual {
+    position: relative;
+    margin: 0;
+    padding-bottom: 56px;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .v-land {
+    fill: #e7edd9;
+  }
+
+  .v-forest {
+    fill: #b9d3a3;
+  }
+
+  .v-field {
+    fill: #f1ecc7;
+  }
+
+  .v-road {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 9;
+  }
+
+  .v-path {
+    fill: none;
+    stroke: #b08d5a;
+    stroke-width: 2.5;
+    stroke-dasharray: 6 5;
+  }
+
+  .v-ring {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    stroke-dasharray: 5 6;
+  }
+
+  .v-pin {
+    stroke: #11151a;
+    stroke-width: 2;
+  }
+
+  .v-pin-n {
+    fill: #11151a;
+    font: 800 14px var(--font);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .v-land {
+      fill: #1f2a22;
+    }
+
+    .v-forest {
+      fill: #2b4a30;
+    }
+
+    .v-field {
+      fill: #39392a;
+    }
+
+    .v-road {
+      stroke: #4a5560;
+    }
+  }
+
+  .v-card {
+    position: absolute;
+    right: 12px;
+    bottom: 0;
+    left: 28%;
+    display: flex;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    font-size: 0.92rem;
+  }
+
+  .v-card ul {
+    margin: 4px 0 0;
+    padding-left: 1.1em;
+    color: var(--text-muted);
+  }
+
+  .v-weather {
+    margin: 6px 0 0;
+    color: var(--ok);
+    font-weight: 600;
+  }
+
+  .v-score {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: conic-gradient(var(--score-4) 0 91%, var(--surface-2) 0);
+  }
+
+  .v-score span {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--surface);
+    font-weight: 800;
+  }
+
+  @media (max-width: 860px) {
+    .v-card {
+      left: 12px;
+    }
+  }
+</style>

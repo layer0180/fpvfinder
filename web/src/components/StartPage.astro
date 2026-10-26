@@ -1,0 +1,135 @@
+---
+/**
+ * Landing for traffic from TikTok and other short-video links ("link in bio").
+ * People arrive on a phone, mid-scroll, with seconds of patience: one sentence,
+ * one big button, nothing else competing for the tap.
+ */
+import Base from '../layouts/Base.astro'
+import BrandMark from './BrandMark.astro'
+import { pages } from '../i18n/pages'
+import { ROUTES, SITE_NAME, type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+}
+const { lang } = Astro.props
+const c = pages[lang].start
+---
+
+<Base lang={lang} title={c.title} description={c.description} alternates={ROUTES.start} bare>
+  <main id="main" class="start">
+    <BrandMark class="start-mark" />
+    <p class="start-brand">{SITE_NAME}</p>
+    <h1>{c.h1}</h1>
+    <p class="start-lead">{c.lead}</p>
+    <a class="btn btn-primary btn-large start-cta" href={`${ROUTES.app[lang]}?locate=1`} data-keep-query>
+      {c.locate}
+    </a>
+    <p class="start-or">{c.or}</p>
+    <form class="start-search" action={ROUTES.app[lang]} method="get" role="search">
+      <label class="visually-hidden" for="start-q">{c.searchPlaceholder}</label>
+      <input id="start-q" name="q" type="search" placeholder={c.searchPlaceholder} autocomplete="off" required />
+      <button class="btn" type="submit">{c.searchButton}</button>
+    </form>
+    <ul class="start-proof">{c.proof.map((p) => <li>✓ {p}</li>)}</ul>
+  </main>
+</Base>
+
+<script>
+  // Carry utm_* (and anything else) from the video link through to the finder,
+  // so a visit that starts here is still attributable once it reaches /app.
+  const params = new URLSearchParams(location.search)
+  if ([...params.keys()].length) {
+    for (const link of document.querySelectorAll<HTMLAnchorElement>('a[data-keep-query]')) {
+      const url = new URL(link.href)
+      params.forEach((v, k) => url.searchParams.set(k, v))
+      link.href = url.toString()
+    }
+    for (const form of document.querySelectorAll('form')) {
+      params.forEach((v, k) => {
+        const input = document.createElement('input')
+        input.type = 'hidden'
+        input.name = k
+        input.value = v
+        form.append(input)
+      })
+    }
+  }
+</script>
+
+<style>
+  .start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100svh;
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: max(24px, env(safe-area-inset-top)) var(--gutter) max(24px, env(safe-area-inset-bottom));
+    text-align: center;
+  }
+
+  :global(.start-mark) {
+    width: 64px;
+    height: 64px;
+  }
+
+  .start-brand {
+    margin: 8px 0 24px;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  h1 {
+    margin: 0 0 12px;
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .start-lead {
+    margin: 0 0 28px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  .start-cta {
+    width: 100%;
+  }
+
+  .start-or {
+    margin: 16px 0;
+    color: var(--text-muted);
+  }
+
+  .start-search {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .start-search input {
+    flex: 1;
+    min-width: 0;
+    min-height: var(--tap);
+    padding: 0 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+  }
+
+  .start-proof {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 16px;
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+</style>

@@ -1,0 +1,485 @@
+{
+  "version": 1,
+  "grid": {
+    "spacing_m": 150,
+    "min_spacing_m": 50,
+    "max_spacing_m": 500,
+    "max_points": 30000,
+    "max_results": 600
+  },
+  "search": {
+    "default_radius_km": 5.0,
+    "max_radius_km": 20.0
+  },
+  "total": {
+    "solitude_weight": 0.55,
+    "flyability_weight": 0.45
+  },
+  "solitude": {
+    "components": {
+      "buildings": {
+        "weight": 0.2,
+        "critical_m": 80,
+        "ideal_m": 500,
+        "recreational": false
+      },
+      "residential": {
+        "weight": 0.2,
+        "critical_m": 150,
+        "ideal_m": 900,
+        "recreational": false
+      },
+      "roads": {
+        "weight": 0.12,
+        "critical_m": 40,
+        "ideal_m": 350,
+        "recreational": false
+      },
+      "paths": {
+        "weight": 0.16,
+        "critical_m": 30,
+        "ideal_m": 250,
+        "recreational": true
+      },
+      "attractors": {
+        "weight": 0.12,
+        "critical_m": 150,
+        "ideal_m": 800,
+        "recreational": true
+      },
+      "landuse": {
+        "weight": 0.1,
+        "recreational": true
+      },
+      "strava": {
+        "weight": 0.08,
+        "recreational": true
+      },
+      "strava_distance": {
+        "weight": 0.1,
+        "critical_m": 100,
+        "ideal_m": 500,
+        "recreational": true
+      },
+      "population": {
+        "weight": 0.0,
+        "recreational": false
+      }
+    }
+  },
+  "flyability": {
+    "components": {
+      "openness": {
+        "weight": 0.26
+      },
+      "takeoff": {
+        "weight": 0.16
+      },
+      "roads_safety": {
+        "weight": 0.14,
+        "critical_m": 30,
+        "ideal_m": 150
+      },
+      "railway": {
+        "weight": 0.1,
+        "critical_m": 50,
+        "ideal_m": 250
+      },
+      "powerlines": {
+        "weight": 0.16,
+        "critical_m": 60,
+        "ideal_m": 250
+      },
+      "buildings": {
+        "weight": 0.1,
+        "critical_m": 50,
+        "ideal_m": 250
+      },
+      "structure": {
+        "weight": 0.08,
+        "peak_near_m": 30,
+        "peak_far_m": 200,
+        "fade_m": 600
+      }
+    }
+  },
+  "landuse_table": {
+    "farmland": {
+      "solitude": 0.9,
+      "openness": 0.95,
+      "takeoff": 0.7
+    },
+    "farmyard": {
+      "solitude": 0.35,
+      "openness": 0.55,
+      "takeoff": 0.4
+    },
+    "meadow": {
+      "solitude": 0.88,
+      "openness": 0.95,
+      "takeoff": 0.9
+    },
+    "grass": {
+      "solitude": 0.7,
+      "openness": 0.92,
+      "takeoff": 0.9
+    },
+    "grassland": {
+      "solitude": 0.88,
+      "openness": 0.95,
+      "takeoff": 0.85
+    },
+    "orchard": {
+      "solitude": 0.8,
+      "openness": 0.45,
+      "takeoff": 0.45
+    },
+    "vineyard": {
+      "solitude": 0.72,
+      "openness": 0.6,
+      "takeoff": 0.45
+    },
+    "greenhouse": {
+      "solitude": 0.4,
+      "openness": 0.3,
+      "takeoff": 0.2
+    },
+    "plant_nursery": {
+      "solitude": 0.55,
+      "openness": 0.6,
+      "takeoff": 0.45
+    },
+    "forest": {
+      "solitude": 0.85,
+      "openness": 0.15,
+      "takeoff": 0.2
+    },
+    "scrub": {
+      "solitude": 0.85,
+      "openness": 0.55,
+      "takeoff": 0.4
+    },
+    "heath": {
+      "solitude": 0.85,
+      "openness": 0.9,
+      "takeoff": 0.7
+    },
+    "wetland": {
+      "solitude": 0.85,
+      "openness": 0.8,
+      "takeoff": 0.15
+    },
+    "moor": {
+      "solitude": 0.88,
+      "openness": 0.85,
+      "takeoff": 0.2
+    },
+    "water": {
+      "solitude": 0.7,
+      "openness": 0.95,
+      "takeoff": 0.0
+    },
+    "beach": {
+      "solitude": 0.35,
+      "openness": 0.9,
+      "takeoff": 0.7
+    },
+    "brownfield": {
+      "solitude": 0.75,
+      "openness": 0.8,
+      "takeoff": 0.65
+    },
+    "greenfield": {
+      "solitude": 0.8,
+      "openness": 0.9,
+      "takeoff": 0.75
+    },
+    "construction": {
+      "solitude": 0.45,
+      "openness": 0.7,
+      "takeoff": 0.35
+    },
+    "quarry": {
+      "solitude": 0.6,
+      "openness": 0.85,
+      "takeoff": 0.55
+    },
+    "landfill": {
+      "solitude": 0.65,
+      "openness": 0.85,
+      "takeoff": 0.5
+    },
+    "industrial": {
+      "solitude": 0.3,
+      "openness": 0.45,
+      "takeoff": 0.3
+    },
+    "commercial": {
+      "solitude": 0.12,
+      "openness": 0.45,
+      "takeoff": 0.25
+    },
+    "retail": {
+      "solitude": 0.08,
+      "openness": 0.4,
+      "takeoff": 0.2
+    },
+    "railway_area": {
+      "solitude": 0.3,
+      "openness": 0.55,
+      "takeoff": 0.1
+    },
+    "military": {
+      "solitude": 0.5,
+      "openness": 0.7,
+      "takeoff": 0.1
+    },
+    "residential": {
+      "solitude": 0.03,
+      "openness": 0.3,
+      "takeoff": 0.1
+    },
+    "village_green": {
+      "solitude": 0.2,
+      "openness": 0.8,
+      "takeoff": 0.7
+    },
+    "school_grounds": {
+      "solitude": 0.1,
+      "openness": 0.55,
+      "takeoff": 0.2
+    },
+    "cemetery": {
+      "solitude": 0.25,
+      "openness": 0.55,
+      "takeoff": 0.15
+    },
+    "religious": {
+      "solitude": 0.2,
+      "openness": 0.5,
+      "takeoff": 0.15
+    },
+    "park": {
+      "solitude": 0.1,
+      "openness": 0.7,
+      "takeoff": 0.55
+    },
+    "garden": {
+      "solitude": 0.2,
+      "openness": 0.55,
+      "takeoff": 0.3
+    },
+    "allotments": {
+      "solitude": 0.15,
+      "openness": 0.6,
+      "takeoff": 0.25
+    },
+    "playground": {
+      "solitude": 0.02,
+      "openness": 0.7,
+      "takeoff": 0.3
+    },
+    "pitch": {
+      "solitude": 0.15,
+      "openness": 0.85,
+      "takeoff": 0.8
+    },
+    "sports_centre": {
+      "solitude": 0.1,
+      "openness": 0.7,
+      "takeoff": 0.5
+    },
+    "golf_course": {
+      "solitude": 0.18,
+      "openness": 0.85,
+      "takeoff": 0.75
+    },
+    "recreation_ground": {
+      "solitude": 0.2,
+      "openness": 0.85,
+      "takeoff": 0.8
+    },
+    "camp_site": {
+      "solitude": 0.08,
+      "openness": 0.6,
+      "takeoff": 0.35
+    },
+    "dog_park": {
+      "solitude": 0.05,
+      "openness": 0.75,
+      "takeoff": 0.5
+    },
+    "marina": {
+      "solitude": 0.15,
+      "openness": 0.7,
+      "takeoff": 0.1
+    },
+    "nature_reserve": {
+      "solitude": 0.6,
+      "openness": 0.6,
+      "takeoff": 0.35
+    },
+    "protected_area": {
+      "solitude": 0.65,
+      "openness": 0.65,
+      "takeoff": 0.4
+    },
+    "national_park": {
+      "solitude": 0.6,
+      "openness": 0.6,
+      "takeoff": 0.3
+    },
+    "aerodrome": {
+      "solitude": 0.3,
+      "openness": 0.95,
+      "takeoff": 0.6
+    },
+    "unknown": {
+      "solitude": 0.65,
+      "openness": 0.7,
+      "takeoff": 0.55
+    }
+  },
+  "road_classes": {
+    "motorway": {
+      "weight": 1.0,
+      "safety": 1.0
+    },
+    "trunk": {
+      "weight": 0.95,
+      "safety": 1.0
+    },
+    "primary": {
+      "weight": 0.85,
+      "safety": 0.95
+    },
+    "secondary": {
+      "weight": 0.7,
+      "safety": 0.85
+    },
+    "tertiary": {
+      "weight": 0.55,
+      "safety": 0.7
+    },
+    "unclassified": {
+      "weight": 0.35,
+      "safety": 0.5
+    },
+    "residential": {
+      "weight": 0.6,
+      "safety": 0.6
+    },
+    "living_street": {
+      "weight": 0.6,
+      "safety": 0.5
+    },
+    "service": {
+      "weight": 0.25,
+      "safety": 0.35
+    }
+  },
+  "path_classes": {
+    "track": 0.45,
+    "path": 0.75,
+    "footway": 0.9,
+    "cycleway": 0.85,
+    "bridleway": 0.55,
+    "steps": 0.6,
+    "pedestrian": 1.0
+  },
+  "attractor_weights": {
+    "playground": 1.0,
+    "picnic_site": 0.85,
+    "picnic_table": 0.7,
+    "viewpoint": 0.9,
+    "camp_site": 0.85,
+    "attraction": 0.95,
+    "bench": 0.35,
+    "shelter": 0.55,
+    "firepit": 0.7,
+    "fitness_station": 0.7,
+    "restaurant": 0.85,
+    "cafe": 0.8,
+    "biergarten": 0.95,
+    "fast_food": 0.7,
+    "parking": 0.8,
+    "school": 0.9,
+    "kindergarten": 0.9,
+    "hospital": 0.85,
+    "marketplace": 0.85,
+    "bus_stop": 0.45,
+    "information": 0.6,
+    "hunting_stand": 0.3
+  },
+  "time_profiles": {
+    "weekday_morning": {
+      "label": "Weekday morning",
+      "recreation": 0.45,
+      "agriculture": 1.0
+    },
+    "weekday_afternoon": {
+      "label": "Weekday afternoon",
+      "recreation": 0.7,
+      "agriculture": 1.0
+    },
+    "weekday_evening": {
+      "label": "Weekday evening (golden hour)",
+      "recreation": 0.85,
+      "agriculture": 0.7
+    },
+    "weekend_morning": {
+      "label": "Weekend morning",
+      "recreation": 0.9,
+      "agriculture": 0.4
+    },
+    "weekend_afternoon": {
+      "label": "Weekend afternoon",
+      "recreation": 1.0,
+      "agriculture": 0.35
+    },
+    "weekend_evening": {
+      "label": "Weekend evening",
+      "recreation": 0.8,
+      "agriculture": 0.3
+    },
+    "early_morning": {
+      "label": "Very early / sunrise",
+      "recreation": 0.25,
+      "agriculture": 0.6
+    }
+  },
+  "default_time_profile": "weekend_afternoon",
+  "hard_rules": {
+    "min_dist_residential_m": 150,
+    "min_dist_building_m": 50,
+    "min_dist_road_m": 25,
+    "min_dist_railway_m": 50,
+    "block_in_protected_area": true,
+    "block_in_airport_zone": true,
+    "airport_radius_m": 1500,
+    "heliport_radius_m": 1000,
+    "penalty_factor": 0.15
+  },
+  "strava": {
+    "enabled": true,
+    "zoom": 12,
+    "sample_radius_px": 1,
+    "noise_floor": 0.35,
+    "intensity_gamma": 1.0,
+    "activity_threshold": 0.4,
+    "search_radius_m": 800.0,
+    "activity": "all",
+    "color": "hot"
+  },
+  "population": {
+    "enabled": false,
+    "raster_path": "data/population.tif",
+    "max_density": 1500.0,
+    "cell_area_km2": 0.01
+  },
+  "display": {
+    "score_good": 0.7,
+    "score_medium": 0.5,
+    "hide_blocked_default": true
+  }
+}

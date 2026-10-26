@@ -1,0 +1,61 @@
+# Reverse proxy with automatic Let's Encrypt certificates.
+# Used only by docker-compose.caddy.yml, for a VPS (Netcup, Hetzner, ...) where
+# nothing else terminates TLS. Platforms that already sit behind their own
+# proxy (Coolify, Render) do not need this.
+
+{
+	email {$ACME_EMAIL}
+}
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	# Caddy sets X-Forwarded-For and X-Forwarded-Proto by default, which is why
+	# the app is started with TRUST_PROXY=true in the overlay - without it every
+	# visitor would look like the proxy and share a single rate limit bucket.
+	reverse_proxy fpvfinder:8000
+
+	# The backend has no body-size limit of its own (Starlette does not enforce
+	# one), so without this a single POST /api/search with an oversized `weights`
+	# override, or just padding, ties up memory and CPU parsing JSON before
+	# Pydantic ever validates a field. The full default scoring config, fully
+	# spelled out, is ~7 KB; 256 KB leaves generous room for a verbose override
+	# while still being far too small to matter as a resource-exhaustion vector.
+	# Also covers PUT /api/airspace (the shipped example is ~1.4 KB) - raise
+	# this if your own custom no-fly-zone file is unusually large.
+	request_body {
+		max_size 256KB
+	}
+
+	header {
+		# No Content-Security-Policy here: the app sends one per page, with
+		# the hashes of exactly that page's inline scripts (backend/app/web.py).
+		# A second, static CSP from the proxy would be enforced as well and
+		# block what the first one allows.
+
+		# Only geolocation is used (the "use my location" button); everything
+		# else this could plausibly gate - camera, microphone, payment, USB -
+		# is switched off entirely rather than left to browser defaults.
+		Permissions-Policy "geolocation=(self), camera=(), microphone=(), payment=(), usb=()"
+
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Frame-Options "SAMEORIGIN"
+	}
+
+	# Cache-Control comes from the app (immutable for hashed /assets/*).
+
+	log {
+		output stdout
+		format console
+	}
+}
+
+# Optional: Umami statistics on their own subdomain (docker compose
+# --profile analytics). Set ANALYTICS_DOMAIN in .env and point a DNS record at
+# this server; without it this block serves nothing.
+{$ANALYTICS_DOMAIN:stats.invalid} {
+	encode zstd gzip
+	reverse_proxy umami:3000
+}

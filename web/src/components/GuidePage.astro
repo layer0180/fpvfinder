@@ -1,0 +1,165 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+import Base from '../layouts/Base.astro'
+import { ROUTES, SITE_NAME, type Lang } from '../i18n/site'
+
+interface Props {
+  entry: CollectionEntry<'guides'>
+}
+const { entry } = Astro.props
+const { data } = entry
+const lang = data.lang as Lang
+const { Content } = await render(entry)
+
+const all = await getCollection('guides')
+const path = (e: CollectionEntry<'guides'>) => `${ROUTES.guides[e.data.lang]}/${e.data.slug}`
+const counterpart = all.find((e) => e.data.translation === data.translation && e.data.lang !== lang)
+const alternates = {
+  [lang]: path(entry),
+  [lang === 'de' ? 'en' : 'de']: counterpart ? path(counterpart) : ROUTES.guides[lang === 'de' ? 'en' : 'de'],
+} as Record<Lang, string>
+const related = all
+  .filter((e) => e.data.lang === lang && e.id !== entry.id)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3)
+
+const t =
+  lang === 'de'
+    ? { home: 'FPV Spot Finder', guides: 'Ratgeber', updated: 'Geprüft am', sources: 'Quellen', more: 'Weitere Ratgeber', cta: 'Ruhige Spots in deiner Nähe finden', ctaText: 'Der Finder sucht in deinem Umkreis nach Orten mit wenig Menschen und freiem Gelände – mit Begründung und Warnhinweisen.' }
+    : { home: 'FPV Spot Finder', guides: 'Guides', updated: 'Checked on', sources: 'Sources', more: 'More guides', cta: 'Find quiet spots near you', ctaText: 'The finder searches your area for places with few people and open ground – with reasons and warnings.' }
+
+const site = (Astro.site?.href ?? '').replace(/\/$/, '')
+const date = data.updated.toISOString().slice(0, 10)
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: data.h1,
+    description: data.description,
+    inLanguage: lang,
+    dateModified: date,
+    datePublished: date,
+    mainEntityOfPage: site + path(entry),
+    author: { '@type': 'Organization', name: SITE_NAME, url: site + ROUTES.home[lang] },
+    publisher: { '@type': 'Organization', name: SITE_NAME, url: site + ROUTES.home[lang] },
+    citation: data.sources.map((s) => s.url),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.home, item: site + (ROUTES.home[lang] === '/' ? '/' : ROUTES.home[lang]) },
+      { '@type': 'ListItem', position: 2, name: t.guides, item: site + ROUTES.guides[lang] },
+      { '@type': 'ListItem', position: 3, name: data.h1, item: site + path(entry) },
+    ],
+  },
+]
+---
+
+<Base lang={lang} title={data.title} description={data.description} alternates={alternates} jsonLd={jsonLd} ogType="article">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href={ROUTES.home[lang]}>{t.home}</a> › <a href={ROUTES.guides[lang]}>{t.guides}</a>
+  </nav>
+  <article class="prose guide">
+    <h1>{data.h1}</h1>
+    <p class="guide-meta">{t.updated} <time datetime={date}>{data.updated.toLocaleDateString(lang, { day: 'numeric', month: 'long', year: 'numeric' })}</time></p>
+    <Content />
+
+    <aside class="guide-cta">
+      <strong>{t.cta}</strong>
+      <p>{t.ctaText}</p>
+      <a class="btn btn-primary" href={ROUTES.app[lang]}>{lang === 'de' ? 'Spots finden' : 'Find spots'}</a>
+      <a class="btn" href={ROUTES.regions[lang]}>{lang === 'de' ? 'Spots nach Region' : 'Spots by region'}</a>
+    </aside>
+
+    {
+      data.sources.length > 0 && (
+        <section class="guide-sources">
+          <h2>{t.sources}</h2>
+          <ul>
+            {data.sources.map((s) => (
+              <li>
+                <a href={s.url} rel="noopener">
+                  {s.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section>
+      <h2>{t.more}</h2>
+      <ul>
+        {
+          related.map((e) => (
+            <li>
+              <a href={path(e)}>{e.data.h1}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .breadcrumb {
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+
+  .guide-meta {
+    margin-top: -6px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+
+  .guide :global(table) {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.94rem;
+  }
+
+  .guide :global(th),
+  .guide :global(td) {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .guide :global(th) {
+    background: var(--surface-2);
+  }
+
+  .guide :global(blockquote) {
+    margin: 20px 0;
+    padding: 12px 16px;
+    border-left: 4px solid var(--warning);
+    border-radius: var(--radius-small);
+    background: var(--warning-soft);
+  }
+
+  .guide :global(blockquote p) {
+    margin: 0;
+  }
+
+  .guide-cta {
+    margin: 32px 0;
+    padding: 20px;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+  }
+
+  .guide-cta p {
+    margin: 6px 0 14px;
+  }
+
+  .guide-sources {
+    font-size: 0.94rem;
+  }
+</style>

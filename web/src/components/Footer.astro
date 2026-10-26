@@ -1,0 +1,24 @@
+---
+import { GITHUB, ROUTES, t, type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+}
+const { lang } = Astro.props
+const s = t[lang]
+---
+
+<footer class="site-footer">
+  <p>{s.footerTagline}</p>
+  <ul class="footer-links">
+    <li><a href={ROUTES.guides[lang]}>{s.navGuides}</a></li>
+    <li><a href={ROUTES.regions[lang]}>{s.navRegions}</a></li>
+    <li><a href={ROUTES.faq[lang]}>{s.navFaq}</a></li>
+    <li><a href={ROUTES.imprint[lang]}>{s.imprint}</a></li>
+    <li><a href={ROUTES.privacy[lang]}>{s.privacy}</a></li>
+    <li><a href={ROUTES.support[lang]}>{s.support}</a></li>
+    <li><a href={GITHUB} rel="noopener">{s.source}</a></li>
+  </ul>
+  <p>{s.disclaimerShort}</p>
+  <p>{s.attribution}</p>
+</footer>

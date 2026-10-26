@@ -1,0 +1,33 @@
+---
+import BrandMark from './BrandMark.astro'
+import { ROUTES, SITE_NAME, SITE_NAME_SHORT, t, type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+  alternates: Record<Lang, string>
+}
+const { lang, alternates } = Astro.props
+const s = t[lang]
+const other: Lang = lang === 'de' ? 'en' : 'de'
+const here = Astro.url.pathname.replace(/\/$/, '') || '/'
+---
+
+<a class="skip-link" href="#main">{s.skip}</a>
+<header class="site-header">
+  {/* aria-label: on narrow phones the visible name is hidden, the link must keep one. */}
+  <a class="brand" href={ROUTES.home[lang]} aria-label={SITE_NAME}>
+    <BrandMark />
+    <span class="brand-name-long">{SITE_NAME}</span>
+    <span class="brand-name-short">{SITE_NAME_SHORT}</span>
+  </a>
+  <nav class="site-nav" aria-label={s.mainNav}>
+    <a class="nav-optional" href={ROUTES.guides[lang]} aria-current={here.startsWith(ROUTES.guides[lang]) ? 'page' : undefined}>
+      {s.navGuides}
+    </a>
+    <a class="nav-optional" href={ROUTES.faq[lang]} aria-current={here === ROUTES.faq[lang] ? 'page' : undefined}>
+      {s.navFaq}
+    </a>
+    <a href={alternates[other]} hreflang={other} lang={other}>{s.otherLangCode.toUpperCase()}</a>
+    <a class="btn btn-primary" href={ROUTES.app[lang]}>{s.navApp}</a>
+  </nav>
+</header>

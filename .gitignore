@@ -1,0 +1,57 @@
+# --- Secrets: NEVER commit these ------------------------------------------
+# Contains STRAVA_HEATMAP_COOKIES among other things (personal session signature).
+backend/.env
+.env
+*.env.local
+
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Node -----------------------------------------------------------------
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+
+# --- Local runtime data (regenerated automatically) -----------------------
+backend/data/cache.sqlite
+backend/data/cache.sqlite-journal
+# Population raster: several hundred MB, everyone downloads their own
+backend/data/*.tif
+backend/data/*.tiff
+# OSM import: the PBF extract (GBs) and the generated tile store. Both are
+# rebuilt with `import-osm`; the store ships as a release asset, not in git.
+*.osm.pbf
+backend/data/osm-*.sqlite
+backend/data/osm-*.sqlite-journal
+backend/data/import-work/
+
+# --- Editors / tooling / OS -----------------------------------------------
+.claude/
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# --- Astro ------------------------------------------------------------------
+web/.astro/
+backend/data/geocode.sqlite
+backend/data/app.sqlite
+
+# --- Test output ---------------------------------------------------------------
+web/test-results/
+web/playwright-report/
+web/.lighthouseci/
+backend/server.log
+backend/data/osm-fixture.sqlite
+
+# Region pages - computed by app/regions.py, published with the OSM store
+backend/data/regions*.json

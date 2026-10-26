@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# Blocks commits that look like they contain credentials.
+#
+# Install once, from the project root:
+#     git config core.hooksPath tools
+#
+# Background: while setting up the Strava heatmap it is easy to end up with the
+# complete browser cookie header in a file. Besides the CloudFront signature
+# that also contains the active login token. In a public repository that would
+# be an account takeover.
+
+FOUND=0
+
+# Search patterns, one per line (grep -E).
+# The Strava names are assembled from parts so this file does not match itself;
+# tools/ is additionally excluded from the check.
+S='_strava'
+CF='CloudFront'
+PATTERNS="${S}4_session
+${S}_idcf
+${CF}-(Signature|Policy|Key-Pair-Id)=
+BEGIN [A-Z ]*PRIVATE KEY
+ghp_[A-Za-z0-9]{20,}
+github_pat_[A-Za-z0-9_]{20,}
+xox[baprs]-[A-Za-z0-9-]{10,}
+AKIA[0-9A-Z]{16}"
+
+# IMPORTANT: iterate line by line (not "for p in \$PATTERNS") - otherwise the
+# shell splits on whitespace and "BEGIN RSA PRIVATE KEY" turns into four
+# separate patterns, of which "KEY" produces endless false positives.
+# The here-doc (rather than a pipe) keeps the loop in the current shell so
+# FOUND stays visible afterwards.
+while IFS= read -r pattern; do
+    [ -z "$pattern" ] && continue
+
+    # Only check the added lines of the staged changes.
+    if git diff --cached --no-color -U0 -- . ':!*.lock' ':!package-lock.json' ':!tools/' \
+       | grep '^+' | grep -Eq -- "$pattern"; then
+
+        if [ "$FOUND" -eq 0 ]; then
+            echo "COMMIT BLOCKED - possible credentials found:" >&2
+            echo >&2
+        fi
+        FOUND=1
+        echo "  pattern: $pattern" >&2
+
+        # Name the affected files, but never print the value itself.
+        git diff --cached --name-only -- . ':!tools/' | while IFS= read -r f; do
+            if git diff --cached --no-color -U0 -- "$f" | grep '^+' | grep -Eq -- "$pattern"; then
+                echo "    in: $f" >&2
+            fi
+        done
+    fi
+done <<PATTERN_LIST
+$PATTERNS
+PATTERN_LIST
+
+if [ "$FOUND" -ne 0 ]; then
+    cat >&2 <<'HINT'
+
+Secrets belong in backend/.env only (excluded via .gitignore).
+Remove the affected lines, then commit again.
+
+If this is a false positive:
+    git commit --no-verify
+HINT
+    exit 1
+fi
+
+exit 0

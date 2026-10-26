@@ -1,0 +1,593 @@
+{
+ "$comment": "German cities for the region pages (backend/app/regions.py). Coordinates from Photon / Nominatim (OSM).",
+ "cities": [
+  {
+   "name": "Berlin",
+   "slug": "berlin",
+   "lat": 52.5174,
+   "lon": 13.3951,
+   "state": "Berlin"
+  },
+  {
+   "name": "Hamburg",
+   "slug": "hamburg",
+   "lat": 53.5502,
+   "lon": 10.0013,
+   "state": "Hamburg"
+  },
+  {
+   "name": "München",
+   "slug": "muenchen",
+   "lat": 48.1371,
+   "lon": 11.5754,
+   "state": "Bayern"
+  },
+  {
+   "name": "Köln",
+   "slug": "koeln",
+   "lat": 50.9384,
+   "lon": 6.96,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Frankfurt am Main",
+   "slug": "frankfurt-am-main",
+   "lat": 50.1106,
+   "lon": 8.6821,
+   "state": "Hessen"
+  },
+  {
+   "name": "Düsseldorf",
+   "slug": "duesseldorf",
+   "lat": 51.2254,
+   "lon": 6.7763,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Stuttgart",
+   "slug": "stuttgart",
+   "lat": 48.7784,
+   "lon": 9.18,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Leipzig",
+   "slug": "leipzig",
+   "lat": 51.3406,
+   "lon": 12.3747,
+   "state": "Sachsen"
+  },
+  {
+   "name": "Dortmund",
+   "slug": "dortmund",
+   "lat": 51.5142,
+   "lon": 7.4653,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Bremen",
+   "slug": "bremen",
+   "lat": 53.0758,
+   "lon": 8.8072,
+   "state": "Bremen"
+  },
+  {
+   "name": "Essen",
+   "slug": "essen",
+   "lat": 51.4582,
+   "lon": 7.0158,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Dresden",
+   "slug": "dresden",
+   "lat": 51.0493,
+   "lon": 13.7381,
+   "state": "Sachsen"
+  },
+  {
+   "name": "Nürnberg",
+   "slug": "nuernberg",
+   "lat": 49.4539,
+   "lon": 11.0773,
+   "state": "Bayern"
+  },
+  {
+   "name": "Hannover",
+   "slug": "hannover",
+   "lat": 52.3745,
+   "lon": 9.7386,
+   "state": "Niedersachsen"
+  },
+  {
+   "name": "Duisburg",
+   "slug": "duisburg",
+   "lat": 51.435,
+   "lon": 6.7596,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Wuppertal",
+   "slug": "wuppertal",
+   "lat": 51.264,
+   "lon": 7.178,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Bochum",
+   "slug": "bochum",
+   "lat": 51.4818,
+   "lon": 7.2197,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Bielefeld",
+   "slug": "bielefeld",
+   "lat": 52.0191,
+   "lon": 8.531,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Bonn",
+   "slug": "bonn",
+   "lat": 50.7353,
+   "lon": 7.1025,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Mannheim",
+   "slug": "mannheim",
+   "lat": 49.4893,
+   "lon": 8.4673,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Karlsruhe",
+   "slug": "karlsruhe",
+   "lat": 49.0069,
+   "lon": 8.4034,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Münster",
+   "slug": "muenster",
+   "lat": 51.9625,
+   "lon": 7.6252,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Augsburg",
+   "slug": "augsburg",
+   "lat": 48.369,
+   "lon": 10.898,
+   "state": "Bayern"
+  },
+  {
+   "name": "Wiesbaden",
+   "slug": "wiesbaden",
+   "lat": 50.082,
+   "lon": 8.2417,
+   "state": "Hessen"
+  },
+  {
+   "name": "Mönchengladbach",
+   "slug": "moenchengladbach",
+   "lat": 51.1947,
+   "lon": 6.4354,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Gelsenkirchen",
+   "slug": "gelsenkirchen",
+   "lat": 51.511,
+   "lon": 7.096,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Aachen",
+   "slug": "aachen",
+   "lat": 50.7764,
+   "lon": 6.0839,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Braunschweig",
+   "slug": "braunschweig",
+   "lat": 52.2647,
+   "lon": 10.5236,
+   "state": "Niedersachsen"
+  },
+  {
+   "name": "Kiel",
+   "slug": "kiel",
+   "lat": 54.3227,
+   "lon": 10.1356,
+   "state": "Schleswig-Holstein"
+  },
+  {
+   "name": "Chemnitz",
+   "slug": "chemnitz",
+   "lat": 50.8324,
+   "lon": 12.9189,
+   "state": "Sachsen"
+  },
+  {
+   "name": "Halle (Saale)",
+   "slug": "halle-saale",
+   "lat": 51.4824,
+   "lon": 11.9713,
+   "state": "Sachsen-Anhalt"
+  },
+  {
+   "name": "Magdeburg",
+   "slug": "magdeburg",
+   "lat": 52.1315,
+   "lon": 11.6401,
+   "state": "Sachsen-Anhalt"
+  },
+  {
+   "name": "Freiburg im Breisgau",
+   "slug": "freiburg-im-breisgau",
+   "lat": 47.9961,
+   "lon": 7.8494,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Krefeld",
+   "slug": "krefeld",
+   "lat": 51.3331,
+   "lon": 6.5623,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Mainz",
+   "slug": "mainz",
+   "lat": 49.9995,
+   "lon": 8.2736,
+   "state": "Rheinland-Pfalz"
+  },
+  {
+   "name": "Lübeck",
+   "slug": "luebeck",
+   "lat": 53.8664,
+   "lon": 10.6847,
+   "state": "Schleswig-Holstein"
+  },
+  {
+   "name": "Erfurt",
+   "slug": "erfurt",
+   "lat": 50.9778,
+   "lon": 11.0287,
+   "state": "Thüringen"
+  },
+  {
+   "name": "Oberhausen",
+   "slug": "oberhausen",
+   "lat": 51.4696,
+   "lon": 6.8514,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Rostock",
+   "slug": "rostock",
+   "lat": 54.0887,
+   "lon": 12.14,
+   "state": "Mecklenburg-Vorpommern"
+  },
+  {
+   "name": "Kassel",
+   "slug": "kassel",
+   "lat": 51.3158,
+   "lon": 9.4978,
+   "state": "Hessen"
+  },
+  {
+   "name": "Hagen",
+   "slug": "hagen",
+   "lat": 51.3583,
+   "lon": 7.4733,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Potsdam",
+   "slug": "potsdam",
+   "lat": 52.4009,
+   "lon": 13.0591,
+   "state": "Brandenburg"
+  },
+  {
+   "name": "Saarbrücken",
+   "slug": "saarbruecken",
+   "lat": 49.2344,
+   "lon": 6.9964,
+   "state": "Saarland"
+  },
+  {
+   "name": "Hamm",
+   "slug": "hamm",
+   "lat": 51.6813,
+   "lon": 7.8191,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Ludwigshafen am Rhein",
+   "slug": "ludwigshafen-am-rhein",
+   "lat": 49.4704,
+   "lon": 8.4382,
+   "state": "Rheinland-Pfalz"
+  },
+  {
+   "name": "Oldenburg",
+   "slug": "oldenburg",
+   "lat": 53.139,
+   "lon": 8.2146,
+   "state": "Niedersachsen"
+  },
+  {
+   "name": "Mülheim an der Ruhr",
+   "slug": "muelheim-an-der-ruhr",
+   "lat": 51.4273,
+   "lon": 6.8829,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Osnabrück",
+   "slug": "osnabrueck",
+   "lat": 52.272,
+   "lon": 8.0476,
+   "state": "Niedersachsen"
+  },
+  {
+   "name": "Leverkusen",
+   "slug": "leverkusen",
+   "lat": 51.0325,
+   "lon": 6.9881,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Darmstadt",
+   "slug": "darmstadt",
+   "lat": 49.8728,
+   "lon": 8.6512,
+   "state": "Hessen"
+  },
+  {
+   "name": "Heidelberg",
+   "slug": "heidelberg",
+   "lat": 49.4094,
+   "lon": 8.6947,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Solingen",
+   "slug": "solingen",
+   "lat": 51.1722,
+   "lon": 7.0846,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Herne",
+   "slug": "herne",
+   "lat": 51.538,
+   "lon": 7.22,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Regensburg",
+   "slug": "regensburg",
+   "lat": 49.0195,
+   "lon": 12.0975,
+   "state": "Bayern"
+  },
+  {
+   "name": "Neuss",
+   "slug": "neuss",
+   "lat": 51.1982,
+   "lon": 6.6916,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Paderborn",
+   "slug": "paderborn",
+   "lat": 51.7177,
+   "lon": 8.7527,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Ingolstadt",
+   "slug": "ingolstadt",
+   "lat": 48.763,
+   "lon": 11.425,
+   "state": "Bayern"
+  },
+  {
+   "name": "Offenbach am Main",
+   "slug": "offenbach-am-main",
+   "lat": 50.1055,
+   "lon": 8.7611,
+   "state": "Hessen"
+  },
+  {
+   "name": "Fürth",
+   "slug": "fuerth",
+   "lat": 49.4886,
+   "lon": 10.9587,
+   "state": "Bayern"
+  },
+  {
+   "name": "Würzburg",
+   "slug": "wuerzburg",
+   "lat": 49.778,
+   "lon": 9.9435,
+   "state": "Bayern"
+  },
+  {
+   "name": "Ulm",
+   "slug": "ulm",
+   "lat": 48.3985,
+   "lon": 9.9912,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Heilbronn",
+   "slug": "heilbronn",
+   "lat": 49.1423,
+   "lon": 9.2187,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Pforzheim",
+   "slug": "pforzheim",
+   "lat": 48.8909,
+   "lon": 8.7026,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Wolfsburg",
+   "slug": "wolfsburg",
+   "lat": 52.4206,
+   "lon": 10.7862,
+   "state": "Niedersachsen"
+  },
+  {
+   "name": "Göttingen",
+   "slug": "goettingen",
+   "lat": 51.5328,
+   "lon": 9.9352,
+   "state": "Niedersachsen"
+  },
+  {
+   "name": "Bottrop",
+   "slug": "bottrop",
+   "lat": 51.5216,
+   "lon": 6.9292,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Reutlingen",
+   "slug": "reutlingen",
+   "lat": 48.492,
+   "lon": 9.2114,
+   "state": "Baden-Württemberg"
+  },
+  {
+   "name": "Erlangen",
+   "slug": "erlangen",
+   "lat": 49.5892,
+   "lon": 10.9812,
+   "state": "Bayern"
+  },
+  {
+   "name": "Bremerhaven",
+   "slug": "bremerhaven",
+   "lat": 53.5505,
+   "lon": 8.5852,
+   "state": "Bremen"
+  },
+  {
+   "name": "Koblenz",
+   "slug": "koblenz",
+   "lat": 50.3533,
+   "lon": 7.5944,
+   "state": "Rheinland-Pfalz"
+  },
+  {
+   "name": "Bergisch Gladbach",
+   "slug": "bergisch-gladbach",
+   "lat": 50.9929,
+   "lon": 7.1277,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Remscheid",
+   "slug": "remscheid",
+   "lat": 51.1799,
+   "lon": 7.1944,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Trier",
+   "slug": "trier",
+   "lat": 49.7596,
+   "lon": 6.6442,
+   "state": "Rheinland-Pfalz"
+  },
+  {
+   "name": "Recklinghausen",
+   "slug": "recklinghausen",
+   "lat": 51.6144,
+   "lon": 7.1979,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Jena",
+   "slug": "jena",
+   "lat": 50.9282,
+   "lon": 11.5879,
+   "state": "Thüringen"
+  },
+  {
+   "name": "Moers",
+   "slug": "moers",
+   "lat": 51.4513,
+   "lon": 6.6284,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Salzgitter",
+   "slug": "salzgitter",
+   "lat": 52.1504,
+   "lon": 10.3593,
+   "state": "Niedersachsen"
+  },
+  {
+   "name": "Siegen",
+   "slug": "siegen",
+   "lat": 50.8751,
+   "lon": 8.0256,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Gütersloh",
+   "slug": "guetersloh",
+   "lat": 51.9167,
+   "lon": 8.4043,
+   "state": "Nordrhein-Westfalen"
+  },
+  {
+   "name": "Hildesheim",
+   "slug": "hildesheim",
+   "lat": 52.1527,
+   "lon": 9.9518,
+   "state": "Niedersachsen"
+  },
+  {
+   "name": "Hanau",
+   "slug": "hanau",
+   "lat": 50.1329,
+   "lon": 8.917,
+   "state": "Hessen"
+  },
+  {
+   "name": "Kaiserslautern",
+   "slug": "kaiserslautern",
+   "lat": 49.4432,
+   "lon": 7.769,
+   "state": "Rheinland-Pfalz"
+  },
+  {
+   "name": "Cottbus",
+   "slug": "cottbus",
+   "lat": 51.7567,
+   "lon": 14.3357,
+   "state": "Brandenburg"
+  },
+  {
+   "name": "Schwerin",
+   "slug": "schwerin",
+   "lat": 53.6288,
+   "lon": 11.4148,
+   "state": "Mecklenburg-Vorpommern"
+  }
+ ]
+}

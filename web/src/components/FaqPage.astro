@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro'
+import { pages } from '../i18n/pages'
+import { ROUTES, type Lang } from '../i18n/site'
+
+interface Props {
+  lang: Lang
+}
+const { lang } = Astro.props
+const c = pages[lang].faq
+const strip = (html: string) => html.replace(/<[^>]+>/g, '')
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    inLanguage: lang,
+    mainEntity: c.items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: strip(item.a) },
+    })),
+  },
+]
+---
+
+<Base lang={lang} title={c.title} description={c.description} alternates={ROUTES.faq} jsonLd={jsonLd}>
+  <article class="prose">
+    <h1>{c.h1}</h1>
+    {
+      c.items.map((item, i) => (
+        <details class="faq" open={i < 2}>
+          <summary>{item.q}</summary>
+          <p set:html={item.a} />
+        </details>
+      ))
+    }
+  </article>
+</Base>
