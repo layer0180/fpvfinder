@@ -62,6 +62,13 @@ test('a spot opens its camera flight, which shows the same score', async ({ page
   await page.locator('.detail').getByRole('link', { name: /Video/ }).click()
   await expect(page).toHaveURL(/present=spot&spot=48\.\d+,9\.\d+/)
 
+  // Headless Firefox on Linux (CI) has no WebGL2: no map, said as such -
+  // not "no results".
+  if (!(await page.evaluate(() => !!document.createElement('canvas').getContext('webgl2')))) {
+    await expect(page.locator('.present-hint')).toContainText('WebGL2', { timeout: 30_000 })
+    return
+  }
+
   // Preloaded behind a cover, then waiting for the tap that starts the take.
   await expect(page.locator('.present-hint')).toHaveText('Tippen zum Starten', { timeout: 60_000 })
   await expect(page.locator('.present-title h1')).toContainText('FPV-Spot')

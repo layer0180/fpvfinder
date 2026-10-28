@@ -3,7 +3,7 @@ import type { CameraOptions, Map as MlMap, PaddingOptions } from 'maplibre-gl'
 import { reverse, runSearch } from './api'
 import { categoryLabel, reasonText, t, warningText, type Lang } from './i18n'
 import { GERMANY, setPoints } from './mapSetup'
-import { CountUp, createPresentMap, Outro, presentCopy, presentSearch, sleep, waitIdle } from './presentKit'
+import { CountUp, createPresentMap, MapUnavailable, Outro, presentCopy, presentSearch, sleep, waitIdle } from './presentKit'
 import { distanceM, percent, scoreStep } from './spots'
 import type { Point } from './types'
 import type { UrlState } from './urlState'
@@ -34,7 +34,7 @@ type Stage =
   | { kind: 'approach' }
   | { kind: 'card' }
   | { kind: 'outro' }
-  | { kind: 'failed' }
+  | { kind: 'failed'; noMap?: boolean }
 
 const LEVEL_ORDER = { danger: 0, warning: 1, info: 2 } as const
 // The rated point nearest to the requested coordinate is the one shown, if it
@@ -165,7 +165,7 @@ export default function SpotFlight({ lang, url, lat, lon, radiusKm, spot, clean,
         })
       })
       .catch((e) => {
-        if ((e as Error).name !== 'AbortError') setStage({ kind: 'failed' })
+        if ((e as Error).name !== 'AbortError') setStage({ kind: 'failed', noMap: e instanceof MapUnavailable })
       })
 
     return () => {
@@ -266,7 +266,7 @@ export default function SpotFlight({ lang, url, lat, lon, radiusKm, spot, clean,
           </div>
         )}
         {stage.kind === 'loading' && <p className="present-hint">{c.loading}</p>}
-        {stage.kind === 'failed' && <p className="present-hint">{c.failed}</p>}
+        {stage.kind === 'failed' && <p className="present-hint">{stage.noMap ? c.noMap : c.failed}</p>}
         {(stage.kind === 'ready' || (stage.kind === 'outro' && finished)) && (
           <p className="present-hint">{finished ? c.replay : c.tap}</p>
         )}

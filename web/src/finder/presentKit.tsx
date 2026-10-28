@@ -34,6 +34,7 @@ export const presentCopy = {
     exit: 'Video-Modus verlassen',
     loading: 'Lädt …',
     failed: 'Für diesen Ort gibt es keine Ergebnisse.',
+    noMap: 'Die Karte lässt sich in diesem Browser nicht anzeigen (WebGL2 nötig).',
   },
   en: {
     title: 'The quietest FPV spots near {place}',
@@ -52,6 +53,7 @@ export const presentCopy = {
     exit: 'Leave video mode',
     loading: 'Loading …',
     failed: 'No results for this place.',
+    noMap: 'This browser cannot show the map (WebGL2 required).',
   },
 } as const
 
@@ -88,11 +90,18 @@ export function presentSearch(url: UrlState, lat: number, lon: number, radiusKm:
   }
 }
 
+/** Thrown when the browser cannot draw the map at all - not "no results". */
+export class MapUnavailable extends Error {
+  name = 'MapUnavailable'
+}
+
 /** A non-interactive map in the video frame, with the spot layers added. */
 export async function createPresentMap(
   container: HTMLElement,
   bounds: LngLatBoundsLike,
 ): Promise<{ maplibre: MapLibre; map: MlMap }> {
+  // MapLibre needs WebGL2 - missing in some headless and locked-down browsers.
+  if (!document.createElement('canvas').getContext('webgl2')) throw new MapUnavailable()
   const [maplibre, health] = await Promise.all([loadMapLibre(), getHealth().catch(() => null)])
   const map = new maplibre.Map({
     container,

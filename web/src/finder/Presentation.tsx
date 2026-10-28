@@ -3,7 +3,7 @@ import type { Map as MlMap, Marker } from 'maplibre-gl'
 import { reverse, runSearch } from './api'
 import { categoryLabel, reasonText, t, type Lang } from './i18n'
 import { radiusBounds, setArea, setPoints } from './mapSetup'
-import { CountUp, createPresentMap, Outro, presentCopy, presentSearch, sleep } from './presentKit'
+import { CountUp, createPresentMap, MapUnavailable, Outro, presentCopy, presentSearch, sleep } from './presentKit'
 import { percent, pickTopSpots, scoreStep } from './spots'
 import type { Point, SearchResult } from './types'
 import type { UrlState } from './urlState'
@@ -18,7 +18,7 @@ import type { UrlState } from './urlState'
  * crops to 9:16 without effort.
  */
 
-type Stage = { kind: 'loading' } | { kind: 'ready' } | { kind: 'intro' } | { kind: 'fly'; i: number } | { kind: 'card'; i: number } | { kind: 'outro' } | { kind: 'failed' }
+type Stage = { kind: 'loading' } | { kind: 'ready' } | { kind: 'intro' } | { kind: 'fly'; i: number } | { kind: 'card'; i: number } | { kind: 'outro' } | { kind: 'failed'; noMap?: boolean }
 
 interface Props {
   lang: Lang
@@ -70,7 +70,7 @@ export default function Presentation({ lang, url, lat, lon, radiusKm, count }: P
         setStage(top.length ? { kind: 'ready' } : { kind: 'failed' })
       })
       .catch((e) => {
-        if ((e as Error).name !== 'AbortError') setStage({ kind: 'failed' })
+        if ((e as Error).name !== 'AbortError') setStage({ kind: 'failed', noMap: e instanceof MapUnavailable })
       })
 
     return () => {
@@ -175,7 +175,7 @@ export default function Presentation({ lang, url, lat, lon, radiusKm, count }: P
         {stage.kind === 'outro' && <Outro c={c} />}
 
         {stage.kind === 'loading' && <p className="present-hint">{c.loading}</p>}
-        {stage.kind === 'failed' && <p className="present-hint">{c.failed}</p>}
+        {stage.kind === 'failed' && <p className="present-hint">{stage.noMap ? c.noMap : c.failed}</p>}
         {(stage.kind === 'ready' || (stage.kind === 'outro' && finished)) && (
           <p className="present-hint">{finished ? c.replay : c.tap}</p>
         )}

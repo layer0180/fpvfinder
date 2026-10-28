@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+- Video modes in a browser without WebGL2 said "no results for this place";
+  they now say that the map cannot be shown.
+
 ## 2.0.1 – 2026-10-28
 
 ### New
