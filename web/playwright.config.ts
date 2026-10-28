@@ -11,6 +11,8 @@ export default defineConfig({
   testDir: './e2e',
   timeout: 60_000,
   retries: process.env.CI ? 1 : 0,
+  // On CI failures also become annotations on the run's summary page.
+  reporter: process.env.CI ? [['github'], ['list']] : 'list',
   use: {
     baseURL: process.env.BASE_URL ?? 'http://localhost:8000',
     locale: 'de-DE',

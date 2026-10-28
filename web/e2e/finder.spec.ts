@@ -49,6 +49,9 @@ test('a spot shows reasons, weather section, route and share', async ({ page, co
 })
 
 test('a spot opens its camera flight, which shows the same score', async ({ page }) => {
+  // Search, the preload behind the cover and a 20 s flight - on CI's
+  // software-rendered WebGL that takes longer than the default minute.
+  test.setTimeout(180_000)
   // The flight moves even when the system asks for reduced motion (Windows
   // with animation effects off does) - the motion is what the video is for.
   await page.emulateMedia({ reducedMotion: 'reduce' })
