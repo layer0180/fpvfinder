@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Map as MlMap, Marker } from 'maplibre-gl'
-import { getHealth, reverse, runSearch } from './api'
+import { reverse, runSearch } from './api'
 import { categoryLabel, reasonText, t, type Lang } from './i18n'
-import { addSpotLayers, loadMapLibre, radiusBounds, setArea, setPoints } from './mapSetup'
+import { radiusBounds, setArea, setPoints } from './mapSetup'
+import { CountUp, createPresentMap, Outro, presentCopy, presentSearch, sleep } from './presentKit'
 import { percent, pickTopSpots, scoreStep } from './spots'
-import { profileFor } from './timeProfile'
 import type { Point, SearchResult } from './types'
+import type { UrlState } from './urlState'
 
 /**
  * Video mode: /app?present=1&lat=..&lon=..&r=..[&n=3]
@@ -17,74 +18,19 @@ import type { Point, SearchResult } from './types'
  * crops to 9:16 without effort.
  */
 
-const copy = {
-  de: {
-    title: 'Die ruhigsten FPV-Spots bei {place}',
-    titleNoPlace: 'Die ruhigsten FPV-Spots hier',
-    sub: 'im Umkreis von {r} km',
-    points: 'Punkte',
-    outro: 'Finde deinen Spot',
-    outroSub: 'kostenlos · ohne Anmeldung',
-    tap: 'Tippen zum Starten',
-    replay: 'Tippen für Wiederholung',
-    exit: 'Video-Modus verlassen',
-    loading: 'Lädt …',
-    failed: 'Für diesen Ort gibt es keine Ergebnisse.',
-  },
-  en: {
-    title: 'The quietest FPV spots near {place}',
-    titleNoPlace: 'The quietest FPV spots around here',
-    sub: 'within {r} km',
-    points: 'points',
-    outro: 'Find your spot',
-    outroSub: 'free · no sign-up',
-    tap: 'Tap to start',
-    replay: 'Tap to replay',
-    exit: 'Leave video mode',
-    loading: 'Loading …',
-    failed: 'No results for this place.',
-  },
-} as const
-
 type Stage = { kind: 'loading' } | { kind: 'ready' } | { kind: 'intro' } | { kind: 'fly'; i: number } | { kind: 'card'; i: number } | { kind: 'outro' } | { kind: 'failed' }
-
-const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
-const sleep = (ms: number, signal: AbortSignal) =>
-  new Promise<void>((resolve, reject) => {
-    const timer = setTimeout(resolve, ms)
-    signal.addEventListener('abort', () => {
-      clearTimeout(timer)
-      reject(new DOMException('Aborted', 'AbortError'))
-    })
-  })
-
-function CountUp({ to, ms = 900 }: { to: number; ms?: number }) {
-  const [value, setValue] = useState(0)
-  useEffect(() => {
-    if (reduceMotion()) return setValue(to)
-    const start = performance.now()
-    let frame = 0
-    const tick = (now: number) => {
-      const k = Math.min(1, (now - start) / ms)
-      setValue(Math.round(to * (1 - (1 - k) ** 3)))
-      if (k < 1) frame = requestAnimationFrame(tick)
-    }
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [to, ms])
-  return <>{value}</>
-}
 
 interface Props {
   lang: Lang
+  url: UrlState
   lat: number
   lon: number
   radiusKm: number
   count: number
 }
 
-export default function Presentation({ lang, lat, lon, radiusKm, count }: Props) {
-  const c = copy[lang]
+export default function Presentation({ lang, url, lat, lon, radiusKm, count }: Props) {
+  const c = presentCopy[lang]
   const container = useRef<HTMLDivElement>(null)
   const map = useRef<MlMap | null>(null)
   const markers = useRef<Marker[]>([])
@@ -93,34 +39,21 @@ export default function Presentation({ lang, lat, lon, radiusKm, count }: Props)
   const [result, setResult] = useState<SearchResult | null>(null)
   const [spots, setSpots] = useState<Point[]>([])
   const [place, setPlace] = useState('')
-  const [played, setPlayed] = useState(false)
-  const host = location.host.replace(/^www\./, '')
+  const [finished, setFinished] = useState(false)
 
   // --- data and map ------------------------------------------------------------
   useEffect(() => {
     const controller = new AbortController()
-    const search = runSearch({ lat, lon, radiusKm, timeProfile: profileFor(), spacingM: 150 }, () => {}, controller.signal)
+    const search = runSearch(presentSearch(url, lat, lon, radiusKm), () => {}, controller.signal)
     const label = reverse(lat, lon, lang).then((l) => l.split(',')[0])
-    const mapReady = (async () => {
-      const [maplibre, health] = await Promise.all([loadMapLibre(), getHealth().catch(() => null)])
-      const m = new maplibre.Map({
-        container: container.current!,
-        style: health?.map_style_url || 'https://tiles.openfreemap.org/styles/liberty',
-        bounds: radiusBounds(lat, lon, radiusKm),
-        interactive: false,
-        attributionControl: false,
-        fadeDuration: 0,
-      })
-      m.addControl(new maplibre.AttributionControl({ compact: false }), 'top-left')
-      await new Promise<void>((resolve) => m.on('load', () => resolve()))
-      addSpotLayers(m)
-      map.current = m
-      return maplibre
-    })()
+    const mapReady = createPresentMap(container.current!, radiusBounds(lat, lon, radiusKm)).then((made) => {
+      map.current = made.map
+      return made.maplibre
+    })
 
     Promise.all([search, label, mapReady])
       .then(([res, name, maplibre]) => {
-        const top = pickTopSpots(res.points, count, Math.max(600, (radiusKm * 1000) / 4))
+        const top = pickTopSpots(res.points, count, Math.max(600, (radiusKm * 1000) / 4), undefined, url.protectedAreas)
         setResult(res)
         setSpots(top)
         setPlace(name)
@@ -145,7 +78,7 @@ export default function Presentation({ lang, lat, lon, radiusKm, count }: Props)
       run.current?.abort()
       map.current?.remove()
     }
-  }, [lat, lon, radiusKm, count, lang])
+  }, [url, lat, lon, radiusKm, count, lang])
 
   // --- the sequence ------------------------------------------------------------
   const play = useCallback(async () => {
@@ -155,21 +88,21 @@ export default function Presentation({ lang, lat, lon, radiusKm, count }: Props)
     const controller = new AbortController()
     run.current = controller
     const { signal } = controller
-    const instant = reduceMotion()
     // Overview below the title block, which takes the top ~40 % of the frame.
     const overview = () => {
       const h = m.getContainer().clientHeight
       m.fitBounds(radiusBounds(lat, lon, radiusKm), {
-        padding: { top: h * 0.4, bottom: h * 0.06, left: 24, right: 24 },
+        padding: { top: h * 0.4, bottom: h * 0.22, left: 24, right: 24 },
         pitch: 0,
         bearing: 0,
-        duration: instant ? 0 : 1800,
+        duration: 1800,
+        essential: true,
       })
     }
     const highlight = (index: number) =>
       markers.current.forEach((marker, i) => marker.getElement().classList.toggle('is-selected', i === index))
     try {
-      setPlayed(true)
+      setFinished(false)
       highlight(-1)
       overview()
       setStage({ kind: 'intro' })
@@ -182,20 +115,24 @@ export default function Presentation({ lang, lat, lon, radiusKm, count }: Props)
           zoom: 15.4,
           pitch: 55,
           bearing: 25 - i * 40,
-          duration: instant ? 0 : 3200,
+          duration: 3200,
+          essential: true,
           curve: 1.5,
-          // Keep the spot above the card at the bottom of the frame.
-          padding: { top: 0, bottom: m.getContainer().clientHeight * 0.35, left: 0, right: 0 },
+          // The spot sits between the card above and the app's caption below.
+          padding: { top: m.getContainer().clientHeight * 0.42, bottom: m.getContainer().clientHeight * 0.24, left: 0, right: 0 },
         })
-        await sleep(instant ? 300 : 3300, signal)
+        await sleep(3300, signal)
         setStage({ kind: 'card', i })
         // A slow drift keeps the picture alive while the card is read.
-        if (!instant) m.easeTo({ bearing: m.getBearing() + 18, duration: 3600, easing: (k) => k })
+        m.easeTo({ bearing: m.getBearing() + 18, duration: 3600, easing: (k) => k, essential: true })
         await sleep(3600, signal)
       }
       highlight(-1)
       overview()
       setStage({ kind: 'outro' })
+      // The replay hint waits, so a recording stopped on the outro ends clean.
+      await sleep(3500, signal)
+      setFinished(true)
     } catch {
       /* restarted or left - nothing to clean up */
     }
@@ -235,33 +172,19 @@ export default function Presentation({ lang, lat, lon, radiusKm, count }: Props)
           </div>
         )}
 
-        {stage.kind === 'outro' && (
-          <div className="present-outro">
-            <svg viewBox="0 0 32 32" aria-hidden="true">
-              <g fill="none" stroke="#ff8a3d" strokeWidth="2.6" strokeLinecap="round">
-                <path d="M9 9 23 23M23 9 9 23" />
-                <circle cx="7" cy="7" r="5" />
-                <circle cx="25" cy="7" r="5" />
-                <circle cx="7" cy="25" r="5" />
-                <circle cx="25" cy="25" r="5" />
-              </g>
-              <circle cx="16" cy="16" r="3.4" fill="#fff" />
-            </svg>
-            <h2>{c.outro}</h2>
-            <p className="present-host">{host}</p>
-            <p>{c.outroSub}</p>
-          </div>
-        )}
+        {stage.kind === 'outro' && <Outro c={c} />}
 
         {stage.kind === 'loading' && <p className="present-hint">{c.loading}</p>}
         {stage.kind === 'failed' && <p className="present-hint">{c.failed}</p>}
-        {(stage.kind === 'ready' || stage.kind === 'outro') && (
-          <p className="present-hint">{played ? c.replay : c.tap}</p>
+        {(stage.kind === 'ready' || (stage.kind === 'outro' && finished)) && (
+          <p className="present-hint">{finished ? c.replay : c.tap}</p>
         )}
 
-        <a className="present-exit" href={exitHref} aria-label={c.exit} onClick={(e) => e.stopPropagation()}>
-          ×
-        </a>
+        {(stage.kind === 'ready' || stage.kind === 'failed' || finished) && (
+          <a className="present-exit" href={exitHref} aria-label={c.exit} onClick={(e) => e.stopPropagation()}>
+            ×
+          </a>
+        )}
       </div>
     </div>
   )

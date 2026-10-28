@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import type { Lang, UiStrings } from './i18n'
+import { useEffect, useMemo, useState } from 'react'
+import { t, type Lang, type UiStrings } from './i18n'
+import { compass, nextGoldenHour } from './sun'
 
 /**
  * Flight weather for one spot, straight from Open-Meteo in the browser - free
@@ -15,6 +16,8 @@ interface Hour {
   wind80: number
   rain: number
   temp: number
+  /** Where the wind comes from, compass degrees. */
+  dir: number
 }
 
 interface Forecast {
@@ -31,6 +34,7 @@ export function judge(hours: Hour[]): { verdict: Verdict; worst: Hour } {
     wind80: Math.max(...hours.map((h) => h.wind80)),
     rain: Math.max(...hours.map((h) => h.rain)),
     temp: Math.min(...hours.map((h) => h.temp)),
+    dir: hours[0].dir,
   }
   let verdict: Verdict = 'go'
   if (worst.gust >= 30 || worst.wind80 >= 35 || worst.rain >= 30 || worst.temp <= 0) verdict = 'caution'
@@ -56,7 +60,8 @@ function loadKp(): Promise<number | null> {
 
 const cache = new Map<string, Promise<Forecast>>()
 
-function load(lat: number, lon: number): Promise<Forecast> {
+/** Shared with the map, which draws the wind arrow at the selected spot. */
+export function loadWeather(lat: number, lon: number): Promise<Forecast> {
   // ~1 km grid: neighbouring spots share one request.
   const key = `${lat.toFixed(2)},${lon.toFixed(2)}`
   let pending = cache.get(key)
@@ -64,7 +69,7 @@ function load(lat: number, lon: number): Promise<Forecast> {
     const params = new URLSearchParams({
       latitude: lat.toFixed(3),
       longitude: lon.toFixed(3),
-      hourly: 'wind_speed_10m,wind_gusts_10m,wind_speed_80m,precipitation_probability,temperature_2m',
+      hourly: 'wind_speed_10m,wind_gusts_10m,wind_speed_80m,wind_direction_10m,precipitation_probability,temperature_2m',
       daily: 'sunset',
       timezone: 'auto',
       forecast_days: '2',
@@ -87,6 +92,7 @@ function load(lat: number, lon: number): Promise<Forecast> {
             wind80: h.wind_speed_80m[i],
             rain: h.precipitation_probability[i] ?? 0,
             temp: h.temperature_2m[i],
+            dir: h.wind_direction_10m[i],
           })
         }
         const sunset = data.daily?.sunset?.map((t: string) => new Date(t)).find((d: Date) => d.getTime() > now) ?? null
@@ -102,12 +108,13 @@ export default function Weather({ lat, lon, lang, s }: { lat: number; lon: numbe
   const [forecast, setForecast] = useState<Forecast | null>(null)
   const [failed, setFailed] = useState(false)
   const [kp, setKp] = useState<number | null>(null)
+  const golden = useMemo(() => nextGoldenHour(lat, lon), [lat, lon])
 
   useEffect(() => {
     let alive = true
     setForecast(null)
     setFailed(false)
-    load(lat, lon)
+    loadWeather(lat, lon)
       .then((f) => alive && setForecast(f))
       .catch(() => alive && setFailed(true))
     loadKp().then((k) => alive && setKp(k))
@@ -127,6 +134,7 @@ export default function Weather({ lat, lon, lang, s }: { lat: number; lon: numbe
   const label = { go: s.weatherGo, caution: s.weatherCaution, nogo: s.weatherNoGo }[verdict]
   const kmh = (v: number) => `${Math.round(v)} km/h`
   const time = (d: Date) => d.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })
+  const windDir = compass(forecast.hours[0].dir, s.compass)
 
   return (
     <div className="weather">
@@ -137,7 +145,16 @@ export default function Weather({ lat, lon, lang, s }: { lat: number; lon: numbe
       <dl className="weather-grid">
         <div>
           <dt>{s.wind}</dt>
-          <dd>{kmh(worst.wind)}</dd>
+          <dd>
+            {kmh(worst.wind)}{' '}
+            <span className="wind-dir">
+              {/* The arrow points where the wind blows to. */}
+              <span className="wind-arrow" style={{ transform: `rotate(${forecast.hours[0].dir + 180}deg)` }} aria-hidden="true">
+                ↑
+              </span>{' '}
+              {t(s.windFrom, { dir: windDir })}
+            </span>
+          </dd>
         </div>
         <div>
           <dt>{s.gusts}</dt>
@@ -165,8 +182,26 @@ export default function Weather({ lat, lon, lang, s }: { lat: number; lon: numbe
             <dd>{time(forecast.sunset)}</dd>
           </div>
         )}
+        {golden && (
+          <div className="weather-wide">
+            <dt>{s.goldenHour}</dt>
+            <dd>
+              {goldenText(golden, s, time)}{' '}
+              <span className="muted">· {t(s.lightFrom, { dir: compass(golden.azimuth, s.compass) })}</span>
+            </dd>
+          </div>
+        )}
       </dl>
       <p className="weather-note">{s.weatherNote}</p>
     </div>
   )
+}
+
+function goldenText(g: NonNullable<ReturnType<typeof nextGoldenHour>>, s: UiStrings, time: (d: Date) => string): string {
+  if (g.start.getTime() <= Date.now()) return t(s.goldenNow, { end: time(g.end) })
+  const today = g.start.toDateString() === new Date().toDateString()
+  const template = today
+    ? g.evening ? s.goldenEvening : s.goldenMorning
+    : g.evening ? s.goldenTomorrowEvening : s.goldenTomorrowMorning
+  return t(template, { start: time(g.start), end: time(g.end) })
 }

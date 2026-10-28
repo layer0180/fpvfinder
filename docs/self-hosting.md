@@ -30,8 +30,12 @@ commented volume in `docker-compose.yml`).
 
 Searches read OpenStreetMap data from a local **tile store** (one SQLite file,
 ~1.5 GB for Germany), so they neither wait for nor depend on the public Overpass
-servers. With `OSM_STORE_URL` set, the container downloads it on first start and
-refreshes it on a restart once it is older than `OSM_STORE_MAX_AGE_DAYS`.
+servers. With `OSM_STORE_URL` set, the container downloads it on first start.
+After that the running server asks the release every `OSM_REFRESH_HOURS` (6)
+whether a newer file exists, downloads it next to the old one and swaps it in
+without a restart; searches keep running throughout. The disk needs room for
+both files during the swap (~3.5 GB free); with less, the server keeps the old
+data and says so in the log. `REGIONS_URL` follows the same way.
 
 The store is rebuilt monthly by [`.github/workflows/osm-data.yml`](../.github/workflows/osm-data.yml)
 from the Geofabrik extract and published as the release `osm-data`; `.env.example`
@@ -49,12 +53,14 @@ Without a store every search falls back to Overpass (`OSM_LIVE_FALLBACK`).
 
 ## Region pages
 
-`/regionen/<city>` shows the best spots around 84 large German cities
-([`shared/regions/cities.json`](../shared/regions/cities.json)). They are computed
+`/regionen/<city>` shows the best spots around every German town of 30,000 or
+more ([`shared/regions/cities.json`](../shared/regions/cities.json), made from OSM
+with `python -m app.cities`; existing slugs never change). They are computed
 offline after each import (`python -m app.regions`, part of the monthly workflow)
 and published as `regions.json` next to the store; `REGIONS_URL` makes the
 container fetch it like the store. A city only gets a page with at least three
-spots scoring 70 or more.
+spots scoring 70 or more, and none of them listed on a larger neighbour's page.
+Running the workflow by hand with "regions only" recomputes just the pages.
 
 ## Options
 

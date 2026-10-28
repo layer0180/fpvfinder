@@ -1,5 +1,45 @@
 # Changelog
 
+## 2.0.1 – 2026-10-28
+
+### New
+- **Spot flight video:** a "Video" button on every spot opens a camera flight
+  for short vertical videos - Germany with the spot pulsing, down to the town,
+  a tilted approach and one orbit while the score counts up, then the site's
+  address. The flight is preloaded behind a cover, so a screen recording shows
+  no half-loaded map. `clean=1` leaves out all text, `title=` sets an own
+  headline.
+
+- **Region pages for every town of 30,000 or more** - some 380 instead of 84,
+  from OSM (`python -m app.cities`; published slugs never change). Where the
+  circles of neighbouring towns overlap, each page lists different spots, and
+  "Nearby regions" now links the closest pages across state borders. The
+  workflow computes them in a job of its own, searches in parallel, and can
+  recompute just the pages ("regions only").
+- **Golden hour and wind direction** for every spot: the next golden hour with
+  the direction the light comes from, worked out in the browser, and where the
+  wind blows from - in the weather section and as an arrow on the map.
+- **OSM data updates itself:** the running server asks the release every
+  `OSM_REFRESH_HOURS` (6) whether a newer store or regions file exists, by its
+  date, downloads it next to the old one and swaps it in without a restart.
+  Searches keep running; a full disk or an unusable file keeps the old data
+  and is not fetched again until the next release.
+
+### Changed
+- **Scoring follows each release:** a public instance no longer reads
+  `config/weights.json` (`USE_WEIGHTS_FILE=true` turns it back on), and a
+  private one saves only the weights changed in the UI. Before, the first start
+  wrote every default into that file and froze them for all later releases.
+- **Quieter log:** expected search failures (outside the covered region, OSM
+  unreachable) are one line instead of a traceback.
+- `OSM_STORE_MAX_AGE_DAYS` defaults to 35 when unset (was: never refresh).
+- **Video modes keep clear of TikTok's overlays:** cards and the outro moved
+  out of the caption at the bottom and the button column on the right; the
+  close button and the replay hint stay hidden while a take runs.
+- **Video modes use the finder's own search** (time profile, grid, balance,
+  protected areas), so they answer from the result cache and show the same
+  scores as the list.
+
 ## 2.0.0 – 2026-10-24
 
 A complete rebuild, focused on mobile use, search engines and small servers.

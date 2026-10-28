@@ -26,7 +26,7 @@ ads, no tracking.
 - **Flight weather** – wind, gusts, rain and the Kp index (GPS quality) at a glance.
 - **Route, share, story image, GPX** – take a spot with you or send it to friends.
 - **[Regions](https://fpv-finder.com/regionen/stuttgart) and [guides](https://fpv-finder.com/ratgeber)** –
-  the best spots around 84 large cities, and where and how you may fly in Germany.
+  the best spots around some 380 German towns and cities, and where and how you may fly in Germany.
 
 ## How it works
 

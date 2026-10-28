@@ -9,8 +9,8 @@
 # airspace.geojson would silently be missing. Copying here covers both cases,
 # and never overwrites a file the user already has.
 #
-# weights.json is deliberately NOT seeded: the backend generates it from its
-# defaults when missing, which keeps a single source of truth (defaults.py).
+# weights.json is deliberately NOT seeded: it holds only the weights changed
+# in the UI, everything else comes from app/scoring/defaults.py.
 
 set -e
 

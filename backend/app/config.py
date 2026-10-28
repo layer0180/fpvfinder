@@ -10,6 +10,7 @@ Two separate concerns:
 
 from __future__ import annotations
 
+import copy
 import json
 import os
 import threading
@@ -142,6 +143,15 @@ class Settings:
     # must not reconfigure the app for everyone else.
     public_mode: bool = field(default_factory=lambda: _env_bool("PUBLIC_MODE", False))
 
+    # Whether config/weights.json is read at all. Unset means: yes on a private
+    # instance, no with PUBLIC_MODE - nobody can change the weights there (the
+    # endpoint is closed), so a file left in the volume could only freeze the
+    # defaults of an older release. Set USE_WEIGHTS_FILE=true to run a public
+    # instance on weights of your own.
+    use_weights_file: bool | None = field(
+        default_factory=lambda: _env_bool("USE_WEIGHTS_FILE", False) if "USE_WEIGHTS_FILE" in os.environ else None
+    )
+
     # Only trust X-Forwarded-For when a reverse proxy actually sets it.
     # Enabling this without a proxy in front lets anyone spoof their address and
     # walk straight past the rate limits.
@@ -250,6 +260,10 @@ class Settings:
     # v1 behaviour), or refuse. A small public server should refuse - one
     # search abroad can otherwise tie up the only search slot for minutes.
     osm_live_fallback: bool = field(default_factory=lambda: _env_bool("OSM_LIVE_FALLBACK", True))
+    # How often the running server asks OSM_STORE_URL / REGIONS_URL for newer
+    # files (a HEAD request each) and swaps them in without a restart.
+    # 0 = only at container start.
+    osm_refresh_hours: float = field(default_factory=lambda: _env_float("OSM_REFRESH_HOURS", 6.0))
 
     # --- Map ---------------------------------------------------------------
     # MapLibre style for the finder. OpenFreeMap needs no key and allows heavy
@@ -350,6 +364,8 @@ SETTINGS.site_verification = _normalise_verification(SETTINGS.site_verification)
 
 if SETTINGS.strava_enabled is None:
     SETTINGS.strava_enabled = not SETTINGS.public_mode
+if SETTINGS.use_weights_file is None:
+    SETTINGS.use_weights_file = not SETTINGS.public_mode
 
 # Create the directories up front so nothing fails later on.
 CONFIG_DIR.mkdir(parents=True, exist_ok=True)
@@ -361,35 +377,39 @@ SETTINGS.data_dir.mkdir(parents=True, exist_ok=True)
 # ---------------------------------------------------------------------------
 _config_lock = threading.Lock()
 _config_cache: dict[str, Any] | None = None
+_ignored_noted = False
 
 
 def load_config(force: bool = False) -> dict[str, Any]:
     """
     Loads ``config/weights.json`` and merges it on top of ``DEFAULT_CONFIG``.
 
-    If the file does not exist it is created from the defaults, so you always
-    have a complete, editable template to start from.
+    The file holds only what was changed (see ``save_config``), so everything
+    else follows the defaults of the running release - an update that improves
+    the scoring reaches every instance. No file means the defaults throughout;
+    ``app/scoring/defaults.py`` is the reference for every key.
     """
-    global _config_cache
+    global _config_cache, _ignored_noted
     with _config_lock:
         if _config_cache is not None and not force:
             return _config_cache
 
         user_cfg: dict[str, Any] = {}
-        if WEIGHTS_FILE.exists():
+        if WEIGHTS_FILE.exists() and not SETTINGS.use_weights_file:
+            if not _ignored_noted:
+                print(f"[config] {WEIGHTS_FILE.name} ignored on a public instance - USE_WEIGHTS_FILE=true reads it")
+                _ignored_noted = True
+        elif WEIGHTS_FILE.exists():
             try:
                 user_cfg = json.loads(WEIGHTS_FILE.read_text(encoding="utf-8"))
             except json.JSONDecodeError as exc:
                 # Better to carry on with the defaults than to kill the backend.
                 print(f"[config] WARNING: {WEIGHTS_FILE.name} is not valid JSON ({exc}) - using defaults.")
                 user_cfg = {}
-        else:
-            WEIGHTS_FILE.write_text(
-                json.dumps(DEFAULT_CONFIG, indent=2, ensure_ascii=False),
-                encoding="utf-8",
-            )
 
-        cfg = deep_merge(DEFAULT_CONFIG, user_cfg)
+        # A deep copy: the merge shares untouched sub-dicts with the defaults,
+        # and _auto_enable_optional_sources writes into them.
+        cfg = deep_merge(copy.deepcopy(DEFAULT_CONFIG), user_cfg)
         cfg = _auto_enable_optional_sources(cfg)
         _config_cache = cfg
         return cfg
@@ -421,11 +441,29 @@ def _auto_enable_optional_sources(cfg: dict[str, Any]) -> dict[str, Any]:
     return cfg
 
 
+def _changes(cfg: dict[str, Any], base: dict[str, Any]) -> dict[str, Any]:
+    """The keys of ``cfg`` that differ from ``base``, nested the same way."""
+    out: dict[str, Any] = {}
+    for key, value in cfg.items():
+        default = base.get(key)
+        if isinstance(value, dict) and isinstance(default, dict):
+            nested = _changes(value, default)
+            if nested:
+                out[key] = nested
+        elif key not in base or value != default:
+            out[key] = value
+    return out
+
+
 def save_config(cfg: dict[str, Any]) -> dict[str, Any]:
-    """Writes the configuration to ``config/weights.json`` and clears the cache."""
+    """
+    Writes what ``cfg`` changes against the defaults to ``config/weights.json``
+    and clears the cache. Saving the defaults leaves an empty file.
+    """
     global _config_cache
     with _config_lock:
-        WEIGHTS_FILE.write_text(json.dumps(cfg, indent=2, ensure_ascii=False), encoding="utf-8")
+        changes = _changes(cfg, DEFAULT_CONFIG)
+        WEIGHTS_FILE.write_text(json.dumps(changes, indent=2, ensure_ascii=False), encoding="utf-8")
         _config_cache = None
     return load_config(force=True)
 

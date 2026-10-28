@@ -128,9 +128,11 @@ def region_page(region: dict[str, Any], all_regions: list[dict[str, Any]], data:
         body.append(f"<p>{esc(_fill(t['aerodromes'], names=names))}</p>")
     body.append(f'<p>{t["always"]} <a href="{GUIDE_PATH[lang]}">{t["guides"]}</a></p>')
 
-    neighbours = [x for x in all_regions if x["state"] == region["state"] and x["slug"] != region["slug"]][:8]
+    # The nearest pages, across state borders: Mainz links to Wiesbaden.
+    others = [x for x in all_regions if x["slug"] != region["slug"]]
+    neighbours = sorted(others, key=lambda x: (x["lat"] - region["lat"]) ** 2 + ((x["lon"] - region["lon"]) * 0.65) ** 2)[:8]
     if neighbours:
-        body.append(f"<h2>{esc(_fill(t['otherH2'], state=region['state']))}</h2><ul>")
+        body.append(f"<h2>{esc(t['otherH2'])}</h2><ul>")
         body.extend(f'<li><a href="{REGION_PATH[lang]}/{x["slug"]}">{esc(x["name"])}</a></li>' for x in neighbours)
         body.append("</ul>")
 

@@ -13,6 +13,8 @@ interface Props {
   s: UiStrings
   onBack: () => void
   onShare: (spot: Point) => Promise<string>
+  /** The camera flight to this spot (SpotFlight.tsx), for short videos. */
+  videoHref: string
 }
 
 export function ScoreRing({ score, blocked, size = 64 }: { score: number; blocked: boolean; size?: number }) {
@@ -31,7 +33,7 @@ export function ScoreRing({ score, blocked, size = 64 }: { score: number; blocke
 
 const LEVEL_ORDER = { danger: 0, warning: 1, info: 2 } as const
 
-export default function SpotDetail({ spot, rank, lang, s, onBack, onShare }: Props) {
+export default function SpotDetail({ spot, rank, lang, s, onBack, onShare, videoHref }: Props) {
   const [saved, setSaved] = useState(() => favorites.has(spot))
   const [shareState, setShareState] = useState<'idle' | 'busy' | 'copied'>('idle')
   const [copied, setCopied] = useState(false)
@@ -123,6 +125,9 @@ export default function SpotDetail({ spot, rank, lang, s, onBack, onShare }: Pro
         <button type="button" className="btn" onClick={downloadStory} disabled={storyBusy}>
           {s.storyImage}
         </button>
+        <a className="btn" href={videoHref}>
+          🎬 {s.video}
+        </a>
       </div>
 
       {spot.reasons.length > 0 && (

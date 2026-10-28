@@ -16,7 +16,8 @@ export interface UrlState {
   t?: string
   spacing?: number
   spot?: { lat: number; lon: number }
-  present?: boolean
+  /** Video mode: present=1 tours the top spots, present=spot flies to one. */
+  present?: 'top' | 'spot'
   /** Solitude share in percent (0-100), see SearchParams.solitudeShare. */
   balance?: number
   /** ns=1: include nature and bird protection areas, see SearchParams.includeProtected. */
@@ -37,7 +38,7 @@ export function readUrl(search = location.search): UrlState {
     t: p.get('t') ?? undefined,
     spacing: num(p.get('g')),
     spot: spot && spot.length === 2 && spot.every(Number.isFinite) ? { lat: spot[0], lon: spot[1] } : undefined,
-    present: p.get('present') === '1',
+    present: p.get('present') === 'spot' ? 'spot' : p.get('present') === '1' ? 'top' : undefined,
     balance: num(p.get('b')),
     protectedAreas: p.get('ns') === '1',
   }
@@ -61,4 +62,18 @@ export function writeUrl(state: UrlState, mode: 'push' | 'replace' = 'replace'):
   const query = p.toString().replace(/%2C/gi, ',')
   const url = `${location.pathname}${query ? `?${query}` : ''}`
   if (url !== location.pathname + location.search) history[mode === 'push' ? 'pushState' : 'replaceState'](null, '', url)
+}
+
+/**
+ * The video mode for the current search. It keeps every search parameter of
+ * the page's URL, so the video asks for exactly the same search - which the
+ * server answers from its result cache - and rates the spot exactly as the
+ * list did.
+ */
+export function videoUrl(spot?: { lat: number; lon: number }): string {
+  const p = new URLSearchParams(location.search)
+  p.delete('spot')
+  p.set('present', spot ? 'spot' : '1')
+  if (spot) p.set('spot', `${spot.lat.toFixed(5)},${spot.lon.toFixed(5)}`)
+  return `${location.pathname}?${p.toString().replace(/%2C/gi, ',')}`
 }

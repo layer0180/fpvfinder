@@ -7,12 +7,17 @@ Runs the normal search around every city in shared/regions/cities.json and
 keeps what a page needs: the best few spots (spread out, with a place name,
 reasons and warnings) plus a few facts about the area. It runs after the
 monthly OSM import (.github/workflows/osm-data.yml), never on the server -
-85 searches in big cities take the better part of an hour.
+some 380 searches take a few hours. The list itself comes from app/cities.py.
 
 A region only gets a page when it has enough to say: at least
 MIN_GOOD_SPOTS spots scoring 70 or more. Thin pages that merely repeat a
 city name are what search engines call doorway pages, and they hurt the
 whole site.
+
+The same goes for neighbours: in the Ruhr or around Stuttgart the 10 km
+circles of several towns overlap. Cities are processed largest first, and a
+spot already listed on another page is not listed again - a town gets a page
+only with at least MIN_OWN_SPOTS spots of its own.
 """
 
 from __future__ import annotations
@@ -21,8 +26,10 @@ import argparse
 import asyncio
 import json
 import math
+import os
 import sys
 import time
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -42,6 +49,9 @@ TOP_SPOTS = 6
 MIN_SEPARATION_M = 1500.0
 GOOD_SCORE = 0.7
 MIN_GOOD_SPOTS = 3
+MIN_OWN_SPOTS = 3
+# A spot this close to one on another page counts as the same spot.
+SAME_SPOT_M = 500.0
 
 
 def _distance_m(a: dict[str, float], b: dict[str, float]) -> float:
@@ -64,10 +74,15 @@ def _listable(p: dict[str, Any]) -> bool:
     )
 
 
-def top_spots(points: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Best points without a block or a red warning, MIN_SEPARATION_M apart (cf. pickTopSpots in the finder)."""
+def top_spots(points: list[dict[str, Any]], taken: list[dict[str, Any]] = ()) -> list[dict[str, Any]]:
+    """
+    Best points without a block or a red warning, MIN_SEPARATION_M apart (cf.
+    pickTopSpots in the finder), leaving out the ``taken`` ones of other pages.
+    """
     picked: list[dict[str, Any]] = []
     for p in sorted(filter(_listable, points), key=lambda p: -p["score"]):
+        if any(_distance_m(p, q) < SAME_SPOT_M for q in taken):
+            continue
         if all(_distance_m(p, q) >= MIN_SEPARATION_M for q in picked):
             picked.append(p)
         if len(picked) >= TOP_SPOTS:
@@ -101,21 +116,62 @@ def area_facts(points: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 SPOT_FIELDS = ("lat", "lon", "score", "category", "area_name", "reasons", "warnings")
+# Per city, the best listable points kept for the selection - far more than a
+# page shows, so a town whose best spots went to a neighbour still has some.
+CANDIDATES = 400
 
 
-async def build(cities: list[dict[str, Any]], log=print) -> list[dict[str, Any]]:
+async def survey(city: dict[str, Any]) -> dict[str, Any]:
+    """The search around one city, boiled down to what the selection needs."""
+    result = await run_search(
+        SearchRequest(lat=city["lat"], lon=city["lon"], radius_km=RADIUS_KM, time_profile=TIME_PROFILE, use_strava=False)
+    )
+    points = result["points"]
+    best = sorted(filter(_listable, points), key=lambda p: -p["score"])[:CANDIDATES]
+    return {"facts": area_facts(points), "candidates": [{k: p[k] for k in (*SPOT_FIELDS, "blocked")} for p in best]}
+
+
+def _survey_in_process(city: dict[str, Any]) -> dict[str, Any]:
+    return asyncio.run(survey(city))
+
+
+async def _survey_all(cities: list[dict[str, Any]], workers: int, log) -> list[dict[str, Any]]:
+    """
+    The searches, the slow part: one process per core. They do not depend on
+    each other - only the selection afterwards does, and that runs in order.
+    """
+    if workers <= 1:
+        return [await survey(city) for city in cities]
+    loop = asyncio.get_running_loop()
+    done = 0
+
+    async def one(pool, city):
+        nonlocal done
+        result = await loop.run_in_executor(pool, _survey_in_process, city)
+        done += 1
+        log(f"[regions] searched {done}/{len(cities)}: {city['name']}")
+        return result
+
+    with ProcessPoolExecutor(workers) as pool:
+        return await asyncio.gather(*(one(pool, city) for city in cities))
+
+
+async def build(cities: list[dict[str, Any]], log=print, workers: int = 1) -> list[dict[str, Any]]:
+    surveys = await _survey_all(cities, workers, log)
     regions = []
-    for n, city in enumerate(cities, 1):
-        started = time.perf_counter()
-        result = await run_search(
-            SearchRequest(lat=city["lat"], lon=city["lon"], radius_km=RADIUS_KM, time_profile=TIME_PROFILE, use_strava=False)
-        )
-        points = result["points"]
-        facts = area_facts(points)
-        spots = top_spots(points)
+    listed: list[dict[str, Any]] = []
+    for n, (city, found) in enumerate(zip(cities, surveys), 1):
+        facts = found["facts"]
         if facts["good_spots"] < MIN_GOOD_SPOTS:
             log(f"[regions] {n}/{len(cities)} {city['name']}: only {facts['good_spots']} good spots - no page")
             continue
+        # Only the spots near listed ones need checking against them.
+        nearby = [s for s in listed if _distance_m(s, city) < (RADIUS_KM * 1000 + SAME_SPOT_M)]
+        spots = top_spots(found["candidates"], nearby)
+        if len(spots) < MIN_OWN_SPOTS:
+            log(f"[regions] {n}/{len(cities)} {city['name']}: its spots are on neighbouring pages - no page")
+            continue
+        listed.extend(spots)
         out_spots = []
         for spot in spots:
             item = {k: spot[k] for k in SPOT_FIELDS}
@@ -123,10 +179,7 @@ async def build(cities: list[dict[str, Any]], log=print) -> list[dict[str, Any]]
             item["place"] = (await reverse_geocode(spot["lat"], spot["lon"], "de", nominatim_fallback=True)).split(",")[0]
             out_spots.append(item)
         regions.append({**city, "radius_km": RADIUS_KM, "time_profile": TIME_PROFILE, "spots": out_spots, "facts": facts})
-        log(
-            f"[regions] {n}/{len(cities)} {city['name']}: {facts['good_spots']} good spots, "
-            f"best {round(spots[0]['score'] * 100)}, {time.perf_counter() - started:.0f} s"
-        )
+        log(f"[regions] {n}/{len(cities)} {city['name']}: {facts['good_spots']} good spots, best {round(spots[0]['score'] * 100)}")
     return regions
 
 
@@ -134,6 +187,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--out", type=Path, default=Path("data/regions.json"))
     parser.add_argument("--only", help="comma separated city slugs, for trying it out")
+    parser.add_argument("--workers", type=int, default=os.cpu_count() or 1, help="searches in parallel (default: one per core)")
     args = parser.parse_args(argv)
 
     store = get_store()
@@ -144,14 +198,18 @@ def main(argv: list[str] | None = None) -> int:
     if args.only:
         wanted = set(args.only.split(","))
         cities = [c for c in cities if c["slug"] in wanted]
-    regions = asyncio.run(build(cities))
+    started = time.perf_counter()
+    regions = asyncio.run(build(cities, workers=args.workers))
     payload = {
         "generated_at": time.strftime("%Y-%m-%d", time.gmtime()),
         "data_timestamp": store.data_timestamp,
         "regions": regions,
     }
     args.out.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"[regions] {len(regions)} of {len(cities)} cities get a page -> {args.out}")
+    print(
+        f"[regions] {len(regions)} of {len(cities)} cities get a page -> {args.out} "
+        f"({(time.perf_counter() - started) / 60:.0f} min)"
+    )
     return 0
 
 

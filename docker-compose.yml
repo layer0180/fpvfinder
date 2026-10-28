@@ -38,9 +38,11 @@ services:
 
       # --- OSM data ------------------------------------------------------------
       # The prebuilt store for Germany (~1.5 GB), downloaded on first start and
-      # refreshed when older than OSM_STORE_MAX_AGE_DAYS. Without it every
-      # search asks the public Overpass servers - slow, and they fail under load.
+      # swapped for a newer one while running (checked every OSM_REFRESH_HOURS).
+      # Without it every search asks the public Overpass servers - slow, and
+      # they fail under load.
       OSM_STORE_URL: "${OSM_STORE_URL:-}"
+      OSM_REFRESH_HOURS: "${OSM_REFRESH_HOURS:-6}"
       OSM_STORE_MAX_AGE_DAYS: "${OSM_STORE_MAX_AGE_DAYS:-35}"
       # Region pages (/regionen), computed from the same import.
       REGIONS_URL: "${REGIONS_URL:-}"

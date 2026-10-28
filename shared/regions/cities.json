@@ -6,588 +6,3128 @@
    "slug": "berlin",
    "lat": 52.5174,
    "lon": 13.3951,
-   "state": "Berlin"
+   "state": "Berlin",
+   "population": 3769962
   },
   {
    "name": "Hamburg",
    "slug": "hamburg",
    "lat": 53.5502,
    "lon": 10.0013,
-   "state": "Hamburg"
+   "state": "Hamburg",
+   "population": 1862565
   },
   {
    "name": "München",
    "slug": "muenchen",
    "lat": 48.1371,
    "lon": 11.5754,
-   "state": "Bayern"
+   "state": "Bayern",
+   "population": 1505036
   },
   {
    "name": "Köln",
    "slug": "koeln",
    "lat": 50.9384,
    "lon": 6.96,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 1069200
   },
   {
    "name": "Frankfurt am Main",
    "slug": "frankfurt-am-main",
    "lat": 50.1106,
    "lon": 8.6821,
-   "state": "Hessen"
+   "state": "Hessen",
+   "population": 701350
   },
   {
    "name": "Düsseldorf",
    "slug": "duesseldorf",
    "lat": 51.2254,
    "lon": 6.7763,
-   "state": "Nordrhein-Westfalen"
-  },
-  {
-   "name": "Stuttgart",
-   "slug": "stuttgart",
-   "lat": 48.7784,
-   "lon": 9.18,
-   "state": "Baden-Württemberg"
+   "state": "Nordrhein-Westfalen",
+   "population": 653253
   },
   {
    "name": "Leipzig",
    "slug": "leipzig",
    "lat": 51.3406,
    "lon": 12.3747,
-   "state": "Sachsen"
+   "state": "Sachsen",
+   "population": 628718
+  },
+  {
+   "name": "Stuttgart",
+   "slug": "stuttgart",
+   "lat": 48.7784,
+   "lon": 9.18,
+   "state": "Baden-Württemberg",
+   "population": 613392
   },
   {
    "name": "Dortmund",
    "slug": "dortmund",
    "lat": 51.5142,
    "lon": 7.4653,
-   "state": "Nordrhein-Westfalen"
-  },
-  {
-   "name": "Bremen",
-   "slug": "bremen",
-   "lat": 53.0758,
-   "lon": 8.8072,
-   "state": "Bremen"
-  },
-  {
-   "name": "Essen",
-   "slug": "essen",
-   "lat": 51.4582,
-   "lon": 7.0158,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 600933
   },
   {
    "name": "Dresden",
    "slug": "dresden",
    "lat": 51.0493,
    "lon": 13.7381,
-   "state": "Sachsen"
+   "state": "Sachsen",
+   "population": 572240
   },
   {
-   "name": "Nürnberg",
-   "slug": "nuernberg",
-   "lat": 49.4539,
-   "lon": 11.0773,
-   "state": "Bayern"
+   "name": "Essen",
+   "slug": "essen",
+   "lat": 51.4582,
+   "lon": 7.0158,
+   "state": "Nordrhein-Westfalen",
+   "population": 569884
   },
   {
    "name": "Hannover",
    "slug": "hannover",
    "lat": 52.3745,
    "lon": 9.7386,
-   "state": "Niedersachsen"
+   "state": "Niedersachsen",
+   "population": 555372
+  },
+  {
+   "name": "Bremen",
+   "slug": "bremen",
+   "lat": 53.0758,
+   "lon": 8.8072,
+   "state": "Bremen",
+   "population": 551415
+  },
+  {
+   "name": "Nürnberg",
+   "slug": "nuernberg",
+   "lat": 49.4539,
+   "lon": 11.0773,
+   "state": "Bayern",
+   "population": 531159
   },
   {
    "name": "Duisburg",
    "slug": "duisburg",
    "lat": 51.435,
    "lon": 6.7596,
-   "state": "Nordrhein-Westfalen"
-  },
-  {
-   "name": "Wuppertal",
-   "slug": "wuppertal",
-   "lat": 51.264,
-   "lon": 7.178,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 486855
   },
   {
    "name": "Bochum",
    "slug": "bochum",
    "lat": 51.4818,
    "lon": 7.2197,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 371075
   },
   {
-   "name": "Bielefeld",
-   "slug": "bielefeld",
-   "lat": 52.0191,
-   "lon": 8.531,
-   "state": "Nordrhein-Westfalen"
+   "name": "Wuppertal",
+   "slug": "wuppertal",
+   "lat": 51.264,
+   "lon": 7.178,
+   "state": "Nordrhein-Westfalen",
+   "population": 361077
   },
   {
    "name": "Bonn",
    "slug": "bonn",
    "lat": 50.7353,
    "lon": 7.1025,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 335913
   },
   {
-   "name": "Mannheim",
-   "slug": "mannheim",
-   "lat": 49.4893,
-   "lon": 8.4673,
-   "state": "Baden-Württemberg"
-  },
-  {
-   "name": "Karlsruhe",
-   "slug": "karlsruhe",
-   "lat": 49.0069,
-   "lon": 8.4034,
-   "state": "Baden-Württemberg"
+   "name": "Bielefeld",
+   "slug": "bielefeld",
+   "lat": 52.0191,
+   "lon": 8.531,
+   "state": "Nordrhein-Westfalen",
+   "population": 328864
   },
   {
    "name": "Münster",
    "slug": "muenster",
    "lat": 51.9625,
    "lon": 7.6252,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 314332
+  },
+  {
+   "name": "Mannheim",
+   "slug": "mannheim",
+   "lat": 49.4893,
+   "lon": 8.4673,
+   "state": "Baden-Württemberg",
+   "population": 310000
   },
   {
    "name": "Augsburg",
    "slug": "augsburg",
    "lat": 48.369,
    "lon": 10.898,
-   "state": "Bayern"
+   "state": "Bayern",
+   "population": 301033
   },
   {
    "name": "Wiesbaden",
    "slug": "wiesbaden",
    "lat": 50.082,
    "lon": 8.2417,
-   "state": "Hessen"
+   "state": "Hessen",
+   "population": 299946
   },
   {
-   "name": "Mönchengladbach",
-   "slug": "moenchengladbach",
-   "lat": 51.1947,
-   "lon": 6.4354,
-   "state": "Nordrhein-Westfalen"
+   "name": "Karlsruhe",
+   "slug": "karlsruhe",
+   "lat": 49.0069,
+   "lon": 8.4034,
+   "state": "Baden-Württemberg",
+   "population": 283959
   },
   {
    "name": "Gelsenkirchen",
    "slug": "gelsenkirchen",
    "lat": 51.511,
    "lon": 7.096,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 260368
   },
   {
-   "name": "Aachen",
-   "slug": "aachen",
-   "lat": 50.7764,
-   "lon": 6.0839,
-   "state": "Nordrhein-Westfalen"
+   "name": "Mönchengladbach",
+   "slug": "moenchengladbach",
+   "lat": 51.1947,
+   "lon": 6.4354,
+   "state": "Nordrhein-Westfalen",
+   "population": 255430
   },
   {
    "name": "Braunschweig",
    "slug": "braunschweig",
    "lat": 52.2647,
    "lon": 10.5236,
-   "state": "Niedersachsen"
+   "state": "Niedersachsen",
+   "population": 252962
   },
   {
    "name": "Kiel",
    "slug": "kiel",
    "lat": 54.3227,
    "lon": 10.1356,
-   "state": "Schleswig-Holstein"
-  },
-  {
-   "name": "Chemnitz",
-   "slug": "chemnitz",
-   "lat": 50.8324,
-   "lon": 12.9189,
-   "state": "Sachsen"
-  },
-  {
-   "name": "Halle (Saale)",
-   "slug": "halle-saale",
-   "lat": 51.4824,
-   "lon": 11.9713,
-   "state": "Sachsen-Anhalt"
+   "state": "Schleswig-Holstein",
+   "population": 246306
   },
   {
    "name": "Magdeburg",
    "slug": "magdeburg",
    "lat": 52.1315,
    "lon": 11.6401,
-   "state": "Sachsen-Anhalt"
+   "state": "Sachsen-Anhalt",
+   "population": 244329
   },
   {
-   "name": "Freiburg im Breisgau",
-   "slug": "freiburg-im-breisgau",
-   "lat": 47.9961,
-   "lon": 7.8494,
-   "state": "Baden-Württemberg"
+   "name": "Chemnitz",
+   "slug": "chemnitz",
+   "lat": 50.8324,
+   "lon": 12.9189,
+   "state": "Sachsen",
+   "population": 243089
   },
   {
-   "name": "Krefeld",
-   "slug": "krefeld",
-   "lat": 51.3331,
-   "lon": 6.5623,
-   "state": "Nordrhein-Westfalen"
+   "name": "Aachen",
+   "slug": "aachen",
+   "lat": 50.7764,
+   "lon": 6.0839,
+   "state": "Nordrhein-Westfalen",
+   "population": 241683
+  },
+  {
+   "name": "Halle (Saale)",
+   "slug": "halle-saale",
+   "lat": 51.4824,
+   "lon": 11.9713,
+   "state": "Sachsen-Anhalt",
+   "population": 231565
   },
   {
    "name": "Mainz",
    "slug": "mainz",
    "lat": 49.9995,
    "lon": 8.2736,
-   "state": "Rheinland-Pfalz"
+   "state": "Rheinland-Pfalz",
+   "population": 227277
   },
   {
-   "name": "Lübeck",
-   "slug": "luebeck",
-   "lat": 53.8664,
-   "lon": 10.6847,
-   "state": "Schleswig-Holstein"
+   "name": "Krefeld",
+   "slug": "krefeld",
+   "lat": 51.3331,
+   "lon": 6.5623,
+   "state": "Nordrhein-Westfalen",
+   "population": 222058
+  },
+  {
+   "name": "Freiburg im Breisgau",
+   "slug": "freiburg-im-breisgau",
+   "lat": 47.9961,
+   "lon": 7.8494,
+   "state": "Baden-Württemberg",
+   "population": 220286
   },
   {
    "name": "Erfurt",
    "slug": "erfurt",
    "lat": 50.9778,
    "lon": 11.0287,
-   "state": "Thüringen"
+   "state": "Thüringen",
+   "population": 213332
+  },
+  {
+   "name": "Lübeck",
+   "slug": "luebeck",
+   "lat": 53.8664,
+   "lon": 10.6847,
+   "state": "Schleswig-Holstein",
+   "population": 212958
   },
   {
    "name": "Oberhausen",
    "slug": "oberhausen",
    "lat": 51.4696,
    "lon": 6.8514,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 209292
   },
   {
    "name": "Rostock",
    "slug": "rostock",
    "lat": 54.0887,
    "lon": 12.14,
-   "state": "Mecklenburg-Vorpommern"
+   "state": "Mecklenburg-Vorpommern",
+   "population": 207830
   },
   {
    "name": "Kassel",
    "slug": "kassel",
    "lat": 51.3158,
    "lon": 9.4978,
-   "state": "Hessen"
+   "state": "Hessen",
+   "population": 204021
   },
   {
    "name": "Hagen",
    "slug": "hagen",
    "lat": 51.3583,
    "lon": 7.4733,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 186000
   },
   {
    "name": "Potsdam",
    "slug": "potsdam",
    "lat": 52.4009,
    "lon": 13.0591,
-   "state": "Brandenburg"
+   "state": "Brandenburg",
+   "population": 178089
   },
   {
    "name": "Saarbrücken",
    "slug": "saarbruecken",
    "lat": 49.2344,
    "lon": 6.9964,
-   "state": "Saarland"
+   "state": "Saarland",
+   "population": 177201
   },
   {
    "name": "Hamm",
    "slug": "hamm",
    "lat": 51.6813,
    "lon": 7.8191,
-   "state": "Nordrhein-Westfalen"
-  },
-  {
-   "name": "Ludwigshafen am Rhein",
-   "slug": "ludwigshafen-am-rhein",
-   "lat": 49.4704,
-   "lon": 8.4382,
-   "state": "Rheinland-Pfalz"
-  },
-  {
-   "name": "Oldenburg",
-   "slug": "oldenburg",
-   "lat": 53.139,
-   "lon": 8.2146,
-   "state": "Niedersachsen"
-  },
-  {
-   "name": "Mülheim an der Ruhr",
-   "slug": "muelheim-an-der-ruhr",
-   "lat": 51.4273,
-   "lon": 6.8829,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 176048
   },
   {
    "name": "Osnabrück",
    "slug": "osnabrueck",
    "lat": 52.272,
    "lon": 8.0476,
-   "state": "Niedersachsen"
+   "state": "Niedersachsen",
+   "population": 167730
   },
   {
-   "name": "Leverkusen",
-   "slug": "leverkusen",
-   "lat": 51.0325,
-   "lon": 6.9881,
-   "state": "Nordrhein-Westfalen"
-  },
-  {
-   "name": "Darmstadt",
-   "slug": "darmstadt",
-   "lat": 49.8728,
-   "lon": 8.6512,
-   "state": "Hessen"
-  },
-  {
-   "name": "Heidelberg",
-   "slug": "heidelberg",
-   "lat": 49.4094,
-   "lon": 8.6947,
-   "state": "Baden-Württemberg"
+   "name": "Mülheim an der Ruhr",
+   "slug": "muelheim-an-der-ruhr",
+   "lat": 51.4273,
+   "lon": 6.8829,
+   "state": "Nordrhein-Westfalen",
+   "population": 167108
   },
   {
    "name": "Solingen",
    "slug": "solingen",
    "lat": 51.1722,
    "lon": 7.0846,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 164205
   },
   {
-   "name": "Herne",
-   "slug": "herne",
-   "lat": 51.538,
-   "lon": 7.22,
-   "state": "Nordrhein-Westfalen"
+   "name": "Oldenburg",
+   "slug": "oldenburg",
+   "lat": 53.139,
+   "lon": 8.2146,
+   "state": "Niedersachsen",
+   "population": 163830
   },
   {
-   "name": "Regensburg",
-   "slug": "regensburg",
-   "lat": 49.0195,
-   "lon": 12.0975,
-   "state": "Bayern"
+   "name": "Ludwigshafen am Rhein",
+   "slug": "ludwigshafen-am-rhein",
+   "lat": 49.4704,
+   "lon": 8.4382,
+   "state": "Rheinland-Pfalz",
+   "population": 163340
+  },
+  {
+   "name": "Leverkusen",
+   "slug": "leverkusen",
+   "lat": 51.0325,
+   "lon": 6.9881,
+   "state": "Nordrhein-Westfalen",
+   "population": 160819
+  },
+  {
+   "name": "Darmstadt",
+   "slug": "darmstadt",
+   "lat": 49.8728,
+   "lon": 8.6512,
+   "state": "Hessen",
+   "population": 159631
   },
   {
    "name": "Neuss",
    "slug": "neuss",
    "lat": 51.1982,
    "lon": 6.6916,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 159122
+  },
+  {
+   "name": "Herne",
+   "slug": "herne",
+   "lat": 51.538,
+   "lon": 7.22,
+   "state": "Nordrhein-Westfalen",
+   "population": 156449
+  },
+  {
+   "name": "Bad Bramstedt",
+   "slug": "bad-bramstedt",
+   "lat": 53.9167,
+   "lon": 9.8833,
+   "state": "Schleswig-Holstein",
+   "population": 154390
+  },
+  {
+   "name": "Heidelberg",
+   "slug": "heidelberg",
+   "lat": 49.4094,
+   "lon": 8.6947,
+   "state": "Baden-Württemberg",
+   "population": 152113
   },
   {
    "name": "Paderborn",
    "slug": "paderborn",
    "lat": 51.7177,
    "lon": 8.7527,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 151633
   },
   {
-   "name": "Ingolstadt",
-   "slug": "ingolstadt",
-   "lat": 48.763,
-   "lon": 11.425,
-   "state": "Bayern"
+   "name": "Regensburg",
+   "slug": "regensburg",
+   "lat": 49.0195,
+   "lon": 12.0975,
+   "state": "Bayern",
+   "population": 151517
   },
   {
    "name": "Offenbach am Main",
    "slug": "offenbach-am-main",
    "lat": 50.1055,
    "lon": 8.7611,
-   "state": "Hessen"
-  },
-  {
-   "name": "Fürth",
-   "slug": "fuerth",
-   "lat": 49.4886,
-   "lon": 10.9587,
-   "state": "Bayern"
-  },
-  {
-   "name": "Würzburg",
-   "slug": "wuerzburg",
-   "lat": 49.778,
-   "lon": 9.9435,
-   "state": "Bayern"
-  },
-  {
-   "name": "Ulm",
-   "slug": "ulm",
-   "lat": 48.3985,
-   "lon": 9.9912,
-   "state": "Baden-Württemberg"
-  },
-  {
-   "name": "Heilbronn",
-   "slug": "heilbronn",
-   "lat": 49.1423,
-   "lon": 9.2187,
-   "state": "Baden-Württemberg"
-  },
-  {
-   "name": "Pforzheim",
-   "slug": "pforzheim",
-   "lat": 48.8909,
-   "lon": 8.7026,
-   "state": "Baden-Württemberg"
-  },
-  {
-   "name": "Wolfsburg",
-   "slug": "wolfsburg",
-   "lat": 52.4206,
-   "lon": 10.7862,
-   "state": "Niedersachsen"
+   "state": "Hessen",
+   "population": 136824
   },
   {
    "name": "Göttingen",
    "slug": "goettingen",
    "lat": 51.5328,
    "lon": 9.9352,
-   "state": "Niedersachsen"
+   "state": "Niedersachsen",
+   "population": 135887
   },
   {
-   "name": "Bottrop",
-   "slug": "bottrop",
-   "lat": 51.5216,
-   "lon": 6.9292,
-   "state": "Nordrhein-Westfalen"
+   "name": "Fürth",
+   "slug": "fuerth",
+   "lat": 49.4886,
+   "lon": 10.9587,
+   "state": "Bayern",
+   "population": 135082
   },
   {
-   "name": "Reutlingen",
-   "slug": "reutlingen",
-   "lat": 48.492,
-   "lon": 9.2114,
-   "state": "Baden-Württemberg"
+   "name": "Heilbronn",
+   "slug": "heilbronn",
+   "lat": 49.1423,
+   "lon": 9.2187,
+   "state": "Baden-Württemberg",
+   "population": 131653
+  },
+  {
+   "name": "Ingolstadt",
+   "slug": "ingolstadt",
+   "lat": 48.763,
+   "lon": 11.425,
+   "state": "Bayern",
+   "population": 127886
+  },
+  {
+   "name": "Würzburg",
+   "slug": "wuerzburg",
+   "lat": 49.778,
+   "lon": 9.9435,
+   "state": "Bayern",
+   "population": 124700
+  },
+  {
+   "name": "Wolfsburg",
+   "slug": "wolfsburg",
+   "lat": 52.4206,
+   "lon": 10.7862,
+   "state": "Niedersachsen",
+   "population": 122457
+  },
+  {
+   "name": "Ulm",
+   "slug": "ulm",
+   "lat": 48.3985,
+   "lon": 9.9912,
+   "state": "Baden-Württemberg",
+   "population": 121648
   },
   {
    "name": "Erlangen",
    "slug": "erlangen",
    "lat": 49.5892,
    "lon": 10.9812,
-   "state": "Bayern"
+   "state": "Bayern",
+   "population": 120028
+  },
+  {
+   "name": "Pforzheim",
+   "slug": "pforzheim",
+   "lat": 48.8909,
+   "lon": 8.7026,
+   "state": "Baden-Württemberg",
+   "population": 117754
   },
   {
    "name": "Bremerhaven",
    "slug": "bremerhaven",
    "lat": 53.5505,
    "lon": 8.5852,
-   "state": "Bremen"
-  },
-  {
-   "name": "Koblenz",
-   "slug": "koblenz",
-   "lat": 50.3533,
-   "lon": 7.5944,
-   "state": "Rheinland-Pfalz"
-  },
-  {
-   "name": "Bergisch Gladbach",
-   "slug": "bergisch-gladbach",
-   "lat": 50.9929,
-   "lon": 7.1277,
-   "state": "Nordrhein-Westfalen"
+   "state": "Bremen",
+   "population": 117281
   },
   {
    "name": "Remscheid",
    "slug": "remscheid",
    "lat": 51.1799,
    "lon": 7.1944,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 116827
   },
   {
-   "name": "Trier",
-   "slug": "trier",
-   "lat": 49.7596,
-   "lon": 6.6442,
-   "state": "Rheinland-Pfalz"
+   "name": "Bottrop",
+   "slug": "bottrop",
+   "lat": 51.5216,
+   "lon": 6.9292,
+   "state": "Nordrhein-Westfalen",
+   "population": 116055
   },
   {
    "name": "Recklinghausen",
    "slug": "recklinghausen",
    "lat": 51.6144,
    "lon": 7.1979,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 115320
+  },
+  {
+   "name": "Reutlingen",
+   "slug": "reutlingen",
+   "lat": 48.492,
+   "lon": 9.2114,
+   "state": "Baden-Württemberg",
+   "population": 112099
   },
   {
    "name": "Jena",
    "slug": "jena",
    "lat": 50.9282,
    "lon": 11.5879,
-   "state": "Thüringen"
+   "state": "Thüringen",
+   "population": 111343
+  },
+  {
+   "name": "Koblenz",
+   "slug": "koblenz",
+   "lat": 50.3533,
+   "lon": 7.5944,
+   "state": "Rheinland-Pfalz",
+   "population": 110643
+  },
+  {
+   "name": "Bergisch Gladbach",
+   "slug": "bergisch-gladbach",
+   "lat": 50.9929,
+   "lon": 7.1277,
+   "state": "Nordrhein-Westfalen",
+   "population": 109425
+  },
+  {
+   "name": "Trier",
+   "slug": "trier",
+   "lat": 49.7596,
+   "lon": 6.6442,
+   "state": "Rheinland-Pfalz",
+   "population": 107233
   },
   {
    "name": "Moers",
    "slug": "moers",
    "lat": 51.4513,
    "lon": 6.6284,
-   "state": "Nordrhein-Westfalen"
+   "state": "Nordrhein-Westfalen",
+   "population": 105102
   },
   {
    "name": "Salzgitter",
    "slug": "salzgitter",
    "lat": 52.1504,
    "lon": 10.3593,
-   "state": "Niedersachsen"
-  },
-  {
-   "name": "Siegen",
-   "slug": "siegen",
-   "lat": 50.8751,
-   "lon": 8.0256,
-   "state": "Nordrhein-Westfalen"
+   "state": "Niedersachsen",
+   "population": 103694
   },
   {
    "name": "Gütersloh",
    "slug": "guetersloh",
    "lat": 51.9167,
    "lon": 8.4043,
-   "state": "Nordrhein-Westfalen"
-  },
-  {
-   "name": "Hildesheim",
-   "slug": "hildesheim",
-   "lat": 52.1527,
-   "lon": 9.9518,
-   "state": "Niedersachsen"
+   "state": "Nordrhein-Westfalen",
+   "population": 103603
   },
   {
    "name": "Hanau",
    "slug": "hanau",
    "lat": 50.1329,
    "lon": 8.917,
-   "state": "Hessen"
+   "state": "Hessen",
+   "population": 101364
   },
   {
-   "name": "Kaiserslautern",
-   "slug": "kaiserslautern",
-   "lat": 49.4432,
-   "lon": 7.769,
-   "state": "Rheinland-Pfalz"
+   "name": "Siegen",
+   "slug": "siegen",
+   "lat": 50.8751,
+   "lon": 8.0256,
+   "state": "Nordrhein-Westfalen",
+   "population": 99403
+  },
+  {
+   "name": "Flensburg",
+   "slug": "flensburg",
+   "lat": 54.7833,
+   "lon": 9.4333,
+   "state": "Schleswig-Holstein",
+   "population": 99307
   },
   {
    "name": "Cottbus",
    "slug": "cottbus",
    "lat": 51.7567,
    "lon": 14.3357,
-   "state": "Brandenburg"
+   "state": "Brandenburg",
+   "population": 98693
   },
   {
    "name": "Schwerin",
    "slug": "schwerin",
    "lat": 53.6288,
    "lon": 11.4148,
-   "state": "Mecklenburg-Vorpommern"
+   "state": "Mecklenburg-Vorpommern",
+   "population": 98596
+  },
+  {
+   "name": "Hildesheim",
+   "slug": "hildesheim",
+   "lat": 52.1527,
+   "lon": 9.9518,
+   "state": "Niedersachsen",
+   "population": 98510
+  },
+  {
+   "name": "Witten",
+   "slug": "witten",
+   "lat": 51.437,
+   "lon": 7.3351,
+   "state": "Nordrhein-Westfalen",
+   "population": 97986
+  },
+  {
+   "name": "Kaiserslautern",
+   "slug": "kaiserslautern",
+   "lat": 49.4432,
+   "lon": 7.769,
+   "state": "Rheinland-Pfalz",
+   "population": 97162
+  },
+  {
+   "name": "Iserlohn",
+   "slug": "iserlohn",
+   "lat": 51.3747,
+   "lon": 7.7,
+   "state": "Nordrhein-Westfalen",
+   "population": 94536
+  },
+  {
+   "name": "Zwickau",
+   "slug": "zwickau",
+   "lat": 50.7185,
+   "lon": 12.4939,
+   "state": "Sachsen",
+   "population": 93128
+  },
+  {
+   "name": "Gera",
+   "slug": "gera",
+   "lat": 50.8766,
+   "lon": 12.0833,
+   "state": "Thüringen",
+   "population": 93125
+  },
+  {
+   "name": "Ratingen",
+   "slug": "ratingen",
+   "lat": 51.2973,
+   "lon": 6.8494,
+   "state": "Nordrhein-Westfalen",
+   "population": 93099
+  },
+  {
+   "name": "Esslingen am Neckar",
+   "slug": "esslingen-am-neckar",
+   "lat": 48.7428,
+   "lon": 9.3072,
+   "state": "Baden-Württemberg",
+   "population": 92261
+  },
+  {
+   "name": "Gießen",
+   "slug": "giessen",
+   "lat": 50.5862,
+   "lon": 8.6742,
+   "state": "Hessen",
+   "population": 92000
+  },
+  {
+   "name": "Tübingen",
+   "slug": "tuebingen",
+   "lat": 48.5203,
+   "lon": 9.0536,
+   "state": "Baden-Württemberg",
+   "population": 91239
+  },
+  {
+   "name": "Ludwigsburg",
+   "slug": "ludwigsburg",
+   "lat": 48.8954,
+   "lon": 9.1895,
+   "state": "Baden-Württemberg",
+   "population": 91116
+  },
+  {
+   "name": "Lünen",
+   "slug": "luenen",
+   "lat": 51.6142,
+   "lon": 7.5228,
+   "state": "Nordrhein-Westfalen",
+   "population": 90800
+  },
+  {
+   "name": "Düren",
+   "slug": "dueren",
+   "lat": 50.8032,
+   "lon": 6.4821,
+   "state": "Nordrhein-Westfalen",
+   "population": 88953
+  },
+  {
+   "name": "Worms",
+   "slug": "worms",
+   "lat": 49.6303,
+   "lon": 8.3621,
+   "state": "Rheinland-Pfalz",
+   "population": 86283
+  },
+  {
+   "name": "Konstanz",
+   "slug": "konstanz",
+   "lat": 47.6592,
+   "lon": 9.1751,
+   "state": "Baden-Württemberg",
+   "population": 85692
+  },
+  {
+   "name": "Velbert",
+   "slug": "velbert",
+   "lat": 51.3407,
+   "lon": 7.044,
+   "state": "Nordrhein-Westfalen",
+   "population": 84579
+  },
+  {
+   "name": "Marl",
+   "slug": "marl",
+   "lat": 51.6486,
+   "lon": 7.0829,
+   "state": "Nordrhein-Westfalen",
+   "population": 83634
+  },
+  {
+   "name": "Villingen-Schwenningen",
+   "slug": "villingen-schwenningen",
+   "lat": 48.0632,
+   "lon": 8.493,
+   "state": "Baden-Württemberg",
+   "population": 81128
+  },
+  {
+   "name": "Norderstedt",
+   "slug": "norderstedt",
+   "lat": 53.709,
+   "lon": 9.9892,
+   "state": "Schleswig-Holstein",
+   "population": 80420
+  },
+  {
+   "name": "Minden",
+   "slug": "minden",
+   "lat": 52.2881,
+   "lon": 8.9169,
+   "state": "Nordrhein-Westfalen",
+   "population": 79969
+  },
+  {
+   "name": "Neumünster",
+   "slug": "neumuenster",
+   "lat": 54.0757,
+   "lon": 9.9815,
+   "state": "Schleswig-Holstein",
+   "population": 79197
+  },
+  {
+   "name": "Troisdorf",
+   "slug": "troisdorf",
+   "lat": 50.8153,
+   "lon": 7.1593,
+   "state": "Nordrhein-Westfalen",
+   "population": 79026
+  },
+  {
+   "name": "Dorsten",
+   "slug": "dorsten",
+   "lat": 51.6604,
+   "lon": 6.9647,
+   "state": "Nordrhein-Westfalen",
+   "population": 77294
+  },
+  {
+   "name": "Wilhelmshaven",
+   "slug": "wilhelmshaven",
+   "lat": 53.5279,
+   "lon": 8.1063,
+   "state": "Niedersachsen",
+   "population": 75728
+  },
+  {
+   "name": "Viersen",
+   "slug": "viersen",
+   "lat": 51.2562,
+   "lon": 6.3905,
+   "state": "Nordrhein-Westfalen",
+   "population": 74941
+  },
+  {
+   "name": "Lüneburg",
+   "slug": "lueneburg",
+   "lat": 53.2487,
+   "lon": 10.4079,
+   "state": "Niedersachsen",
+   "population": 74125
+  },
+  {
+   "name": "Brandenburg an der Havel",
+   "slug": "brandenburg-an-der-havel",
+   "lat": 52.4108,
+   "lon": 12.5498,
+   "state": "Brandenburg",
+   "population": 74113
+  },
+  {
+   "name": "Delmenhorst",
+   "slug": "delmenhorst",
+   "lat": 53.0481,
+   "lon": 8.6286,
+   "state": "Niedersachsen",
+   "population": 74052
+  },
+  {
+   "name": "Gladbeck",
+   "slug": "gladbeck",
+   "lat": 51.5719,
+   "lon": 6.9877,
+   "state": "Nordrhein-Westfalen",
+   "population": 74011
+  },
+  {
+   "name": "Castrop-Rauxel",
+   "slug": "castrop-rauxel",
+   "lat": 51.5646,
+   "lon": 7.3106,
+   "state": "Nordrhein-Westfalen",
+   "population": 73751
+  },
+  {
+   "name": "Arnsberg",
+   "slug": "arnsberg",
+   "lat": 51.4002,
+   "lon": 8.0606,
+   "state": "Nordrhein-Westfalen",
+   "population": 73501
+  },
+  {
+   "name": "Rheine",
+   "slug": "rheine",
+   "lat": 52.2798,
+   "lon": 7.4374,
+   "state": "Nordrhein-Westfalen",
+   "population": 73484
+  },
+  {
+   "name": "Detmold",
+   "slug": "detmold",
+   "lat": 51.9363,
+   "lon": 8.8792,
+   "state": "Nordrhein-Westfalen",
+   "population": 73449
+  },
+  {
+   "name": "Marburg",
+   "slug": "marburg",
+   "lat": 50.809,
+   "lon": 8.7705,
+   "state": "Hessen",
+   "population": 73125
+  },
+  {
+   "name": "Lüdenscheid",
+   "slug": "luedenscheid",
+   "lat": 51.2181,
+   "lon": 7.6397,
+   "state": "Nordrhein-Westfalen",
+   "population": 72923
+  },
+  {
+   "name": "Bamberg",
+   "slug": "bamberg",
+   "lat": 49.8916,
+   "lon": 10.8868,
+   "state": "Bayern",
+   "population": 72821
+  },
+  {
+   "name": "Bayreuth",
+   "slug": "bayreuth",
+   "lat": 49.9446,
+   "lon": 11.5744,
+   "state": "Bayern",
+   "population": 72295
+  },
+  {
+   "name": "Landshut",
+   "slug": "landshut",
+   "lat": 48.5362,
+   "lon": 12.1517,
+   "state": "Bayern",
+   "population": 71922
+  },
+  {
+   "name": "Bocholt",
+   "slug": "bocholt",
+   "lat": 51.8383,
+   "lon": 6.6149,
+   "state": "Nordrhein-Westfalen",
+   "population": 70856
+  },
+  {
+   "name": "Celle",
+   "slug": "celle",
+   "lat": 52.6241,
+   "lon": 10.0811,
+   "state": "Niedersachsen",
+   "population": 69748
+  },
+  {
+   "name": "Aalen",
+   "slug": "aalen",
+   "lat": 48.8376,
+   "lon": 10.093,
+   "state": "Baden-Württemberg",
+   "population": 68816
+  },
+  {
+   "name": "Fulda",
+   "slug": "fulda",
+   "lat": 50.5515,
+   "lon": 9.6762,
+   "state": "Hessen",
+   "population": 67980
+  },
+  {
+   "name": "Aschaffenburg",
+   "slug": "aschaffenburg",
+   "lat": 49.9738,
+   "lon": 9.1447,
+   "state": "Bayern",
+   "population": 67844
+  },
+  {
+   "name": "Kempten (Allgäu)",
+   "slug": "kempten-allgaeu",
+   "lat": 47.7267,
+   "lon": 10.3169,
+   "state": "Bayern",
+   "population": 67645
+  },
+  {
+   "name": "Dessau",
+   "slug": "dessau",
+   "lat": 51.831,
+   "lon": 12.2431,
+   "state": "Sachsen-Anhalt",
+   "population": 67304
+  },
+  {
+   "name": "Dinslaken",
+   "slug": "dinslaken",
+   "lat": 51.5624,
+   "lon": 6.7345,
+   "state": "Nordrhein-Westfalen",
+   "population": 67190
+  },
+  {
+   "name": "Neuwied",
+   "slug": "neuwied",
+   "lat": 50.4302,
+   "lon": 7.4663,
+   "state": "Rheinland-Pfalz",
+   "population": 66455
+  },
+  {
+   "name": "Grevenbroich",
+   "slug": "grevenbroich",
+   "lat": 51.0906,
+   "lon": 6.5835,
+   "state": "Nordrhein-Westfalen",
+   "population": 66314
+  },
+  {
+   "name": "Lippstadt",
+   "slug": "lippstadt",
+   "lat": 51.6747,
+   "lon": 8.3472,
+   "state": "Nordrhein-Westfalen",
+   "population": 66312
+  },
+  {
+   "name": "Rüsselsheim am Main",
+   "slug": "ruesselsheim-am-main",
+   "lat": 49.9949,
+   "lon": 8.4117,
+   "state": "Hessen",
+   "population": 66000
+  },
+  {
+   "name": "Plauen",
+   "slug": "plauen",
+   "lat": 50.4951,
+   "lon": 12.1347,
+   "state": "Sachsen",
+   "population": 65738
+  },
+  {
+   "name": "Weimar",
+   "slug": "weimar",
+   "lat": 50.9793,
+   "lon": 11.3298,
+   "state": "Thüringen",
+   "population": 65566
+  },
+  {
+   "name": "Herford",
+   "slug": "herford",
+   "lat": 52.1152,
+   "lon": 8.6711,
+   "state": "Nordrhein-Westfalen",
+   "population": 64957
+  },
+  {
+   "name": "Schwäbisch Gmünd",
+   "slug": "schwaebisch-gmuend",
+   "lat": 48.7999,
+   "lon": 9.7978,
+   "state": "Baden-Württemberg",
+   "population": 64416
+  },
+  {
+   "name": "Kerpen",
+   "slug": "kerpen",
+   "lat": 50.8696,
+   "lon": 6.6947,
+   "state": "Nordrhein-Westfalen",
+   "population": 63784
+  },
+  {
+   "name": "Neubrandenburg",
+   "slug": "neubrandenburg",
+   "lat": 53.5574,
+   "lon": 13.2603,
+   "state": "Mecklenburg-Vorpommern",
+   "population": 63437
+  },
+  {
+   "name": "Neu-Ulm",
+   "slug": "neu-ulm",
+   "lat": 48.3953,
+   "lon": 10.0005,
+   "state": "Bayern",
+   "population": 62610
+  },
+  {
+   "name": "Bergheim",
+   "slug": "bergheim",
+   "lat": 50.954,
+   "lon": 6.641,
+   "state": "Nordrhein-Westfalen",
+   "population": 62454
+  },
+  {
+   "name": "Dormagen",
+   "slug": "dormagen",
+   "lat": 51.0934,
+   "lon": 6.8416,
+   "state": "Nordrhein-Westfalen",
+   "population": 62312
+  },
+  {
+   "name": "Frankfurt (Oder)",
+   "slug": "frankfurt-oder",
+   "lat": 52.3412,
+   "lon": 14.5495,
+   "state": "Brandenburg",
+   "population": 61969
+  },
+  {
+   "name": "Rosenheim",
+   "slug": "rosenheim",
+   "lat": 47.8558,
+   "lon": 12.1273,
+   "state": "Bayern",
+   "population": 61844
+  },
+  {
+   "name": "Sindelfingen",
+   "slug": "sindelfingen",
+   "lat": 48.7084,
+   "lon": 9.0035,
+   "state": "Baden-Württemberg",
+   "population": 61669
+  },
+  {
+   "name": "Herten",
+   "slug": "herten",
+   "lat": 51.5942,
+   "lon": 7.1368,
+   "state": "Nordrhein-Westfalen",
+   "population": 60582
+  },
+  {
+   "name": "Wesel",
+   "slug": "wesel",
+   "lat": 51.6577,
+   "lon": 6.6171,
+   "state": "Nordrhein-Westfalen",
+   "population": 60070
+  },
+  {
+   "name": "Garbsen",
+   "slug": "garbsen",
+   "lat": 52.4277,
+   "lon": 9.6005,
+   "state": "Niedersachsen",
+   "population": 59912
+  },
+  {
+   "name": "Hürth",
+   "slug": "huerth",
+   "lat": 50.8807,
+   "lon": 6.8766,
+   "state": "Nordrhein-Westfalen",
+   "population": 59496
+  },
+  {
+   "name": "Sankt Augustin",
+   "slug": "sankt-augustin",
+   "lat": 50.7753,
+   "lon": 7.1896,
+   "state": "Nordrhein-Westfalen",
+   "population": 59450
+  },
+  {
+   "name": "Unna",
+   "slug": "unna",
+   "lat": 51.5349,
+   "lon": 7.689,
+   "state": "Nordrhein-Westfalen",
+   "population": 58856
+  },
+  {
+   "name": "Offenburg",
+   "slug": "offenburg",
+   "lat": 48.4696,
+   "lon": 7.9429,
+   "state": "Baden-Württemberg",
+   "population": 58769
+  },
+  {
+   "name": "Euskirchen",
+   "slug": "euskirchen",
+   "lat": 50.6613,
+   "lon": 6.7872,
+   "state": "Nordrhein-Westfalen",
+   "population": 58435
+  },
+  {
+   "name": "Friedrichshafen",
+   "slug": "friedrichshafen",
+   "lat": 47.65,
+   "lon": 9.4801,
+   "state": "Baden-Württemberg",
+   "population": 58099
+  },
+  {
+   "name": "Stolberg",
+   "slug": "stolberg",
+   "lat": 50.7703,
+   "lon": 6.2296,
+   "state": "Nordrhein-Westfalen",
+   "population": 57755
+  },
+  {
+   "name": "Eschweiler",
+   "slug": "eschweiler",
+   "lat": 50.8175,
+   "lon": 6.2631,
+   "state": "Nordrhein-Westfalen",
+   "population": 57534
+  },
+  {
+   "name": "Görlitz",
+   "slug": "goerlitz",
+   "lat": 51.1563,
+   "lon": 14.991,
+   "state": "Sachsen",
+   "population": 57427
+  },
+  {
+   "name": "Stralsund",
+   "slug": "stralsund",
+   "lat": 54.3096,
+   "lon": 13.0821,
+   "state": "Mecklenburg-Vorpommern",
+   "population": 57301
+  },
+  {
+   "name": "Langenfeld",
+   "slug": "langenfeld",
+   "lat": 51.1009,
+   "lon": 6.9459,
+   "state": "Nordrhein-Westfalen",
+   "population": 56982
+  },
+  {
+   "name": "Bad Homburg vor der Höhe",
+   "slug": "bad-homburg-vor-der-hoehe",
+   "lat": 50.2284,
+   "lon": 8.613,
+   "state": "Hessen",
+   "population": 56688
+  },
+  {
+   "name": "Schweinfurt",
+   "slug": "schweinfurt",
+   "lat": 50.0451,
+   "lon": 10.2341,
+   "state": "Bayern",
+   "population": 56625
+  },
+  {
+   "name": "Greifswald",
+   "slug": "greifswald",
+   "lat": 54.0958,
+   "lon": 13.3815,
+   "state": "Mecklenburg-Vorpommern",
+   "population": 56445
+  },
+  {
+   "name": "Hattingen",
+   "slug": "hattingen",
+   "lat": 51.4007,
+   "lon": 7.1862,
+   "state": "Nordrhein-Westfalen",
+   "population": 56263
+  },
+  {
+   "name": "Hameln",
+   "slug": "hameln",
+   "lat": 52.104,
+   "lon": 9.3562,
+   "state": "Niedersachsen",
+   "population": 56260
+  },
+  {
+   "name": "Göppingen",
+   "slug": "goeppingen",
+   "lat": 48.7031,
+   "lon": 9.6541,
+   "state": "Baden-Württemberg",
+   "population": 55846
+  },
+  {
+   "name": "Waiblingen",
+   "slug": "waiblingen",
+   "lat": 48.8326,
+   "lon": 9.3164,
+   "state": "Baden-Württemberg",
+   "population": 55449
+  },
+  {
+   "name": "Wetzlar",
+   "slug": "wetzlar",
+   "lat": 50.5525,
+   "lon": 8.5074,
+   "state": "Hessen",
+   "population": 54959
+  },
+  {
+   "name": "Hilden",
+   "slug": "hilden",
+   "lat": 51.1674,
+   "lon": 6.9307,
+   "state": "Nordrhein-Westfalen",
+   "population": 54737
+  },
+  {
+   "name": "Baden-Baden",
+   "slug": "baden-baden",
+   "lat": 48.7611,
+   "lon": 8.24,
+   "state": "Baden-Württemberg",
+   "population": 54454
+  },
+  {
+   "name": "Passau",
+   "slug": "passau",
+   "lat": 48.5748,
+   "lon": 13.461,
+   "state": "Bayern",
+   "population": 54401
+  },
+  {
+   "name": "Meerbusch",
+   "slug": "meerbusch",
+   "lat": 51.2652,
+   "lon": 6.6761,
+   "state": "Nordrhein-Westfalen",
+   "population": 54318
+  },
+  {
+   "name": "Pulheim",
+   "slug": "pulheim",
+   "lat": 50.998,
+   "lon": 6.8025,
+   "state": "Nordrhein-Westfalen",
+   "population": 54200
+  },
+  {
+   "name": "Menden (Sauerland)",
+   "slug": "menden-sauerland",
+   "lat": 51.4378,
+   "lon": 7.7954,
+   "state": "Nordrhein-Westfalen",
+   "population": 53354
+  },
+  {
+   "name": "Nordhorn",
+   "slug": "nordhorn",
+   "lat": 52.436,
+   "lon": 7.0708,
+   "state": "Niedersachsen",
+   "population": 53285
+  },
+  {
+   "name": "Gummersbach",
+   "slug": "gummersbach",
+   "lat": 51.0278,
+   "lon": 7.5631,
+   "state": "Nordrhein-Westfalen",
+   "population": 53183
+  },
+  {
+   "name": "Bergkamen",
+   "slug": "bergkamen",
+   "lat": 51.6149,
+   "lon": 7.6363,
+   "state": "Nordrhein-Westfalen",
+   "population": 52517
+  },
+  {
+   "name": "Ahlen",
+   "slug": "ahlen",
+   "lat": 51.7628,
+   "lon": 7.8909,
+   "state": "Nordrhein-Westfalen",
+   "population": 52503
+  },
+  {
+   "name": "Neustadt an der Weinstraße",
+   "slug": "neustadt-an-der-weinstrasse",
+   "lat": 49.3536,
+   "lon": 8.136,
+   "state": "Rheinland-Pfalz",
+   "population": 52400
+  },
+  {
+   "name": "Bad Kreuznach",
+   "slug": "bad-kreuznach",
+   "lat": 49.8432,
+   "lon": 7.8658,
+   "state": "Rheinland-Pfalz",
+   "population": 52385
+  },
+  {
+   "name": "Lingen (Ems)",
+   "slug": "lingen-ems",
+   "lat": 52.5225,
+   "lon": 7.3166,
+   "state": "Niedersachsen",
+   "population": 52158
+  },
+  {
+   "name": "Langenhagen",
+   "slug": "langenhagen",
+   "lat": 52.4431,
+   "lon": 9.739,
+   "state": "Niedersachsen",
+   "population": 51847
+  },
+  {
+   "name": "Willich",
+   "slug": "willich",
+   "lat": 51.2641,
+   "lon": 6.5447,
+   "state": "Nordrhein-Westfalen",
+   "population": 51846
+  },
+  {
+   "name": "Wolfenbüttel",
+   "slug": "wolfenbuettel",
+   "lat": 52.1625,
+   "lon": 10.5348,
+   "state": "Niedersachsen",
+   "population": 51569
+  },
+  {
+   "name": "Frechen",
+   "slug": "frechen",
+   "lat": 50.9096,
+   "lon": 6.8082,
+   "state": "Nordrhein-Westfalen",
+   "population": 51080
+  },
+  {
+   "name": "Ravensburg",
+   "slug": "ravensburg",
+   "lat": 47.7811,
+   "lon": 9.6125,
+   "state": "Baden-Württemberg",
+   "population": 50776
+  },
+  {
+   "name": "Elmshorn",
+   "slug": "elmshorn",
+   "lat": 53.7532,
+   "lon": 9.6525,
+   "state": "Schleswig-Holstein",
+   "population": 50772
+  },
+  {
+   "name": "Goslar",
+   "slug": "goslar",
+   "lat": 51.906,
+   "lon": 10.4266,
+   "state": "Niedersachsen",
+   "population": 50681
+  },
+  {
+   "name": "Emden",
+   "slug": "emden",
+   "lat": 53.3671,
+   "lon": 7.2058,
+   "state": "Niedersachsen",
+   "population": 50535
+  },
+  {
+   "name": "Ibbenbüren",
+   "slug": "ibbenbueren",
+   "lat": 52.2775,
+   "lon": 7.7151,
+   "state": "Nordrhein-Westfalen",
+   "population": 50438
+  },
+  {
+   "name": "Speyer",
+   "slug": "speyer",
+   "lat": 49.3166,
+   "lon": 8.4336,
+   "state": "Rheinland-Pfalz",
+   "population": 50284
+  },
+  {
+   "name": "Peine",
+   "slug": "peine",
+   "lat": 52.3209,
+   "lon": 10.2349,
+   "state": "Niedersachsen",
+   "population": 49810
+  },
+  {
+   "name": "Rheda-Wiedenbrück",
+   "slug": "rheda-wiedenbrueck",
+   "lat": 51.8428,
+   "lon": 8.2986,
+   "state": "Nordrhein-Westfalen",
+   "population": 49722
+  },
+  {
+   "name": "Cuxhaven",
+   "slug": "cuxhaven",
+   "lat": 53.8688,
+   "lon": 8.6983,
+   "state": "Niedersachsen",
+   "population": 49697
+  },
+  {
+   "name": "Hennef",
+   "slug": "hennef",
+   "lat": 50.7754,
+   "lon": 7.2848,
+   "state": "Nordrhein-Westfalen",
+   "population": 49217
+  },
+  {
+   "name": "Bornheim",
+   "slug": "bornheim",
+   "lat": 50.7628,
+   "lon": 6.9891,
+   "state": "Nordrhein-Westfalen",
+   "population": 49121
+  },
+  {
+   "name": "Lörrach",
+   "slug": "loerrach",
+   "lat": 47.6121,
+   "lon": 7.6607,
+   "state": "Baden-Württemberg",
+   "population": 48307
+  },
+  {
+   "name": "Bad Oeynhausen",
+   "slug": "bad-oeynhausen",
+   "lat": 52.2014,
+   "lon": 8.7981,
+   "state": "Nordrhein-Westfalen",
+   "population": 48294
+  },
+  {
+   "name": "Rodgau",
+   "slug": "rodgau",
+   "lat": 50.0177,
+   "lon": 8.8853,
+   "state": "Hessen",
+   "population": 47946
+  },
+  {
+   "name": "Soest",
+   "slug": "soest",
+   "lat": 51.5726,
+   "lon": 8.1061,
+   "state": "Nordrhein-Westfalen",
+   "population": 47460
+  },
+  {
+   "name": "Rastatt",
+   "slug": "rastatt",
+   "lat": 48.8585,
+   "lon": 8.204,
+   "state": "Baden-Württemberg",
+   "population": 47110
+  },
+  {
+   "name": "Herzogenrath",
+   "slug": "herzogenrath",
+   "lat": 50.8685,
+   "lon": 6.0951,
+   "state": "Nordrhein-Westfalen",
+   "population": 47054
+  },
+  {
+   "name": "Frankenthal (Pfalz)",
+   "slug": "frankenthal-pfalz",
+   "lat": 49.5353,
+   "lon": 8.3541,
+   "state": "Rheinland-Pfalz",
+   "population": 47002
+  },
+  {
+   "name": "Lutherstadt Wittenberg",
+   "slug": "lutherstadt-wittenberg",
+   "lat": 51.8664,
+   "lon": 12.643,
+   "state": "Sachsen-Anhalt",
+   "population": 46837
+  },
+  {
+   "name": "Neunkirchen (Saar)",
+   "slug": "neunkirchen-saar",
+   "lat": 49.3499,
+   "lon": 7.1842,
+   "state": "Saarland",
+   "population": 46816
+  },
+  {
+   "name": "Schwerte",
+   "slug": "schwerte",
+   "lat": 51.4455,
+   "lon": 7.5675,
+   "state": "Nordrhein-Westfalen",
+   "population": 46763
+  },
+  {
+   "name": "Böblingen",
+   "slug": "boeblingen",
+   "lat": 48.685,
+   "lon": 9.0113,
+   "state": "Baden-Württemberg",
+   "population": 46714
+  },
+  {
+   "name": "Landau in der Pfalz",
+   "slug": "landau-in-der-pfalz",
+   "lat": 49.1983,
+   "lon": 8.1123,
+   "state": "Rheinland-Pfalz",
+   "population": 46677
+  },
+  {
+   "name": "Oberursel (Taunus)",
+   "slug": "oberursel-taunus",
+   "lat": 50.2033,
+   "lon": 8.5834,
+   "state": "Hessen",
+   "population": 46545
+  },
+  {
+   "name": "Heidenheim an der Brenz",
+   "slug": "heidenheim-an-der-brenz",
+   "lat": 48.6768,
+   "lon": 10.1529,
+   "state": "Baden-Württemberg",
+   "population": 46419
+  },
+  {
+   "name": "Dülmen",
+   "slug": "duelmen",
+   "lat": 51.8284,
+   "lon": 7.2791,
+   "state": "Nordrhein-Westfalen",
+   "population": 46071
+  },
+  {
+   "name": "Gotha",
+   "slug": "gotha",
+   "lat": 50.9495,
+   "lon": 10.7014,
+   "state": "Thüringen",
+   "population": 46030
+  },
+  {
+   "name": "Gronau",
+   "slug": "gronau",
+   "lat": 52.2086,
+   "lon": 7.0264,
+   "state": "Nordrhein-Westfalen",
+   "population": 45998
+  },
+  {
+   "name": "Kamen",
+   "slug": "kamen",
+   "lat": 51.5918,
+   "lon": 7.6617,
+   "state": "Nordrhein-Westfalen",
+   "population": 45931
+  },
+  {
+   "name": "Freising",
+   "slug": "freising",
+   "lat": 48.4008,
+   "lon": 11.744,
+   "state": "Bayern",
+   "population": 45857
+  },
+  {
+   "name": "Melle",
+   "slug": "melle",
+   "lat": 52.2008,
+   "lon": 8.3387,
+   "state": "Niedersachsen",
+   "population": 45844
+  },
+  {
+   "name": "Alsdorf",
+   "slug": "alsdorf",
+   "lat": 50.8772,
+   "lon": 6.1621,
+   "state": "Nordrhein-Westfalen",
+   "population": 45721
+  },
+  {
+   "name": "Singen (Hohentwiel)",
+   "slug": "singen-hohentwiel",
+   "lat": 47.7618,
+   "lon": 8.8349,
+   "state": "Baden-Württemberg",
+   "population": 45717
+  },
+  {
+   "name": "Stade",
+   "slug": "stade",
+   "lat": 53.5998,
+   "lon": 9.4754,
+   "state": "Niedersachsen",
+   "population": 45682
+  },
+  {
+   "name": "Dachau",
+   "slug": "dachau",
+   "lat": 48.2595,
+   "lon": 11.4347,
+   "state": "Bayern",
+   "population": 45621
+  },
+  {
+   "name": "Leonberg",
+   "slug": "leonberg",
+   "lat": 48.8013,
+   "lon": 9.015,
+   "state": "Baden-Württemberg",
+   "population": 45458
+  },
+  {
+   "name": "Memmingen",
+   "slug": "memmingen",
+   "lat": 47.9863,
+   "lon": 10.1808,
+   "state": "Bayern",
+   "population": 45343
+  },
+  {
+   "name": "Bünde",
+   "slug": "buende",
+   "lat": 52.2005,
+   "lon": 8.5829,
+   "state": "Nordrhein-Westfalen",
+   "population": 45189
+  },
+  {
+   "name": "Straubing",
+   "slug": "straubing",
+   "lat": 48.882,
+   "lon": 12.5697,
+   "state": "Bayern",
+   "population": 44741
+  },
+  {
+   "name": "Hof",
+   "slug": "hof",
+   "lat": 50.3188,
+   "lon": 11.9163,
+   "state": "Bayern",
+   "population": 44522
+  },
+  {
+   "name": "Fellbach",
+   "slug": "fellbach",
+   "lat": 48.8145,
+   "lon": 9.2745,
+   "state": "Baden-Württemberg",
+   "population": 44403
+  },
+  {
+   "name": "Brühl",
+   "slug": "bruehl",
+   "lat": 50.8291,
+   "lon": 6.9037,
+   "state": "Nordrhein-Westfalen",
+   "population": 44029
+  },
+  {
+   "name": "Lahr/Schwarzwald",
+   "slug": "lahr-schwarzwald",
+   "lat": 48.3389,
+   "lon": 7.8711,
+   "state": "Baden-Württemberg",
+   "population": 43728
+  },
+  {
+   "name": "Erkrath",
+   "slug": "erkrath",
+   "lat": 51.221,
+   "lon": 6.9056,
+   "state": "Nordrhein-Westfalen",
+   "population": 43639
+  },
+  {
+   "name": "Pinneberg",
+   "slug": "pinneberg",
+   "lat": 53.6615,
+   "lon": 9.7968,
+   "state": "Schleswig-Holstein",
+   "population": 43603
+  },
+  {
+   "name": "Amberg",
+   "slug": "amberg",
+   "lat": 49.4453,
+   "lon": 11.8582,
+   "state": "Bayern",
+   "population": 43529
+  },
+  {
+   "name": "Borken",
+   "slug": "borken",
+   "lat": 51.8445,
+   "lon": 6.8583,
+   "state": "Nordrhein-Westfalen",
+   "population": 43367
+  },
+  {
+   "name": "Siegburg",
+   "slug": "siegburg",
+   "lat": 50.7928,
+   "lon": 7.2071,
+   "state": "Nordrhein-Westfalen",
+   "population": 43333
+  },
+  {
+   "name": "Weinheim",
+   "slug": "weinheim",
+   "lat": 49.5462,
+   "lon": 8.6717,
+   "state": "Baden-Württemberg",
+   "population": 43272
+  },
+  {
+   "name": "Lehrte",
+   "slug": "lehrte",
+   "lat": 52.3749,
+   "lon": 9.9749,
+   "state": "Niedersachsen",
+   "population": 43048
+  },
+  {
+   "name": "Gifhorn",
+   "slug": "gifhorn",
+   "lat": 52.4882,
+   "lon": 10.5453,
+   "state": "Niedersachsen",
+   "population": 42993
+  },
+  {
+   "name": "Aurich",
+   "slug": "aurich",
+   "lat": 53.4696,
+   "lon": 7.4824,
+   "state": "Niedersachsen",
+   "population": 42970
+  },
+  {
+   "name": "Bruchsal",
+   "slug": "bruchsal",
+   "lat": 49.1241,
+   "lon": 8.598,
+   "state": "Baden-Württemberg",
+   "population": 42911
+  },
+  {
+   "name": "Erkelenz",
+   "slug": "erkelenz",
+   "lat": 51.081,
+   "lon": 6.3161,
+   "state": "Nordrhein-Westfalen",
+   "population": 42792
+  },
+  {
+   "name": "Wismar",
+   "slug": "wismar",
+   "lat": 53.891,
+   "lon": 11.4648,
+   "state": "Mecklenburg-Vorpommern",
+   "population": 42557
+  },
+  {
+   "name": "Weiden in der Oberpfalz",
+   "slug": "weiden-in-der-oberpfalz",
+   "lat": 49.6753,
+   "lon": 12.1632,
+   "state": "Bayern",
+   "population": 42444
+  },
+  {
+   "name": "Ansbach",
+   "slug": "ansbach",
+   "lat": 49.3029,
+   "lon": 10.5722,
+   "state": "Bayern",
+   "population": 42311
+  },
+  {
+   "name": "Buchholz in der Nordheide",
+   "slug": "buchholz-in-der-nordheide",
+   "lat": 53.3333,
+   "lon": 9.8667,
+   "state": "Niedersachsen",
+   "population": 42276
+  },
+  {
+   "name": "Eisenach",
+   "slug": "eisenach",
+   "lat": 50.9747,
+   "lon": 10.3194,
+   "state": "Thüringen",
+   "population": 42250
+  },
+  {
+   "name": "Bietigheim-Bissingen",
+   "slug": "bietigheim-bissingen",
+   "lat": 48.9493,
+   "lon": 9.1364,
+   "state": "Baden-Württemberg",
+   "population": 42210
+  },
+  {
+   "name": "Homburg",
+   "slug": "homburg",
+   "lat": 49.3215,
+   "lon": 7.3409,
+   "state": "Saarland",
+   "population": 42040
+  },
+  {
+   "name": "Oranienburg",
+   "slug": "oranienburg",
+   "lat": 52.7529,
+   "lon": 13.2458,
+   "state": "Brandenburg",
+   "population": 42028
+  },
+  {
+   "name": "Kaarst",
+   "slug": "kaarst",
+   "lat": 51.2267,
+   "lon": 6.6194,
+   "state": "Nordrhein-Westfalen",
+   "population": 42001
+  },
+  {
+   "name": "Bitterfeld-Wolfen",
+   "slug": "bitterfeld-wolfen",
+   "lat": 51.6425,
+   "lon": 12.3076,
+   "state": "Sachsen-Anhalt",
+   "population": 41816
+  },
+  {
+   "name": "Kaufbeuren",
+   "slug": "kaufbeuren",
+   "lat": 47.8804,
+   "lon": 10.6222,
+   "state": "Bayern",
+   "population": 41759
+  },
+  {
+   "name": "Rottenburg am Neckar",
+   "slug": "rottenburg-am-neckar",
+   "lat": 48.477,
+   "lon": 8.9337,
+   "state": "Baden-Württemberg",
+   "population": 41718
+  },
+  {
+   "name": "Freiberg",
+   "slug": "freiberg",
+   "lat": 50.9169,
+   "lon": 13.3429,
+   "state": "Sachsen",
+   "population": 41498
+  },
+  {
+   "name": "Coburg",
+   "slug": "coburg",
+   "lat": 50.2582,
+   "lon": 10.9646,
+   "state": "Bayern",
+   "population": 41405
+  },
+  {
+   "name": "Nürtingen",
+   "slug": "nuertingen",
+   "lat": 48.6266,
+   "lon": 9.3365,
+   "state": "Baden-Württemberg",
+   "population": 41154
+  },
+  {
+   "name": "Heinsberg",
+   "slug": "heinsberg",
+   "lat": 51.0654,
+   "lon": 6.0984,
+   "state": "Nordrhein-Westfalen",
+   "population": 40908
+  },
+  {
+   "name": "Falkensee",
+   "slug": "falkensee",
+   "lat": 52.5606,
+   "lon": 13.0882,
+   "state": "Brandenburg",
+   "population": 40900
+  },
+  {
+   "name": "Neumarkt in der Oberpfalz",
+   "slug": "neumarkt-in-der-oberpfalz",
+   "lat": 49.2801,
+   "lon": 11.4585,
+   "state": "Bayern",
+   "population": 40808
+  },
+  {
+   "name": "Nordhausen",
+   "slug": "nordhausen",
+   "lat": 51.5052,
+   "lon": 10.7925,
+   "state": "Thüringen",
+   "population": 40767
+  },
+  {
+   "name": "Neu-Isenburg",
+   "slug": "neu-isenburg",
+   "lat": 50.0552,
+   "lon": 8.6957,
+   "state": "Hessen",
+   "population": 40751
+  },
+  {
+   "name": "Lemgo",
+   "slug": "lemgo",
+   "lat": 52.0281,
+   "lon": 8.9013,
+   "state": "Nordrhein-Westfalen",
+   "population": 40717
+  },
+  {
+   "name": "Wunstorf",
+   "slug": "wunstorf",
+   "lat": 52.4258,
+   "lon": 9.4294,
+   "state": "Niedersachsen",
+   "population": 40639
+  },
+  {
+   "name": "Niederkassel",
+   "slug": "niederkassel",
+   "lat": 50.8137,
+   "lon": 7.0352,
+   "state": "Nordrhein-Westfalen",
+   "population": 40506
+  },
+  {
+   "name": "Schwabach",
+   "slug": "schwabach",
+   "lat": 49.3291,
+   "lon": 11.0208,
+   "state": "Bayern",
+   "population": 40428
+  },
+  {
+   "name": "Buxtehude",
+   "slug": "buxtehude",
+   "lat": 53.4767,
+   "lon": 9.7004,
+   "state": "Niedersachsen",
+   "population": 40122
+  },
+  {
+   "name": "Pirmasens",
+   "slug": "pirmasens",
+   "lat": 49.1997,
+   "lon": 7.6088,
+   "state": "Rheinland-Pfalz",
+   "population": 40101
+  },
+  {
+   "name": "Monheim am Rhein",
+   "slug": "monheim-am-rhein",
+   "lat": 51.0909,
+   "lon": 6.8812,
+   "state": "Nordrhein-Westfalen",
+   "population": 40098
+  },
+  {
+   "name": "Halberstadt",
+   "slug": "halberstadt",
+   "lat": 51.8954,
+   "lon": 11.0521,
+   "state": "Sachsen-Anhalt",
+   "population": 40000
+  },
+  {
+   "name": "Hofheim am Taunus",
+   "slug": "hofheim-am-taunus",
+   "lat": 50.0866,
+   "lon": 8.4471,
+   "state": "Hessen",
+   "population": 40000
+  },
+  {
+   "name": "Königswinter",
+   "slug": "koenigswinter",
+   "lat": 50.674,
+   "lon": 7.1931,
+   "state": "Nordrhein-Westfalen",
+   "population": 39976
+  },
+  {
+   "name": "Weißenfels",
+   "slug": "weissenfels",
+   "lat": 51.2,
+   "lon": 11.9668,
+   "state": "Sachsen-Anhalt",
+   "population": 39918
+  },
+  {
+   "name": "Bensheim",
+   "slug": "bensheim",
+   "lat": 49.681,
+   "lon": 8.6228,
+   "state": "Hessen",
+   "population": 39642
+  },
+  {
+   "name": "Laatzen",
+   "slug": "laatzen",
+   "lat": 52.3078,
+   "lon": 9.8146,
+   "state": "Niedersachsen",
+   "population": 39526
+  },
+  {
+   "name": "Löhne",
+   "slug": "loehne",
+   "lat": 52.199,
+   "lon": 8.7142,
+   "state": "Nordrhein-Westfalen",
+   "population": 39512
+  },
+  {
+   "name": "Kirchheim unter Teck",
+   "slug": "kirchheim-unter-teck",
+   "lat": 48.6481,
+   "lon": 9.451,
+   "state": "Baden-Württemberg",
+   "population": 39389
+  },
+  {
+   "name": "Schorndorf",
+   "slug": "schorndorf",
+   "lat": 48.8055,
+   "lon": 9.5273,
+   "state": "Baden-Württemberg",
+   "population": 39323
+  },
+  {
+   "name": "Freital",
+   "slug": "freital",
+   "lat": 51.0163,
+   "lon": 13.653,
+   "state": "Sachsen",
+   "population": 39276
+  },
+  {
+   "name": "Ilmenau",
+   "slug": "ilmenau",
+   "lat": 50.6868,
+   "lon": 10.9142,
+   "state": "Thüringen",
+   "population": 39000
+  },
+  {
+   "name": "Langen (Hessen)",
+   "slug": "langen-hessen",
+   "lat": 49.9915,
+   "lon": 8.6667,
+   "state": "Hessen",
+   "population": 39000
+  },
+  {
+   "name": "Stendal",
+   "slug": "stendal",
+   "lat": 52.6051,
+   "lon": 11.8594,
+   "state": "Sachsen-Anhalt",
+   "population": 38946
+  },
+  {
+   "name": "Eberswalde",
+   "slug": "eberswalde",
+   "lat": 52.8351,
+   "lon": 13.7997,
+   "state": "Brandenburg",
+   "population": 38844
+  },
+  {
+   "name": "Ettlingen",
+   "slug": "ettlingen",
+   "lat": 48.9414,
+   "lon": 8.4076,
+   "state": "Baden-Württemberg",
+   "population": 38819
+  },
+  {
+   "name": "Hückelhoven",
+   "slug": "hueckelhoven",
+   "lat": 51.0552,
+   "lon": 6.2247,
+   "state": "Nordrhein-Westfalen",
+   "population": 38709
+  },
+  {
+   "name": "Haltern am See",
+   "slug": "haltern-am-see",
+   "lat": 51.7431,
+   "lon": 7.1872,
+   "state": "Nordrhein-Westfalen",
+   "population": 38686
+  },
+  {
+   "name": "Erding",
+   "slug": "erding",
+   "lat": 48.3064,
+   "lon": 11.9077,
+   "state": "Bayern",
+   "population": 38644
+  },
+  {
+   "name": "Germering",
+   "slug": "germering",
+   "lat": 48.1374,
+   "lon": 11.3614,
+   "state": "Bayern",
+   "population": 38478
+  },
+  {
+   "name": "Völklingen",
+   "slug": "voelklingen",
+   "lat": 49.2523,
+   "lon": 6.8595,
+   "state": "Saarland",
+   "population": 38468
+  },
+  {
+   "name": "Ahaus",
+   "slug": "ahaus",
+   "lat": 52.0762,
+   "lon": 7.0049,
+   "state": "Nordrhein-Westfalen",
+   "population": 38262
+  },
+  {
+   "name": "Bautzen",
+   "slug": "bautzen",
+   "lat": 51.1809,
+   "lon": 14.4276,
+   "state": "Sachsen",
+   "population": 38207
+  },
+  {
+   "name": "Backnang",
+   "slug": "backnang",
+   "lat": 48.9468,
+   "lon": 9.4304,
+   "state": "Baden-Württemberg",
+   "population": 38184
+  },
+  {
+   "name": "Königs Wusterhausen",
+   "slug": "koenigs-wusterhausen",
+   "lat": 52.2995,
+   "lon": 13.6244,
+   "state": "Brandenburg",
+   "population": 38111
+  },
+  {
+   "name": "Mettmann",
+   "slug": "mettmann",
+   "lat": 51.2528,
+   "lon": 6.9778,
+   "state": "Nordrhein-Westfalen",
+   "population": 37867
+  },
+  {
+   "name": "Saarlouis",
+   "slug": "saarlouis",
+   "lat": 49.3165,
+   "lon": 6.7498,
+   "state": "Saarland",
+   "population": 37667
+  },
+  {
+   "name": "Würselen",
+   "slug": "wuerselen",
+   "lat": 50.8179,
+   "lon": 6.1341,
+   "state": "Nordrhein-Westfalen",
+   "population": 37654
+  },
+  {
+   "name": "Pirna",
+   "slug": "pirna",
+   "lat": 50.9617,
+   "lon": 13.9387,
+   "state": "Sachsen",
+   "population": 37645
+  },
+  {
+   "name": "Suhl",
+   "slug": "suhl",
+   "lat": 50.6087,
+   "lon": 10.6926,
+   "state": "Thüringen",
+   "population": 37300
+  },
+  {
+   "name": "Sinsheim",
+   "slug": "sinsheim",
+   "lat": 49.2531,
+   "lon": 8.877,
+   "state": "Baden-Württemberg",
+   "population": 37036
+  },
+  {
+   "name": "Kamp-Lintfort",
+   "slug": "kamp-lintfort",
+   "lat": 51.5018,
+   "lon": 6.5479,
+   "state": "Nordrhein-Westfalen",
+   "population": 36973
+  },
+  {
+   "name": "Warendorf",
+   "slug": "warendorf",
+   "lat": 51.9532,
+   "lon": 7.9912,
+   "state": "Nordrhein-Westfalen",
+   "population": 36886
+  },
+  {
+   "name": "Deggendorf",
+   "slug": "deggendorf",
+   "lat": 48.8334,
+   "lon": 12.962,
+   "state": "Bayern",
+   "population": 36854
+  },
+  {
+   "name": "Beckum",
+   "slug": "beckum",
+   "lat": 51.7555,
+   "lon": 8.0411,
+   "state": "Nordrhein-Westfalen",
+   "population": 36815
+  },
+  {
+   "name": "Winsen (Luhe)",
+   "slug": "winsen-luhe",
+   "lat": 53.3636,
+   "lon": 10.2059,
+   "state": "Niedersachsen",
+   "population": 36754
+  },
+  {
+   "name": "Schwäbisch Hall",
+   "slug": "schwaebisch-hall",
+   "lat": 49.1124,
+   "lon": 9.7371,
+   "state": "Baden-Württemberg",
+   "population": 36660
+  },
+  {
+   "name": "Merseburg",
+   "slug": "merseburg",
+   "lat": 51.3564,
+   "lon": 11.9961,
+   "state": "Sachsen-Anhalt",
+   "population": 36392
+  },
+  {
+   "name": "Coesfeld",
+   "slug": "coesfeld",
+   "lat": 51.9459,
+   "lon": 7.1691,
+   "state": "Nordrhein-Westfalen",
+   "population": 36382
+  },
+  {
+   "name": "Voerde",
+   "slug": "voerde",
+   "lat": 51.5975,
+   "lon": 6.6812,
+   "state": "Nordrhein-Westfalen",
+   "population": 36282
+  },
+  {
+   "name": "St. Ingbert",
+   "slug": "st-ingbert",
+   "lat": 49.2788,
+   "lon": 7.1157,
+   "state": "Saarland",
+   "population": 36254
+  },
+  {
+   "name": "Bernau bei Berlin",
+   "slug": "bernau-bei-berlin",
+   "lat": 52.6787,
+   "lon": 13.5881,
+   "state": "Brandenburg",
+   "population": 36222
+  },
+  {
+   "name": "Meppen",
+   "slug": "meppen",
+   "lat": 52.6947,
+   "lon": 7.291,
+   "state": "Niedersachsen",
+   "population": 35935
+  },
+  {
+   "name": "Wesseling",
+   "slug": "wesseling",
+   "lat": 50.8247,
+   "lon": 6.9811,
+   "state": "Nordrhein-Westfalen",
+   "population": 35859
+  },
+  {
+   "name": "Emsdetten",
+   "slug": "emsdetten",
+   "lat": 52.1747,
+   "lon": 7.5302,
+   "state": "Nordrhein-Westfalen",
+   "population": 35447
+  },
+  {
+   "name": "Porta Westfalica",
+   "slug": "porta-westfalica",
+   "lat": 52.2394,
+   "lon": 8.9248,
+   "state": "Nordrhein-Westfalen",
+   "population": 35374
+  },
+  {
+   "name": "Greven",
+   "slug": "greven",
+   "lat": 52.0929,
+   "lon": 7.612,
+   "state": "Nordrhein-Westfalen",
+   "population": 35278
+  },
+  {
+   "name": "Mühlhausen/Thüringen",
+   "slug": "muehlhausen-thueringen",
+   "lat": 51.2094,
+   "lon": 10.4589,
+   "state": "Thüringen",
+   "population": 35000
+  },
+  {
+   "name": "Steinfurt",
+   "slug": "steinfurt",
+   "lat": 52.1378,
+   "lon": 7.3581,
+   "state": "Nordrhein-Westfalen",
+   "population": 34822
+  },
+  {
+   "name": "Hemer",
+   "slug": "hemer",
+   "lat": 51.3854,
+   "lon": 7.7662,
+   "state": "Nordrhein-Westfalen",
+   "population": 34678
+  },
+  {
+   "name": "Lage",
+   "slug": "lage",
+   "lat": 51.9914,
+   "lon": 8.792,
+   "state": "Nordrhein-Westfalen",
+   "population": 34671
+  },
+  {
+   "name": "Fürstenfeldbruck",
+   "slug": "fuerstenfeldbruck",
+   "lat": 48.1795,
+   "lon": 11.2547,
+   "state": "Bayern",
+   "population": 34648
+  },
+  {
+   "name": "Kempen",
+   "slug": "kempen",
+   "lat": 51.3642,
+   "lon": 6.4195,
+   "state": "Nordrhein-Westfalen",
+   "population": 34618
+  },
+  {
+   "name": "Wermelskirchen",
+   "slug": "wermelskirchen",
+   "lat": 51.1406,
+   "lon": 7.2157,
+   "state": "Nordrhein-Westfalen",
+   "population": 34472
+  },
+  {
+   "name": "Papenburg",
+   "slug": "papenburg",
+   "lat": 53.0773,
+   "lon": 7.411,
+   "state": "Niedersachsen",
+   "population": 34440
+  },
+  {
+   "name": "Dietzenbach",
+   "slug": "dietzenbach",
+   "lat": 50.0172,
+   "lon": 8.7843,
+   "state": "Hessen",
+   "population": 34429
+  },
+  {
+   "name": "Viernheim",
+   "slug": "viernheim",
+   "lat": 49.5401,
+   "lon": 8.5785,
+   "state": "Hessen",
+   "population": 34348
+  },
+  {
+   "name": "Datteln",
+   "slug": "datteln",
+   "lat": 51.6515,
+   "lon": 7.3386,
+   "state": "Nordrhein-Westfalen",
+   "population": 34332
+  },
+  {
+   "name": "Limburg an der Lahn",
+   "slug": "limburg-an-der-lahn",
+   "lat": 50.388,
+   "lon": 8.0635,
+   "state": "Hessen",
+   "population": 34255
+  },
+  {
+   "name": "Ahrensburg",
+   "slug": "ahrensburg",
+   "lat": 53.6737,
+   "lon": 10.2359,
+   "state": "Schleswig-Holstein",
+   "population": 34201
+  },
+  {
+   "name": "Zweibrücken",
+   "slug": "zweibruecken",
+   "lat": 49.2487,
+   "lon": 7.3642,
+   "state": "Rheinland-Pfalz",
+   "population": 34084
+  },
+  {
+   "name": "Leer (Ostfriesland)",
+   "slug": "leer-ostfriesland",
+   "lat": 53.2332,
+   "lon": 7.4568,
+   "state": "Niedersachsen",
+   "population": 34025
+  },
+  {
+   "name": "Radebeul",
+   "slug": "radebeul",
+   "lat": 51.1,
+   "lon": 13.6768,
+   "state": "Sachsen",
+   "population": 34008
+  },
+  {
+   "name": "Bad Vilbel",
+   "slug": "bad-vilbel",
+   "lat": 50.1836,
+   "lon": 8.7444,
+   "state": "Hessen",
+   "population": 34000
+  },
+  {
+   "name": "Uelzen",
+   "slug": "uelzen",
+   "lat": 52.965,
+   "lon": 10.5605,
+   "state": "Niedersachsen",
+   "population": 33991
+  },
+  {
+   "name": "Kehl",
+   "slug": "kehl",
+   "lat": 48.5734,
+   "lon": 7.8114,
+   "state": "Baden-Württemberg",
+   "population": 33991
+  },
+  {
+   "name": "Jülich",
+   "slug": "juelich",
+   "lat": 50.9221,
+   "lon": 6.3611,
+   "state": "Nordrhein-Westfalen",
+   "population": 33948
+  },
+  {
+   "name": "Bernburg (Saale)",
+   "slug": "bernburg-saale",
+   "lat": 51.794,
+   "lon": 11.7374,
+   "state": "Sachsen-Anhalt",
+   "population": 33879
+  },
+  {
+   "name": "Tuttlingen",
+   "slug": "tuttlingen",
+   "lat": 47.9844,
+   "lon": 8.8187,
+   "state": "Baden-Württemberg",
+   "population": 33394
+  },
+  {
+   "name": "Balingen",
+   "slug": "balingen",
+   "lat": 48.2738,
+   "lon": 8.8558,
+   "state": "Baden-Württemberg",
+   "population": 33270
+  },
+  {
+   "name": "Barsinghausen",
+   "slug": "barsinghausen",
+   "lat": 52.3022,
+   "lon": 9.4624,
+   "state": "Niedersachsen",
+   "population": 33231
+  },
+  {
+   "name": "Korschenbroich",
+   "slug": "korschenbroich",
+   "lat": 51.1903,
+   "lon": 6.5144,
+   "state": "Nordrhein-Westfalen",
+   "population": 33078
+  },
+  {
+   "name": "Geldern",
+   "slug": "geldern",
+   "lat": 51.517,
+   "lon": 6.3228,
+   "state": "Nordrhein-Westfalen",
+   "population": 33064
+  },
+  {
+   "name": "Goch",
+   "slug": "goch",
+   "lat": 51.6756,
+   "lon": 6.1593,
+   "state": "Nordrhein-Westfalen",
+   "population": 33063
+  },
+  {
+   "name": "Crailsheim",
+   "slug": "crailsheim",
+   "lat": 49.1366,
+   "lon": 10.072,
+   "state": "Baden-Württemberg",
+   "population": 33000
+  },
+  {
+   "name": "Bad Nauheim",
+   "slug": "bad-nauheim",
+   "lat": 50.3636,
+   "lon": 8.7355,
+   "state": "Hessen",
+   "population": 33000
+  },
+  {
+   "name": "Altenburg",
+   "slug": "altenburg",
+   "lat": 50.9852,
+   "lon": 12.4341,
+   "state": "Thüringen",
+   "population": 32910
+  },
+  {
+   "name": "Forchheim",
+   "slug": "forchheim",
+   "lat": 49.7201,
+   "lon": 11.0579,
+   "state": "Bayern",
+   "population": 32907
+  },
+  {
+   "name": "Naumburg (Saale)",
+   "slug": "naumburg-saale",
+   "lat": 51.1526,
+   "lon": 11.8099,
+   "state": "Sachsen-Anhalt",
+   "population": 32804
+  },
+  {
+   "name": "Cloppenburg",
+   "slug": "cloppenburg",
+   "lat": 52.8461,
+   "lon": 8.0439,
+   "state": "Niedersachsen",
+   "population": 32600
+  },
+  {
+   "name": "Stuhr",
+   "slug": "stuhr",
+   "lat": 53.0274,
+   "lon": 8.7498,
+   "state": "Niedersachsen",
+   "population": 32556
+  },
+  {
+   "name": "Lampertheim",
+   "slug": "lampertheim",
+   "lat": 49.5945,
+   "lon": 8.4675,
+   "state": "Hessen",
+   "population": 32400
+  },
+  {
+   "name": "Seelze",
+   "slug": "seelze",
+   "lat": 52.3965,
+   "lon": 9.5943,
+   "state": "Niedersachsen",
+   "population": 32397
+  },
+  {
+   "name": "Friedberg",
+   "slug": "friedberg",
+   "lat": 50.3366,
+   "lon": 8.7537,
+   "state": "Hessen",
+   "population": 32348
+  },
+  {
+   "name": "Itzehoe",
+   "slug": "itzehoe",
+   "lat": 53.9194,
+   "lon": 9.5172,
+   "state": "Schleswig-Holstein",
+   "population": 32319
+  },
+  {
+   "name": "Wedel",
+   "slug": "wedel",
+   "lat": 53.581,
+   "lon": 9.7039,
+   "state": "Schleswig-Holstein",
+   "population": 32289
+  },
+  {
+   "name": "Rheinfelden (Baden)",
+   "slug": "rheinfelden-baden",
+   "lat": 47.5603,
+   "lon": 7.7868,
+   "state": "Baden-Württemberg",
+   "population": 32245
+  },
+  {
+   "name": "Kornwestheim",
+   "slug": "kornwestheim",
+   "lat": 48.8611,
+   "lon": 9.1874,
+   "state": "Baden-Württemberg",
+   "population": 32177
+  },
+  {
+   "name": "Vechta",
+   "slug": "vechta",
+   "lat": 52.7311,
+   "lon": 8.2873,
+   "state": "Niedersachsen",
+   "population": 32104
+  },
+  {
+   "name": "Wernigerode",
+   "slug": "wernigerode",
+   "lat": 51.8344,
+   "lon": 10.7863,
+   "state": "Sachsen-Anhalt",
+   "population": 32000
+  },
+  {
+   "name": "Achim",
+   "slug": "achim",
+   "lat": 53.0121,
+   "lon": 9.036,
+   "state": "Niedersachsen",
+   "population": 31923
+  },
+  {
+   "name": "Riesa",
+   "slug": "riesa",
+   "lat": 51.3038,
+   "lon": 13.3088,
+   "state": "Sachsen",
+   "population": 31760
+  },
+  {
+   "name": "Radolfzell am Bodensee",
+   "slug": "radolfzell-am-bodensee",
+   "lat": 47.7373,
+   "lon": 8.9703,
+   "state": "Baden-Württemberg",
+   "population": 31734
+  },
+  {
+   "name": "Geestland",
+   "slug": "geestland",
+   "lat": 53.6097,
+   "lon": 8.5944,
+   "state": "Niedersachsen",
+   "population": 31713
+  },
+  {
+   "name": "Hoyerswerda",
+   "slug": "hoyerswerda",
+   "lat": 51.4333,
+   "lon": 14.2501,
+   "state": "Sachsen",
+   "population": 31681
+  },
+  {
+   "name": "Georgsmarienhütte",
+   "slug": "georgsmarienhuette",
+   "lat": 52.2,
+   "lon": 8.05,
+   "state": "Niedersachsen",
+   "population": 31616
+  },
+  {
+   "name": "Burgdorf",
+   "slug": "burgdorf",
+   "lat": 52.4438,
+   "lon": 10.0078,
+   "state": "Niedersachsen",
+   "population": 31615
+  },
+  {
+   "name": "Einbeck",
+   "slug": "einbeck",
+   "lat": 51.8183,
+   "lon": 9.867,
+   "state": "Niedersachsen",
+   "population": 31591
+  },
+  {
+   "name": "Schönebeck (Elbe)",
+   "slug": "schoenebeck-elbe",
+   "lat": 52.0206,
+   "lon": 11.7383,
+   "state": "Sachsen-Anhalt",
+   "population": 31582
+  },
+  {
+   "name": "Geesthacht",
+   "slug": "geesthacht",
+   "lat": 53.4375,
+   "lon": 10.3678,
+   "state": "Schleswig-Holstein",
+   "population": 31539
+  },
+  {
+   "name": "Biberach an der Riß",
+   "slug": "biberach-an-der-riss",
+   "lat": 48.0984,
+   "lon": 9.79,
+   "state": "Baden-Württemberg",
+   "population": 31419
+  },
+  {
+   "name": "Neuruppin",
+   "slug": "neuruppin",
+   "lat": 52.9244,
+   "lon": 12.8093,
+   "state": "Brandenburg",
+   "population": 31037
+  },
+  {
+   "name": "Northeim",
+   "slug": "northeim",
+   "lat": 51.7057,
+   "lon": 10.0004,
+   "state": "Niedersachsen",
+   "population": 30973
+  },
+  {
+   "name": "Fürstenwalde/Spree",
+   "slug": "fuerstenwalde-spree",
+   "lat": 52.358,
+   "lon": 14.065,
+   "state": "Brandenburg",
+   "population": 30967
+  },
+  {
+   "name": "Gevelsberg",
+   "slug": "gevelsberg",
+   "lat": 51.3207,
+   "lon": 7.3405,
+   "state": "Nordrhein-Westfalen",
+   "population": 30949
+  },
+  {
+   "name": "Weyhe",
+   "slug": "weyhe",
+   "lat": 52.9821,
+   "lon": 8.8496,
+   "state": "Niedersachsen",
+   "population": 30920
+  },
+  {
+   "name": "Kreuztal",
+   "slug": "kreuztal",
+   "lat": 50.9599,
+   "lon": 7.9896,
+   "state": "Nordrhein-Westfalen",
+   "population": 30899
+  },
+  {
+   "name": "Bad Hersfeld",
+   "slug": "bad-hersfeld",
+   "lat": 50.8681,
+   "lon": 9.7068,
+   "state": "Hessen",
+   "population": 30846
+  },
+  {
+   "name": "Delbrück",
+   "slug": "delbrueck",
+   "lat": 51.7649,
+   "lon": 8.5595,
+   "state": "Nordrhein-Westfalen",
+   "population": 30828
+  },
+  {
+   "name": "Nienburg/Weser",
+   "slug": "nienburg-weser",
+   "lat": 52.6386,
+   "lon": 9.2056,
+   "state": "Niedersachsen",
+   "population": 30677
+  },
+  {
+   "name": "Rendsburg",
+   "slug": "rendsburg",
+   "lat": 54.3003,
+   "lon": 9.665,
+   "state": "Schleswig-Holstein",
+   "population": 30633
+  },
+  {
+   "name": "Rheinberg",
+   "slug": "rheinberg",
+   "lat": 51.5459,
+   "lon": 6.6014,
+   "state": "Nordrhein-Westfalen",
+   "population": 30610
+  },
+  {
+   "name": "Oer-Erkenschwick",
+   "slug": "oer-erkenschwick",
+   "lat": 51.6398,
+   "lon": 7.2606,
+   "state": "Nordrhein-Westfalen",
+   "population": 30550
+  },
+  {
+   "name": "Ganderkesee",
+   "slug": "ganderkesee",
+   "lat": 53.0345,
+   "lon": 8.5451,
+   "state": "Niedersachsen",
+   "population": 30460
+  },
+  {
+   "name": "Herrenberg",
+   "slug": "herrenberg",
+   "lat": 48.5964,
+   "lon": 8.8702,
+   "state": "Baden-Württemberg",
+   "population": 30373
+  },
+  {
+   "name": "Köthen (Anhalt)",
+   "slug": "koethen-anhalt",
+   "lat": 51.751,
+   "lon": 11.9737,
+   "state": "Sachsen-Anhalt",
+   "population": 30345
+  },
+  {
+   "name": "Schwandorf",
+   "slug": "schwandorf",
+   "lat": 49.3304,
+   "lon": 12.1077,
+   "state": "Bayern",
+   "population": 30239
+  },
+  {
+   "name": "Eisenhüttenstadt",
+   "slug": "eisenhuettenstadt",
+   "lat": 52.1449,
+   "lon": 14.6294,
+   "state": "Brandenburg",
+   "population": 30234
+  },
+  {
+   "name": "Bramsche",
+   "slug": "bramsche",
+   "lat": 52.4075,
+   "lon": 7.9792,
+   "state": "Niedersachsen",
+   "population": 30134
+  },
+  {
+   "name": "Oelde",
+   "slug": "oelde",
+   "lat": 51.8261,
+   "lon": 8.1455,
+   "state": "Nordrhein-Westfalen",
+   "population": 30129
+  },
+  {
+   "name": "Emmerich am Rhein",
+   "slug": "emmerich-am-rhein",
+   "lat": 51.8322,
+   "lon": 6.2428,
+   "state": "Nordrhein-Westfalen",
+   "population": 30105
+  },
+  {
+   "name": "Meschede",
+   "slug": "meschede",
+   "lat": 51.3437,
+   "lon": 8.2859,
+   "state": "Nordrhein-Westfalen",
+   "population": 30103
+  },
+  {
+   "name": "Walsrode",
+   "slug": "walsrode",
+   "lat": 52.8625,
+   "lon": 9.5883,
+   "state": "Niedersachsen",
+   "population": 30100
+  },
+  {
+   "name": "Werl",
+   "slug": "werl",
+   "lat": 51.5533,
+   "lon": 7.9156,
+   "state": "Nordrhein-Westfalen",
+   "population": 30061
+  },
+  {
+   "name": "Weil am Rhein",
+   "slug": "weil-am-rhein",
+   "lat": 47.5933,
+   "lon": 7.6116,
+   "state": "Baden-Württemberg",
+   "population": 30000
+  },
+  {
+   "name": "Bad Salzuflen",
+   "slug": "bad-salzuflen",
+   "lat": 52.0837,
+   "lon": 8.7462,
+   "state": "Nordrhein-Westfalen",
+   "population": 30000
   }
  ]
 }

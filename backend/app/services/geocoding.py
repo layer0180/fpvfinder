@@ -229,7 +229,10 @@ async def reverse_geocode(lat: float, lon: float, lang: str = "de", nominatim_fa
     cache = _get_cache()
     cached = cache.get(key)
     if cached is not None:
-        return cached[0]["label"] if cached else ""
+        label = cached[0]["label"] if cached else ""
+        # An empty answer from Photon is worth a second source in the batch job.
+        if label or not nominatim_fallback:
+            return label
     label = ""
     try:
         if time.monotonic() < _photon_down_until:
@@ -249,6 +252,9 @@ async def reverse_geocode(lat: float, lon: float, lang: str = "de", nominatim_fa
     except (httpx.HTTPError, ValueError, KeyError):
         if not nominatim_fallback:
             return ""
+    # Photon down, or no place for a point deep in a forest: the batch job
+    # asks Nominatim, which names the municipality the point lies in.
+    if not label and nominatim_fallback:
         try:
             label = await _nominatim_reverse(lat, lon, lang)
         except (httpx.HTTPError, ValueError, KeyError):

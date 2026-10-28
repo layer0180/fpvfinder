@@ -151,7 +151,7 @@ export const pages = {
       faqMore: 'Alle Fragen ansehen',
       guidesH2: 'Ratgeber: Regeln und gute Spots',
       guidesMore: 'Alle Ratgeber',
-      regionsLink: 'FPV-Spots rund um die Großstädte',
+      regionsLink: 'FPV-Spots rund um deine Stadt',
       dataNote: 'Kartendaten: OpenStreetMap. Keine Cookies, kein Tracking.',
     },
     faq: {
@@ -225,7 +225,7 @@ export const pages = {
       faqMore: 'See all questions',
       guidesH2: 'Guides: rules and good spots',
       guidesMore: 'All guides',
-      regionsLink: 'FPV spots around large cities',
+      regionsLink: 'FPV spots around your town',
       dataNote: 'Map data: OpenStreetMap. No cookies, no tracking.',
     },
     faq: {

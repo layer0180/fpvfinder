@@ -4,7 +4,7 @@ import { ApiError, createShare, geocode, getAirspace, getHealth, reverse, runSea
 import { errorText, strings, t, timeProfileLabel, type Lang } from './i18n'
 import { distanceM, pickTopSpots } from './spots'
 import { profileFor } from './timeProfile'
-import { readUrl, writeUrl } from './urlState'
+import { readUrl, videoUrl, writeUrl } from './urlState'
 import { disclaimer, favorites } from './storage'
 import type { Health, JobStatus, Place, Point, SearchResult, ZoneCollection } from './types'
 import SearchBar from './SearchBar'
@@ -16,6 +16,7 @@ import TuningPanel, { tuningWeights, type Tuning } from './Tuning'
 // already usable, so the first paint is the search field, not a grey box.
 const MapView = lazy(() => import('./MapView'))
 const Presentation = lazy(() => import('./Presentation'))
+const SpotFlight = lazy(() => import('./SpotFlight'))
 
 type Phase = 'idle' | 'locating' | 'searching' | 'results' | 'error'
 type SheetSize = 'peek' | 'half' | 'full'
@@ -46,13 +47,32 @@ function stageOf(job: JobStatus | null): number {
 
 export default function Finder({ lang }: { lang: Lang }) {
   const initial = useMemo(() => readUrl(), [])
-  // Video mode replaces the whole finder (see Presentation.tsx).
+  // Video modes replace the whole finder (see Presentation.tsx, SpotFlight.tsx).
   if (initial.present && initial.lat !== undefined && initial.lon !== undefined) {
-    const count = Number(new URLSearchParams(location.search).get('n')) || 3
+    const params = new URLSearchParams(location.search)
+    if (initial.present === 'spot') {
+      return (
+        <Suspense fallback={null}>
+          <SpotFlight
+            lang={lang}
+            url={initial}
+            lat={initial.lat}
+            lon={initial.lon}
+            // A bare point needs only its surroundings rated.
+            radiusKm={initial.r ?? 2}
+            spot={initial.spot ?? { lat: initial.lat, lon: initial.lon }}
+            clean={params.get('clean') === '1'}
+            title={params.get('title')?.trim().slice(0, 80) || undefined}
+          />
+        </Suspense>
+      )
+    }
+    const count = Number(params.get('n')) || 3
     return (
       <Suspense fallback={null}>
         <Presentation
           lang={lang}
+          url={initial}
           lat={initial.lat}
           lon={initial.lon}
           radiusKm={initial.r ?? DEFAULT_RADIUS}
@@ -359,6 +379,7 @@ function FinderApp({ lang, initial }: { lang: Lang; initial: ReturnType<typeof r
                 panelBody.current?.scrollTo({ top: 0 })
               }}
               onShare={share}
+              videoHref={videoUrl(selected)}
             />
           ) : (
             <>
@@ -413,10 +434,7 @@ function FinderApp({ lang, initial }: { lang: Lang; initial: ReturnType<typeof r
                         </button>
                       )}
                       {place && topSpots.length > 0 && (
-                        <a
-                          className="btn btn-small"
-                          href={`?present=1&lat=${place.lat.toFixed(4)}&lon=${place.lon.toFixed(4)}&r=${result.radius_km}`}
-                        >
+                        <a className="btn btn-small" href={videoUrl()}>
                           🎬 {s.video}
                         </a>
                       )}

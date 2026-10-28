@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import type { Map as MlMap, Marker } from 'maplibre-gl'
 import type { Point, ZoneCollection } from './types'
 import { percent } from './spots'
-import type { UiStrings } from './i18n'
+import { t, type UiStrings } from './i18n'
+import { compass } from './sun'
+import { loadWeather } from './Weather'
 import { GERMANY, addSpotLayers, addZoneLayers, loadMapLibre, radiusBounds, setArea, setPoints, type MapLibre } from './mapSetup'
 
 interface Props {
@@ -24,6 +26,7 @@ export default function MapView({ styleUrl, center, radiusKm, points, topSpots, 
   const container = useRef<HTMLDivElement>(null)
   const map = useRef<MlMap | null>(null)
   const markers = useRef<Marker[]>([])
+  const wind = useRef<Marker | null>(null)
   const lib = useRef<MapLibre | null>(null)
   const pointsById = useRef(new Map<number, Point>())
   const onSelectRef = useRef(onSelect)
@@ -154,6 +157,40 @@ export default function MapView({ styleUrl, center, radiusKm, points, topSpots, 
       })
     }
   }, [state, selected?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // --- wind at the selected spot ----------------------------------------------
+  // The same forecast the weather section shows (one cached request). The map
+  // never rotates in the finder, so the arrow can stay a plain CSS rotation.
+  useEffect(() => {
+    const m = map.current
+    const maplibre = lib.current
+    wind.current?.remove()
+    wind.current = null
+    if (state !== 'ready' || !m || !maplibre || !selected) return
+    let alive = true
+    loadWeather(selected.lat, selected.lon)
+      .then((forecast) => {
+        const from = forecast.hours[0]?.dir
+        if (!alive || from === undefined) return
+        const el = document.createElement('div')
+        el.className = 'map-wind'
+        el.title = t(s.windArrow, { dir: compass(from, s.compass) })
+        el.setAttribute('role', 'img')
+        el.setAttribute('aria-label', el.title)
+        // Points where the wind blows to.
+        el.innerHTML =
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 13h-4.5v8h-5v-8H5z" fill="currentColor"/></svg>'
+        el.firstElementChild!.setAttribute('style', `transform: rotate(${from + 180}deg)`)
+        // Beside the pin, not on it: the pin stays clickable.
+        wind.current = new maplibre.Marker({ element: el, offset: [30, -30] }).setLngLat([selected.lon, selected.lat]).addTo(m)
+      })
+      .catch(() => {
+        /* no weather - no arrow */
+      })
+    return () => {
+      alive = false
+    }
+  }, [state, selected?.id, s]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="map-wrap">

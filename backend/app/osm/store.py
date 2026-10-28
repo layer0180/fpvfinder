@@ -156,3 +156,20 @@ def get_store() -> OsmTileStore | None:
             _store = OsmTileStore.open_if_present(SETTINGS.osm_store)
             _store_checked = True
         return _store
+
+
+def reload_store() -> OsmTileStore | None:
+    """
+    Opens the store file afresh, after the monthly refresh replaced it.
+
+    The previous store is left open: searches running on it finish on the old
+    file (Linux keeps a replaced file readable while it is open), and its
+    connection closes once the last of them lets go of it.
+    """
+    global _store, _store_checked
+    from app.config import SETTINGS
+
+    fresh = OsmTileStore.open_if_present(SETTINGS.osm_store)
+    with _store_lock:
+        _store, _store_checked = fresh, True
+    return fresh

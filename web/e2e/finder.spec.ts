@@ -48,6 +48,28 @@ test('a spot shows reasons, weather section, route and share', async ({ page, co
   expect(html).toMatch(/<title>[^<]*Score \d+\/100/)
 })
 
+test('a spot opens its camera flight, which shows the same score', async ({ page }) => {
+  // The flight moves even when the system asks for reduced motion (Windows
+  // with animation effects off does) - the motion is what the video is for.
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto(FIXTURE)
+  const first = page.locator('.results .result').first()
+  const score = (await first.locator('.result-score').textContent())?.match(/\d+/)?.[0]
+  await first.click()
+  await page.locator('.detail').getByRole('link', { name: /Video/ }).click()
+  await expect(page).toHaveURL(/present=spot&spot=48\.\d+,9\.\d+/)
+
+  // Preloaded behind a cover, then waiting for the tap that starts the take.
+  await expect(page.locator('.present-hint')).toHaveText('Tippen zum Starten', { timeout: 60_000 })
+  await expect(page.locator('.present-title h1')).toContainText('FPV-Spot')
+  await page.locator('.present').click()
+  const card = page.locator('.present-card')
+  await expect(card).toBeVisible({ timeout: 20_000 })
+  await expect(card.locator('.present-score')).toHaveText(score!)
+  await expect(card).toContainText('dipul.de')
+  await expect(page.locator('.present-outro')).toBeVisible({ timeout: 20_000 })
+})
+
 test('a place outside Germany is explained, not failed', async ({ page }) => {
   await page.goto('/app?lat=52.37&lon=4.90&r=2')
   await expect(page.getByRole('alert')).toContainText('außerhalb')

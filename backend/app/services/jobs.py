@@ -90,7 +90,13 @@ class JobRegistry:
                 job.error = f"{type(exc).__name__}: {exc}"
                 job.error_code = getattr(exc, "code", None)
                 job.message = "Failed"
-                traceback.print_exc()
+                if job.error_code:
+                    # Expected and explained to the visitor (outside the
+                    # covered region, OSM unreachable): one line, no
+                    # coordinates - a traceback here would bury real bugs.
+                    print(f"[search] {job.error_code}: {exc}")
+                else:
+                    traceback.print_exc()
             finally:
                 job.updated_at = time.time()
 

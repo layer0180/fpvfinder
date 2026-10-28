@@ -9,6 +9,8 @@ The interactive API docs are then at http://localhost:8000/docs
 
 from __future__ import annotations
 
+import asyncio
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -19,6 +21,7 @@ from fastapi.responses import JSONResponse
 from app import __version__, web
 from app.api import routes_meta, routes_search
 from app.config import SETTINGS, USER_AGENT_WARNING, load_config
+from app.osm.refresh import refresh_loop
 from app.osm.store import get_store
 from app.services.overpass import OutsideCoverageError, OverpassError
 
@@ -77,12 +80,17 @@ def _startup_log() -> None:
         else "[fpvfinder] osm:      no local store - every area comes from Overpass"
     )
     print(f"[fpvfinder] fallback: {'live Overpass outside the store' if SETTINGS.osm_live_fallback else 'off'}")
+    if os.environ.get("OSM_STORE_URL") or os.environ.get("REGIONS_URL"):
+        hours = SETTINGS.osm_refresh_hours
+        print(f"[fpvfinder] refresh:  {f'checks for new OSM data every {hours:g} h' if hours > 0 else 'only at start'}")
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     _startup_log()
+    refresher = asyncio.create_task(refresh_loop())
     yield
+    refresher.cancel()
 
 
 app = FastAPI(
